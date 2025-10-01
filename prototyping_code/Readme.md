@@ -11,6 +11,7 @@ directory:
 - chiller_system.py # defines system dynamics in torch
 - analysis.py # evaluate and compare the three control strategies
 
+- simulate_chiller.py
 - run.sh
 
 - [folder]results

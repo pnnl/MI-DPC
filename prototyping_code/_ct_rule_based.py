@@ -19,11 +19,11 @@ s_length = int(s_hours*3600//Ts) # to utils
 load_n = load_n.reshape(1,-1, 1)
 load=load_n[:,0:s_length,:] # to utils
 
-system = ChillerSystem(M=M, Ts=Ts, C_r=C_r*1, C_i=C_i, a=a, b=b ,c=c , c_p=c_p, gamma=gamma)
+system = ChillerSystem(M=M, Ts=Ts, C_r=C_r, C_i=C_i, a=a, b=b ,c=c , c_p=c_p, gamma=gamma)
 integrator = integrators.RK4(system, h=torch.tensor(Ts))
 
 with torch.no_grad():
-  flow_const = 18.
+  flow_const = 20.
   T_evap_const= T_evap_min
   
   mass_flow = torch.ones(1,s_length,M)*flow_const # Constant mass flow
@@ -166,7 +166,7 @@ with torch.no_grad():
                      Tracking RMSE: {control_RMSE.item():.1f} [kW] \n \
                       Number of violations: {n_violations}')
 
-  plt.savefig(f'/home/bold914/chiller_staging/plots/chiller_control_rule_based_{int(Ts)}.png')
+  plt.savefig(f'/home/bold914/chiller_staging/prototyping_code/plots/chiller_control_rule_based_{int(Ts)}.png')
   plt.show()
 
   print('Total cost of operation: ', cost.sum().item(), ' [kWh]')

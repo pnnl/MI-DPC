@@ -10,7 +10,7 @@ M = 2 # Number of chillers
 c_p = 4.184 # Specific heat of water [kJ/kgC]
 fluid_per_chiller = 2000 # kg of water per chiller / ~liters
 C_i = c_p * fluid_per_chiller # Thermal capacitance of chiller [kJ/C] 
-fluid_in_system = 6000 # Amount of fluid in the whole system [kg] / ~[liter]
+fluid_in_system = 36000 # Amount of fluid in the whole system [kg] / ~[liter]
 C_r = fluid_in_system*c_p # Thermal capacitance of the system [kJ/C]
 
 # Chiller power curve coefficients with respect to PLR
@@ -19,7 +19,7 @@ b = 19.33 #kW
 c = -18.33 #kW
 exponent = 3 # Pump power curve exponent
 if exponent == 3:
-    gamma = 8.625*1e-4  #8 Pump power coefficient [kWs^3/kg^3]
+    gamma = 3.625*1e-4  #8 Pump power coefficient [kWs^3/kg^3]
 elif exponent == 2:
     gamma = 1.395*1e-2 # Pump power coefficient [kWs^2/kg^2]
 

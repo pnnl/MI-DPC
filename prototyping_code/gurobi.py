@@ -1,5 +1,5 @@
 #%%
-from chiller_staging.MIDPC import generate_load
+from utils import generate_datacenter_load
 import numpy as np
 from pyomo.environ import *
 import torch
@@ -8,13 +8,13 @@ from utils import *
 import matplotlib.pyplot as plt
 
 M = 2
-Ts = 45.0
+Ts = 60.0
 nsteps = 10
 s_length = 300
 
-loads_t_1d = generate_load(T=s_length+nsteps)
+# loads_t_1d = generate_datacenter_load(T=s_length+nsteps)
 
-load = loads_t_1d[0:s_length+nsteps].cpu().numpy()
+# load = loads_t_1d[0:s_length+nsteps].cpu().numpy()
 
 torch.manual_seed(202)
 t, load_n = utils.generate_datacenter_load(sampling_time=45,
@@ -29,7 +29,7 @@ t, load_n = utils.generate_datacenter_load(sampling_time=45,
                                           f_day=3,
                                           f_night=2)
 load_n = load_n.reshape(1,-1, 1)
-s_length = 1900
+s_length = 400
 # s_length = load_n.size(1)
 load=load_n[:,0:s_length+nsteps,:].reshape(-1).cpu().numpy()
 

@@ -71,7 +71,6 @@ class ChillerSystem(torch.nn.Module):
         # energy_diff = torch.sum(self.c_p*integer_status*mass_flow*temp_diff, dim=-1, keepdim=True) 
         # dT_return_next = (1/self.C_r) * (load - energy_diff)
 
-        
         mass_effect = self.c_p * integer_status * mass_flow
         delta_supply_evap = T_supply - T_evap
         delta_return_supply = T_return - T_supply
@@ -81,7 +80,7 @@ class ChillerSystem(torch.nn.Module):
         dT_return_next = self.inv_C_r * (load - energy_diff)
 
 
-        return torch.cat([dT_supply_next, dT_return_next], dim=-1)        
+        return torch.cat([dT_supply_next, dT_return_next], dim=-1)
     # deprecated
     # def get_chiller_consumption(self, integer_status, mass_flow, T_return, T_supply) -> torch.Tensor:
     #     cooling_delivered = self.get_cooling_delivered(integer_status, mass_flow, T_return, T_supply)
@@ -97,10 +96,11 @@ class ChillerSystem(torch.nn.Module):
 
     def get_chiller_power_PLR(self,*, integer_status, mass_flow, T_return, T_supply, Q_rated) -> torch.Tensor:
         cooling = self.get_cooling_delivered_per_chiller(integer_status, mass_flow, T_return, T_supply)
-        PLR = cooling / Q_rated
+        PLR = torch.clip(cooling / Q_rated, min=0., max=1.) 
         # PLR = self.get_cooling_delivered(integer_status, mass_flow, T_return, T_supply) / (Q_rated)
         # PLR = torch.clip(PLR, 0., 1.) if type(PLR) == torch.Tensor else PLR
         COP = self.a+self.b*PLR+self.c*torch.square(PLR) 
+        COP = torch.relu(COP)
         # COP = torch.clip(COP, self.a, 7.) if type(COP) == torch.Tensor else COP
         power = cooling / (COP)
         power = torch.clip(power, min=0., max=Q_rated) # gives stable training

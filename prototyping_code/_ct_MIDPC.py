@@ -11,6 +11,7 @@ from neuromancer.problem import Problem
 from neuromancer.dataset import DictDataset
 from neuromancer.dynamics import integrators
 from neuromancer.trainer import Trainer
+from neuromancer.loggers import BasicLogger
 torch.manual_seed(202)
 
 if __name__=='__main__':
@@ -23,8 +24,8 @@ if __name__=='__main__':
     # exponent = 2
     load_min = 0
     load_max = 1500*unit_coeff
-    nsteps = 30
-    Ts = 60.
+    nsteps = 100
+    Ts = 300.
     mins = [T_supply_min] * M + [T_return_min] * 1 + [load_min] * (nsteps + 1) 
     maxs = [T_supply_max] * M + [T_return_max] * 1 + [load_max] * (nsteps + 1) 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -37,6 +38,50 @@ if __name__=='__main__':
         backward = (x-torch.floor(x)-0.5) # fractional value with rounding threshold    
         return torch.round(x) + (torch.sigmoid(slope*backward) - torch.sigmoid(slope*backward).detach())
  
+    # def relaxed_binary(x, slope=5.0):
+    #     logits = slope * (x)
+    #     sig = torch.sigmoid(logits)
+    #     return (x > 0.).float() + (sig - sig.detach())
+    
+    def relaxed_binary(x, slope=5.0, threshold=0.5):
+        logits = slope * (x - threshold)
+        sig = torch.sigmoid(logits)
+        return (x > threshold).float() + (sig - sig.detach())
+
+    def relaxed_binary_hysteresis(x, prev_state=None, slope=5.0, threshold=0.5, hysteresis=0.05):
+        logits = slope * (x - threshold)
+        sig = torch.sigmoid(logits)
+        if prev_state is None:
+            hard = (x > threshold).float()
+        else:
+            hard = prev_state.clone()
+            hard = torch.where((prev_state == 0) & (x > threshold + hysteresis), 1.0, hard)
+            hard = torch.where((prev_state == 1) & (x < threshold - hysteresis), 0.0, hard)
+        return hard + (sig - sig.detach())
+
+    def relaxed_binary_deadzone(x, slope=5.0, threshold=0.5, deadzone=0.1):
+        z = x - threshold
+        # compress values inside [-deadzone, deadzone] to 0
+        shifted = torch.where(z.abs() > deadzone,
+                            z - deadzone * z.sign(),
+                            torch.zeros_like(z))
+        logits = slope * shifted
+        sig = torch.sigmoid(logits)
+        return (x > threshold).float() + (sig - sig.detach())
+
+    # def relaxed_binary(x, slope=5.0, threshold=0.5, deadzone=0.1):
+    #     # Shift input so threshold is at 0
+    #     z = x - threshold
+    #     # If z is inside the deadzone, treat it as 0
+    #     # Outside, subtract deadzone so sigmoid starts after the flat region
+    #     shifted = torch.where(z.abs() > deadzone,
+    #                         z - deadzone * z.sign(),
+    #                         torch.zeros_like(z))
+    #     logits = slope * shifted
+    #     sig = torch.sigmoid(logits)
+    #     return (x > threshold).float() + (sig - sig.detach())
+
+
     def relaxed_round_hysteresis(x, slope=15.0, low=0.48, high=0.52, _state={}):
         """
         Hysteresis rounding that works for any real input range.
@@ -64,7 +109,7 @@ if __name__=='__main__':
                                 # min=5, max=10., method='sigmoid_scale')
     # net_flow = blocks.MLP(insize=1*M+1+1*(nsteps+1), outsize=M, hsizes=[120, 120, 120, 120], nonlin=activations['selu'])
     net_flow = utils.customMPL(insize=1*M+1+1*(nsteps+1)+0, outsize=M, hsizes=[120, 120, 120, 120],
-                                nonlin=nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+                                nonlin=nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                 mins=mins, maxs=maxs, u_min=flow_min, u_max=flow_max, 
                                 clipping=False, spectral_norm=spectral_norm)
 
@@ -72,7 +117,7 @@ if __name__=='__main__':
                                 # min=T_evap_min, max=T_evap_max, method='relu_clamp')
     # net_evap = blocks.MLP(insize=1*M+1+1*(nsteps+1)+2, outsize=M, hsizes=[120, 120, 120, 120], nonlin=activations['Tanh'])
     net_evap = utils.customMPL(insize=1*M+1+1*(nsteps+1)+0, outsize=M, hsizes=[120, 120, 120, 120], 
-                               nonlin=nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+                               nonlin=nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                mins=mins, maxs=maxs, u_min=T_evap_min, u_max=T_evap_max, 
                                clipping=False, spectral_norm=spectral_norm)
 
@@ -80,8 +125,8 @@ if __name__=='__main__':
                                     # min=-.49, max=1.49, method='sigmoid_scale')
     # net_integer = blocks.MLP(insize=1*M+1+1*(nsteps+1)+4, outsize=M-1, hsizes=[120, 120, 120, 120], nonlin=activations['selu'])
     net_integer = utils.customMPL(insize=1*M+1+1*(nsteps+1)+0, outsize=M-1, hsizes=[120, 120, 120, 120],
-                                   nonlin=nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0,
-                                   mins=mins, maxs=maxs, u_min=0, u_max=1, 
+                                   nonlin=nn.Tanh(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+                                   mins=mins, maxs=maxs, u_min=-0.49, u_max=1.49, 
                                    clipping=False, spectral_norm=spectral_norm)
 
     # NEUROMANCER NODES
@@ -99,7 +144,7 @@ if __name__=='__main__':
 
     # round_fn = lambda x: torch.clip(relaxed_round(x),0,1)
     # round_fn = lambda x: torch.cat((torch.clip(relaxed_round(x), 0., 1.), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
-    round_fn = lambda x: torch.cat((relaxed_round(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
+    round_fn = lambda x: torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)# bound integers to avoid training instability
     rounding_node = Node(round_fn, input_keys=['relaxed_integer'], output_keys=['integer'], name='soft_rounding')
 
     policy_flow_node = Node(net_flow,
@@ -146,24 +191,25 @@ if __name__=='__main__':
                                                                 T_supply=T_supply_variable) # Decisions
     
     #%% CONTROL OBJECTIVES
-    chiller_loss = 0.001 * ((system.get_chiller_power_PLR(integer_status=integer_variable, 
+    chiller_loss = 0.01 * ((system.get_chiller_power_PLR(integer_status=integer_variable, 
                                                     Q_rated=Q_delivered_max*unit_coeff,
                                                     mass_flow=flow_variable,
                                                     T_return=T_return_variable,
                                                     T_supply=T_supply_variable) == 0.))
     
-    pump_loss = 0.001 * ((system.get_pump_consumption(mass_flow=flow_variable, 
+    pump_loss = 0.01 * ((system.get_pump_consumption(mass_flow=flow_variable, 
                         integer_status=integer_variable, exponent=exponent) == 0.))
     
-    c = 200. # Switching cost coefficient
+    c = 10. # Switching cost coefficient
     switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
+    # switching_loss = c*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
     # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
     # switching_loss = c*(integer_variable == 0)
 
     # TRACKING
     cooling_loss = 0.01*(cooling_delivered_variable == load_variable[:,:nsteps,:])^2.
 
-    COP_loss = 10. * (system.a*integer_variable + 
+    COP_loss = 10. * (system.a + 
                 system.b * cooling_delivered_variable[:,:,[-1]]/(Q_delivered_max*unit_coeff) + 
                 system.c * torch.pow(cooling_delivered_variable[:,:,[-1]]/(Q_delivered_max*unit_coeff),2)
                 == 6.)
@@ -173,8 +219,8 @@ if __name__=='__main__':
     switching_loss.name = 'switching_loss'; cooling_loss.name = 'cooling_loss'
     
     loss_list = [
-                chiller_loss,  
-                pump_loss, 
+                chiller_loss,
+                pump_loss,
                 # COP_loss,
                 switching_loss, 
                 # cooling_loss 
@@ -189,8 +235,8 @@ if __name__=='__main__':
     flow_lb = 10.*(flow_variable >= flow_min); flow_ub = 10.* (flow_variable <= flow_max)
     T_evap_lb = 10.*(T_evap_variable >= T_evap_min); T_evap_ub = 10.* (T_evap_variable <= T_evap_max)
     
-    relaxed_integer_variable_lb = 5.*(relaxed_integer_variable >= -.49)
-    relaxed_integer_variable_ub = 5.*(relaxed_integer_variable <= 1.49)
+    relaxed_integer_variable_lb = 5.*(relaxed_integer_variable >= 0.)
+    relaxed_integer_variable_ub = 5.*(relaxed_integer_variable <= 1.)
 
     PLR_bound = 200.*(cooling_delivered_variable/(Q_delivered_max*unit_coeff) == 0. or \
                      cooling_delivered_variable/(Q_delivered_max*unit_coeff) >= 0.2) 
@@ -203,8 +249,6 @@ if __name__=='__main__':
     T_evap_lb.name, T_evap_ub.name = 'T_evap_lb', 'T_evap_ub`'
 
     constraints = [
-            # T_out_lb, 
-            # T_out_ub, 
             T_return_lb,
             T_return_ub,
             T_supply_lb,
@@ -229,7 +273,7 @@ if __name__=='__main__':
     T_return_t = T_supply_t.mean(-1, keepdim=True).uniform_(T_supply_max, T_return_max)
     # T_return_t = torch.rand(num_data, 1, 1).uniform_(T_return_min, T_return_max)
 
-    _, loads_t_1d = utils.generate_datacenter_load(number_of_days=4000, sampling_time=Ts, ramp_hours=4, day_baseline=800, night_baseline=300)
+    _, loads_t_1d = utils.generate_datacenter_load(number_of_days=14000, sampling_time=Ts, ramp_hours=4, day_baseline=800, night_baseline=300)
     # loads_t = loads_t_1d.unfold(0,nsteps+1,1)
     # loads_t = loads_t[:num_data,:].unsqueeze(-1)
     loads_t = loads_t_1d[:num_data*(nsteps+1)].reshape(num_data,nsteps+1,1)*unit_coeff
@@ -244,22 +288,24 @@ if __name__=='__main__':
     # instantiate data loaders
     train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, collate_fn=train_data.collate_fn)
     dev_loader = torch.utils.data.DataLoader(dev_data, batch_size=batch_size, collate_fn=dev_data.collate_fn)
-
+    logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
     #%% Optimizer
-    optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.0001, weight_decay=0.0)
+    optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.001, weight_decay=0.0)
     trainer = Trainer(
         problem.to(device),
         train_loader, dev_loader,
         optimizer=optimizer,
-        epochs=2000,
+        epochs=1000,
         train_metric='train_loss',
         dev_metric='dev_loss',
         eval_metric='dev_loss',
         warmup=20,
         patience=500,
         clip=torch.inf, 
-        lr_scheduler=True,
-        device=device
+        lr_scheduler=False,
+        device=device,
+        logger=logger,
+
     )
     best_model = trainer.train()    # start optimization
     trainer.model.load_state_dict(best_model) # load best 
@@ -408,7 +454,7 @@ if __name__=='__main__':
                         Number of violations {n_violations}')
     print('Total cost of operation: ', cost.item())
 
-    plt.savefig('/home/bold914/chiller_staging/plots/ct_chiller_control_MIDPC1.png')
+    plt.savefig('/home/bold914/chiller_staging/prototyping_code/plots/ct_chiller_control_MIDPC1.png')
 
 
 # %%

@@ -1,19 +1,20 @@
 #%%
-import utils
+import utils; from utils import *
 import numpy as np
-from pyomo.environ import *
 import torch
-import utils
-from utils import *
 import matplotlib.pyplot as plt
 
-M = 1
-Ts = 60.0
-nsteps = 10
-# s_length = 300
-torch.manual_seed(utils.seed)
-Ts = 60. # Sampling time in seconds
+from pyomo.environ import *
+from pyomo.dae import ContinuousSet, DerivativeVar, Integral
+
+solver = SolverFactory("gurobi")
+solver.options['FuncNonlinear'] = 1 
+solver.options['NonConvex'] = 2
+
+
+M = 2; nsteps = 10; Ts = 60. # Sampling time in seconds
 n_days = 2
+torch.manual_seed(utils.seed)
 t, load_n = utils.generate_datacenter_load(number_of_days=2, sampling_time=Ts,  # load_test
                                                   night_baseline=300,
                                                   day_baseline=800,
@@ -22,40 +23,19 @@ t, load_n = utils.generate_datacenter_load(number_of_days=2, sampling_time=Ts,  
 load_n = load_n.reshape(1,-1, 1)
 s_length = load_n.size(1)-nsteps
 
-s_length = 1000
+s_length = 300
 
 load=load_n[:,0:s_length+nsteps,:].reshape(-1).cpu().numpy()
 
 #%%
-
-# solver = SolverFactory("ipopt")  # use NLP solver for speed
-
-# solver = SolverFactory('scip', executable='/home/bold914/miniconda3/envs/neuromancer/bin/scip')
-# solver = SolverFactory("bonmin") # if you need binaries
-# solver = SolverFactory("mindtpy") # if you need binaries
-
-# solver.options['warm_start'] = 'yes' 
-# 
-
-# solver = SolverFactory("gurobi_persistent") # if you need binaries
-solver = SolverFactory("gurobi") # if you need binaries
-solver.options['FuncNonlinear'] = 1 
-solver.options['NonConvex'] = 2
-
 # Initial conditions
-T_return = np.full(1, 8.0)
-T_supply = np.full(M, 8.0)
+T_return = np.full(1, 8.0); T_supply = np.full(M, 8.0)
 
 # history lists
-T_return_hist = []; 
-# T_return_hist.append(T_return)
-T_supply_hist = []; 
-# T_supply_hist.append(T_supply.copy())
+T_return_hist = []; T_supply_hist = []
 
 T_out_hist, P_chiller_hist, P_pump_hist, Q_delivered_hist = [], [], [], []
-
 T_evap_hist, flow_hist, integer_hist = [], [], []
-
 solver_termination_hist, solver_time_hist = [], []
 
 for k in range(s_length):
@@ -63,24 +43,24 @@ for k in range(s_length):
     load_forecast = load[k:k+nsteps]
     # Iterator ranges
     m = ConcreteModel()
-    m.T = RangeSet(0,nsteps)
-    m.t = RangeSet(0,nsteps-1)
+    m.t = ContinuousSet(bounds=(0, Ts*nsteps))
     m.i = RangeSet(1,M) # Integers range
-
+  
     ### Variables
     # States
-    m.T_return = Var(m.T, bounds=(T_return_min, T_return_max+10)) # 1 dimensionl
-    m.T_supply = Var(m.T,m.i, bounds=(T_min, T_max)) # i dimensional
+    m.T_return = Var(m.t, bounds=(T_return_min, T_return_max)) # 1 dimensionl
+    m.T_supply = Var(m.t,m.i, bounds=(T_min, T_max)) # i dimensional
+    m.dT_supply = DerivativeVar(m.T_supply, wrt=m.t) # dot T_supply
+    m.dT_return = DerivativeVar(m.T_return, wrt=m.t) # dot T_return
 
     # Decisions
     m.flow = Var(m.t,m.i, bounds=(flow_min, flow_max))
     m.integer = Var(m.t,m.i, within=Binary) # original MINLP
-    # m.integer = Var(m.t,m.i, bounds=(0,1))    # relaxed to continuous
     m.T_evap = Var(m.t, m.i, bounds=(T_evap_min, T_evap_max))
 
-    # Stats
-    m.T_out = Var(m.t, bounds=(T_min, T_max)) # i dimensional
-    m.Q_delivered = Var(m.t, bounds=(0., None)) 
+    # Scores
+    m.Q_delivered = Var(m.t, bounds=(0., Q_delivered_max)) 
+    m.PLR = Var(m.t, m.i, bounds=(0., 1.))
     m.P_chiller = Var(m.t)
     m.P_pump = Var(m.t)
 
@@ -94,24 +74,17 @@ for k in range(s_length):
 
     # Replace all integer * flow with flow_active in constraints:
     def dynamics_supply_fn(m,t,i):
-        return m.T_supply[t+1,i] == m.T_supply[t,i] + Ts/C_i * (-m.flow_active[t,i] * c_p * (m.T_supply[t,i] - m.T_evap[t,i]))
+        # return m.T_supply[t+1,i] == m.T_supply[t,i] + Ts/C_i * (-m.flow_active[t,i] * c_p * (m.T_supply[t,i] - m.T_evap[t,i]))
+        return m.dT_supply[t,i] == 1/C_i * (-m.flow_active[t,i] * c_p * (m.T_supply[t,i] - m.T_evap[t,i]))
     m.dynamics_supply_constr = Constraint(m.t,m.i, rule=dynamics_supply_fn)
 
     def dynamics_return_fn(m,t):
-        return m.T_return[t+1] == m.T_return[t] + Ts/C_r * (load_forecast[t] - sum(m.flow_active[t,i] * c_p * (m.T_return[t] - m.T_supply[t,i]) for i in m.i))
+        return m.dT_return[t] == 1/C_r * (load_forecast[t] - sum(m.flow_active[t,i] * c_p * (m.T_return[t] - m.T_supply[t,i]) for i in m.i))
     m.dynamics_return_constr = Constraint(m.t, rule=dynamics_return_fn)
 
     def Q_delivered_fn(m,t):
         return m.Q_delivered[t] == c_p * sum(m.flow_active[t,i] * (m.T_return[t] - m.T_supply[t,i]) for i in m.i)
     m.Q_delivered_constr = Constraint(m.t, rule=Q_delivered_fn)
-
-    # def T_out_fn(m,t):
-        # numerator = sum(m.flow_active[t,i] * m.T_supply[t,i] for i in m.i)
-        # denominator = sum(m.flow_active[t,i] for i in m.i) + 1e-10
-        # return m.T_out[t] == numerator / denominator
-    # m.T_out_constr = Constraint(m.t, rule=T_out_fn)
-
-
 
     # Setting initial conditions
     m.T_return[0].fix(T_return.item())
@@ -120,19 +93,16 @@ for k in range(s_length):
 
     ### Constraints
 
-    # Chiller power
-    # m.P_chiller_contr = Constraint(m.t, rule=lambda m,t: m.P_chiller[t]==a0+a1*m.Q_delivered[t]+a2*m.Q_delivered[t]**2)
-    m.P_chiller_contr = Constraint(m.t, rule=lambda m,t: m.P_chiller[t]==a+b*(m.Q_delivered[t]/Q_delivered_max)+c*(m.Q_delivered[t]/Q_delivered_max)**2)
-    # Computing
+    # Pump power
     m.P_pump_constr = Constraint(m.t, rule=lambda m,t: m.P_pump[t]==sum(gamma*m.flow_active[t,i]**2 for i in m.i))
+    # PLR
+    m.PLR_constr = Constraint(m.t, m.i, rule=lambda m,t: m.PLR[t] == sum(m.Q_delivered[t,i]/ Q_delivered_max for i in m.i))
+    # Chiller power
+    m.P_chiller_contr = Constraint(m.t, rule=lambda m,t: m.P_chiller[t]==m.Q_delivered[t] / (a+b*(m.PLR[t])+c*(m.PLR[t])**2))
 
     # m.demand = Constraint(m.t, rule=lambda m,t: m.Q_delivered[t] >= load_forecast[t])
 
     coeff = 0.0   # integer penalty
-    # m.obj = Objective(
-    #     expr=sum(m.P_chiller[t] + m.P_pump[t] + (m.Q_delivered[t] - load_forecast[t])**2 + sum(m.integer[t,i]*c for i in m.i) for t in m.t),
-    #     sense=minimize
-    # )
     m.obj = Objective(
         expr=sum(m.P_chiller[t] + m.P_pump[t]  for t in m.t),
         sense=minimize
@@ -148,9 +118,6 @@ for k in range(s_length):
     T_return_solution = np.array([[m.T_return[t].value] for t in m.T])
     T_supply_solution = np.array([[m.T_supply[t, i].value for i in m.i] for t in m.T])
 
-    # T_out_solution = np.array([[m.T_out[t].value] for t in m.t])
-    # After solution is found:
-    # T_out_solution = []
     for t in m.t:
         numerator = sum(m.integer[t,i].value * m.flow[t,i].value * m.T_supply[t,i].value for i in m.i)
         denominator = sum(m.integer[t,i].value * m.flow[t,i].value for i in m.i)

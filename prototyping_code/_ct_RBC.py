@@ -8,8 +8,8 @@ torch.manual_seed(utils.seed)
 # add argparse for all script level arguments
 
 Ts = 60. # Sampling time in seconds
-n_days = 2
-t, load_n = utils.generate_datacenter_load(number_of_days=2, sampling_time=Ts,  # load_test
+n_days = 7
+t, load_n = utils.generate_datacenter_load(number_of_days=n_days, sampling_time=Ts,  # load_test
                                                   night_baseline=300,
                                                   day_baseline=800,
                                                   ramp_hours=4)
@@ -23,7 +23,7 @@ system = ChillerSystem(M=M, Ts=Ts, C_r=C_r, C_i=C_i, a=a, b=b ,c=c , c_p=c_p, ga
 integrator = integrators.RK4(system, h=torch.tensor(Ts))
 
 with torch.no_grad():
-  flow_const = 20.
+  flow_const = 15.
   T_evap_const= T_evap_min
   
   mass_flow = torch.ones(1,s_length,M)*flow_const # Constant mass flow
@@ -90,7 +90,7 @@ with torch.no_grad():
   n_violations = 0
   tolerance = 5 # tolerance for violation [kW]
   for i in range(s_length):
-     if not cooling_in_simulation[0,i,0] + tolerance >= load[0,i,0]:
+     if not cooling_in_simulation[0,i,:].sum(dim=-1) + tolerance >= load[0,i,0]:
       n_violations += 1
 
   fig, axes = plt.subplots(4, 2, figsize=(12, 14))

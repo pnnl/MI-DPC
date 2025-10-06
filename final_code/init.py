@@ -35,6 +35,7 @@ flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
 Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller
 Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
+delta_penalty = 10.
 # SIGNAL AND COP PLOTS
 if __name__ == '__main__':
     import matplotlib.pyplot as plt

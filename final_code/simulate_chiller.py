@@ -19,7 +19,7 @@ def simulate(T_supply_0, T_return_0, load_signal, dynamics_forward, policy, nste
     s_length = load_signal.size(1)-nsteps # Simulation length
     
     for k in range(s_length): # Simulation Loop
-        decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps+1,:]) # Compute decisions
+        decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps,:]) # Compute decisions
        
         relaxed_integer = decisions.get('relaxed_integer')
         inference_time = decisions.get('inference_time')
@@ -68,7 +68,7 @@ if __name__=='__main__':
         policy = MIDPC_policy(
             load_path=f'results/MIDPC/policies/N_{args.nsteps}.pt',
             nsteps=args.nsteps,
-            measure_inference_time = True,
+            measure_inference_time=True,
             )
         
     elif args.policy == 'MIMPC':

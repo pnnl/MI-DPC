@@ -73,7 +73,7 @@ for k in range(s_length):
     m.T = RangeSet(0,nsteps)
     m.t = RangeSet(0,nsteps-1)
     m.i = RangeSet(1,M) # Integers range
-
+#%%
     ### Variables
     # States
     m.T_return = Var(m.T, bounds=(T_return_min, T_return_max)) # 1 dimensionl

@@ -30,13 +30,14 @@ elif exponent == 2:
 T_min, T_max = 8., 12. # Outlet temperature bounds [C]
 T_supply_min, T_supply_max = 8., 12. # Supply temperature bounds [C]
 T_evap_min, T_evap_max = 8., 12. # Evaporation temperature bounds [C]
-T_return_min, T_return_max = 8., 18. # Return temperature bounds [C]
+T_return_min, T_return_max = 8., 40. # Return temperature bounds [C]
 flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
-Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller
+# Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller
+Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
 Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
-delta_penalty = 10.
-# SIGNAL AND COP PLOTS
+delta_penalty = 10. # penalty coefficient for chiller status switching
+
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
 # CHILLER POWER CHARACTERISTICS

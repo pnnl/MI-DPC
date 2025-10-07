@@ -7,6 +7,7 @@ from utils import generate_datacenter_load
 from RBC import RBC_policy
 from utils import customMPL;
 from MIDPC import round_fn, MIDPC_policy
+from MIMPC import MIMPC_policy
 torch.set_default_device('cpu')
 
 def simulate(T_supply_0, T_return_0, load_signal, dynamics_forward, policy, nsteps=10):
@@ -48,9 +49,9 @@ def simulate(T_supply_0, T_return_0, load_signal, dynamics_forward, policy, nste
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIDPC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=100, type=int)
+    parser.add_argument('-nsteps', default=10, type=int)
     parser.add_argument('-n_days', default=2, type=int)
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -58,11 +59,12 @@ if __name__=='__main__':
     # # # Initialize policy
     if args.policy == 'RBC':
         policy = RBC_policy(
-                        PLR_on=0.6, PLR_off=0.2,
-                        n_active_chillers=init.M,
-                        T_evap_const=8., 
-                        mass_flow_const=15.
-                        )
+            PLR_on=0.6, 
+            PLR_off=0.2,
+            n_active_chillers=init.M,
+            T_evap_const=8., 
+            mass_flow_const=15.
+            )
    
     elif args.policy == 'MIDPC':
         policy = MIDPC_policy(
@@ -72,8 +74,13 @@ if __name__=='__main__':
             )
         
     elif args.policy == 'MIMPC':
-        # policy = MPC_policy()
-        pass
+        policy = MIMPC_policy(
+            nsteps=args.nsteps,
+            measure_inference_time=True,
+            continous_time_formulation=False,
+            exponent=init.exponent,
+            verbose=True
+        )
 
     # # # System init
     Ts = 300

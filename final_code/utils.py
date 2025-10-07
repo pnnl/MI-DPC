@@ -120,8 +120,10 @@ signal_seed=303,
         td = t[day_offset]  # hours for this day
 
         # stochastic day baselines & oscillations
-        db = day_baseline * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
-        nb = night_baseline * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
+        db_var = day_baseline() if callable(day_baseline) else day_baseline
+        db = db_var * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
+        nb_var = night_baseline() if callable(night_baseline) else night_baseline
+        nb = nb_var * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
         oda = osc_day_amp * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
         ona = osc_night_amp * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
 
@@ -155,6 +157,21 @@ signal_seed=303,
         load[day_offset] = baseline + trend + oscillations + noise + transition_noise + random_walk
     load = torch.clamp(load, min=0)
     return t, load
+
+# SIGNAL PLOT
+if __name__ == '__main__':
+    import matplotlib.pyplot as plt
+    t, load = generate_datacenter_load(sampling_time=300, number_of_days=7, ramp_hours=2,
+                                       f_day=5, f_night=6, 
+                                       day_baseline=lambda: torch.rand(1).uniform_(300,800), 
+                                    #    day_baseline=lambda: torch.rand(1).normal_(400,20), 
+                                       night_baseline=lambda: torch.rand(1).uniform_(50,350),
+                                       osc_night_amp=20, osc_day_amp=20,
+                                       noise_scale=5)
+    
+    plt.figure(figsize=(10,4)); plt.plot(t, load.numpy(), lw=1)
+    plt.xlabel("Time [hours]"); plt.ylabel("Load [kW]")
+    plt.grid(True, alpha=0.3); plt.show()
 
 
 

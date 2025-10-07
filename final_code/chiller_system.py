@@ -20,7 +20,7 @@ class ChillerSystem(torch.nn.Module):
         self.out_features = self.M + 1 # Number of output features (T) for integrator
         self.exponent = exponent
     # Torch methods
-    def forward_euler(self, integer_status, mass_flow, T_evap, T_return, T_supply, load, Ts=None) -> torch.Tensor: 
+    def forward_euler(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor:  
         """
         Inputs:
             T_return: (batch,1)        1D
@@ -35,13 +35,22 @@ class ChillerSystem(torch.nn.Module):
             T_return_next: (batch,)
             T_supply_next: (batch, M)
         """
+        if T_supply_and_return.ndim == 2:
+            T_supply = T_supply_and_return[:,:self.M]
+            T_return = T_supply_and_return[:,self.M:]
+        elif T_supply_and_return.ndim == 3: 
+            T_supply = T_supply_and_return[:,:,:self.M]
+            T_return = T_supply_and_return[:,:,self.M:]
+
         Ts = self.Ts if Ts is None else Ts
         
         T_supply_next = T_supply + Ts/self.C_i * (-integer_status * mass_flow * self.c_p * (T_supply - T_evap))
         temp_diff = T_return - T_supply
         energy_diff = torch.sum(self.c_p*integer_status*mass_flow*temp_diff, dim=-1, keepdim=True) 
         T_return_next = T_return + Ts/self.C_r * (load - energy_diff)
-        return T_return_next, T_supply_next
+        
+        return torch.cat([T_supply_next, T_return_next], dim=-1)
+        # return T_return_next, T_supply_next
     
     # def forward(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor: 
     def forward(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor: 

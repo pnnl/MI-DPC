@@ -10,7 +10,7 @@ from pyomo.dae import ContinuousSet, DerivativeVar, Integral
 class MIMPC_policy():
     def __init__(self, nsteps, measure_inference_time = True, M=init.M,
                   solver="gurobi", continous_time_formulation=False,
-                  exponent=init.exponent):
+                  exponent=init.exponent, verbose=True):
         self.nsteps = nsteps
         self.measure_inference_time = measure_inference_time
         self.solver = SolverFactory(solver)
@@ -19,6 +19,7 @@ class MIMPC_policy():
         self.continous_time_formulation = continous_time_formulation
         self.M = M
         self.exponent = exponent
+        self.verbose = verbose
 
     def discrete_time_model(self, T_supply, T_return, load, Ts):
         m = ConcreteModel()
@@ -26,17 +27,17 @@ class MIMPC_policy():
         m.t = RangeSet(0,self.nsteps-1)
         m.i = RangeSet(1,self.M) # Integers range
         # # # Variables
-        m.T_return = Var(m.T, bounds=(init.T_return_min, init.T_return_max)) # 1 dimensionl
-        m.T_supply = Var(m.T,m.i, bounds=(init.T_min, init.T_max)) # i dimensional
-        m.flow = Var(m.t,m.i, bounds=(init.flow_min, init.flow_max))
+        m.T_return = Var(m.T, bounds=(init.T_return_min, init.T_return_max), within=NonNegativeReals) # 1 dimensionl
+        m.T_supply = Var(m.T,m.i, bounds=(init.T_min, init.T_max), within=NonNegativeReals) # i dimensional
+        m.flow = Var(m.t,m.i, bounds=(init.flow_min, init.flow_max), within=NonNegativeReals)
         m.integer = Var(m.t,m.i, within=Binary) # original MINLP
-        m.flow_active = Var(m.t, m.i, bounds=(0., init.flow_max))
-        m.T_evap = Var(m.t, m.i, bounds=(init.T_evap_min, init.T_evap_max))
+        m.flow_active = Var(m.t, m.i, bounds=(0., init.flow_max), within=NonNegativeReals)
+        m.T_evap = Var(m.t, m.i, bounds=(init.T_evap_min, init.T_evap_max), within=NonNegativeReals)
 
-        m.T_out = Var(m.t, bounds=(init.T_min, init.T_max)) # i dimensional
-        m.Q_delivered = Var(m.t, bounds=(0., None)) 
-        m.P_chiller = Var(m.t)
-        m.P_pump = Var(m.t)
+        m.T_out = Var(m.t, bounds=(init.T_min, init.T_max), within=NonNegativeReals) # i dimensional
+        m.Q_delivered = Var(m.t, bounds=(0., None), within=NonNegativeReals) 
+        m.P_chiller = Var(m.t, within=NonNegativeReals)
+        m.P_pump = Var(m.t, within=NonNegativeReals)
         
         # # # McCormick
         m.flow_active_ub1 = Constraint(m.t, m.i,
@@ -47,6 +48,8 @@ class MIMPC_policy():
                             rule=lambda m,t,i: m.flow_active[t,i] <= m.flow[t,i] - init.flow_min * (1 - m.integer[t,i]))
         m.flow_active_lb2 = Constraint(m.t, m.i, 
                             rule=lambda m,t,i: m.flow_active[t,i] >= m.flow[t,i] - init.flow_max * (1 - m.integer[t,i]))
+        # New auxiliary variable for squares of flow
+        m.flow_sq = Var(m.t, m.i, bounds=(0, init.flow_max**2), within=NonNegativeReals)
 
         # # # Constraints
         def dynamics_supply_fn(m,t,i):
@@ -64,9 +67,16 @@ class MIMPC_policy():
         m.P_chiller_contr = Constraint(m.t, rule=lambda m,t: m.P_chiller[t]== \
                             init.a+init.b*(m.Q_delivered[t]/init.Q_delivered_max)+init.c*(m.Q_delivered[t]/init.Q_delivered_max)**2)
 
-        m.P_pump_constr = Constraint(m.t, rule=lambda m,t: m.P_pump[t]== \
-                                     sum(init.gamma*m.flow_active[t,i]**3 for i in m.i)) # TODO: PW approximation
+        # m.one_always_active = Constraint(m.t, rule=lambda m,t: sum(m.integer[t,i] for i in m.i) >= 1.)
+
+        if self.exponent == 3:
+            m.P_pump_constr = Constraint(m.t, rule=lambda m,t: m.P_pump[t]== \
+                                     sum(init.gamma * m.flow_active[t, i] * m.flow_sq[t, i] for i in m.i)) # TODO: PW approximation
+        elif self.exponent == 2:
+            m.P_pump_constr = Constraint(m.t, rule=lambda m,t: m.P_pump[t]== \
+                                     sum(init.gamma * m.flow_active[t, i] **2 for i in m.i)) # TODO: PW approximation
         
+        # # # Control objective
         m.obj = Objective(
            expr=sum(m.P_chiller[t] + m.P_pump[t] + sum(m.integer[t,i]*init.delta_penalty for i in m.i) for t in m.t),
             sense=minimize
@@ -76,12 +86,29 @@ class MIMPC_policy():
         m.T_return[0].fix(T_return.item())
         for i in m.i:
             m.T_supply[0,i].fix(T_supply[i-1])
-
+        # # # One chiller always on
+        for t in m.t:
+            m.integer[t,1].fix(1.)
         return m
     
     def continous_time_model(self):
         pass
-    
+
+    def get_variable_values(self, model):
+        # # # States
+        T_supply = torch.tensor([[model.T_supply[t, i].value for i in model.i] for t in model.T])
+        T_return = torch.tensor([[model.T_return[t].value] for t in model.T])
+        # # # Decisions
+        flow = torch.tensor([[model.flow[t, i].value for i in model.i] for t in model.t ])
+        integer = torch.tensor([[model.integer[t, i].value for i in model.i] for t in model.t ])
+        T_evap = torch.tensor([[model.T_evap[t, i].value for i in model.i] for t in model.t])
+        # # # Scores
+        Q_delivered = torch.tensor([[model.Q_delivered[t].value] for t in model.t ])
+        P_chiller = torch.tensor([[model.P_chiller[t].value] for t in model.t])
+        P_pump = torch.tensor([[model.P_pump[t].value] for t in model.t])
+
+        return flow, integer, T_evap # Return decisions
+
     def __call__(self, T_supply=None, T_return=None, load=None, Ts=300.):
         T_supply = T_supply.view(-1).numpy()
         T_return = T_return.view(-1).numpy()
@@ -93,28 +120,35 @@ class MIMPC_policy():
         elif not self.continous_time_formulation:
             model = self.discrete_time_model(T_supply=T_supply, T_return=T_return, load=load, Ts=Ts)
         
+        # self.solver.set_instance(model)
         result = self.solver.solve(model, tee=False, symbolic_solver_labels=True)
-        print(f'Solution time: ', result.solver.time)
-        print(result.solver.termination_condition)
+        
+        if self.verbose:
+            print(f'Solution time: ', result.solver.wall_time)
+            print(result.solver.termination_condition)
+        
+        flow, integer, T_evap = self.get_variable_values(model)
         output = {}
         if self.measure_inference_time:
-            output['inference_time'] = torch.tensor(result.solver.time).view(1,1,1)
-
-
+            output['inference_time'] = torch.tensor(result.solver.wall_time).view(1,1,1)
+        output['termination_condition'] = result.solver.termination_condition
+        output['integer'] = integer[0].view(1,1,-1)
+        output['flow'] = flow[0].view(1,1,-1)
+        output['T_evap'] = T_evap[0].view(1,1,-1)
         return output
 
 if __name__=="__main__":
 
-    nsteps = 2
+    nsteps = 12
     T_supply = torch.tensor([9.0, 9.0])  # supply temperature
     T_return = torch.tensor([10.0])        # return temperature
-    load = torch.tensor([100.0, 120.0])    # heat load
+    load = torch.ones(1,nsteps,1)    # heat load
     
     policy = MIMPC_policy(
         nsteps=nsteps,
-        continous_time_formulation=False
+        continous_time_formulation=False,
+        verbose=False
     )
-    policy.solver.options['NonConvex'] = 2
 
     result = policy(
         T_supply=T_supply,

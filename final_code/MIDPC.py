@@ -22,7 +22,6 @@ class MIDPC_policy():
             self.T_evap_node = self.cl_system.nodes[2]
             self.flow_node = self.cl_system.nodes[3]
             self.measure_inference_time = measure_inference_time
-            print(self.cl_system)
         def __call__(self, T_supply=None, T_return=None, load=None):
                 input_dict = {
                        'T_supply_and_return': torch.cat((T_supply,T_return), dim=-1).reshape(1,-1),

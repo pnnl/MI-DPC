@@ -4,8 +4,8 @@ seed = 209
 Ts = 300.0 # Sampling time [s]
 
 # # # Load signal parameters
-day_baseline = 800
-night_baseline = 300
+night_baseline=lambda: torch.rand(1).uniform_(150,350)
+day_baseline=lambda: torch.rand(1).uniform_(300,900)
 ramp_hours = 4
 
 # SYSTEM PARAMETERS
@@ -34,7 +34,7 @@ T_return_min, T_return_max = 8., 40. # Return temperature bounds [C]
 flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
 # Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller
 Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
-Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
+# Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
 delta_penalty = 10. # penalty coefficient for chiller status switching
 

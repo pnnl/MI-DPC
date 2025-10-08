@@ -35,7 +35,7 @@ class MIMPC_policy():
         m.T_evap = Var(m.t, m.i, bounds=(init.T_evap_min, init.T_evap_max), within=NonNegativeReals)
 
         m.T_out = Var(m.t, bounds=(init.T_min, init.T_max), within=NonNegativeReals) # i dimensional
-        m.Q_delivered = Var(m.t, bounds=(0., None), within=NonNegativeReals) 
+        m.Q_delivered = Var(m.t, bounds=(0., init.Q_delivered_max), within=NonNegativeReals) 
         m.P_chiller = Var(m.t, within=NonNegativeReals)
         m.P_pump = Var(m.t, within=NonNegativeReals)
         

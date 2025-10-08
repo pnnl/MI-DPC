@@ -8,7 +8,9 @@ torch.manual_seed(init.seed)
 # add argparse for all script level arguments
 
 system = ChillerSystem(M=init.M, Ts=init.Ts, C_r=init.C_r, C_i=init.C_i, 
-                       a=init.a, b=init.b ,c=init.c , c_p=init.c_p, gamma=init.gamma)
+                       a=init.a, b=init.b ,c=init.c , c_p=init.c_p, 
+                       gamma=init.gamma, Q_rated=init.Q_delivered_max)
+
 integrator = integrators.RK4(system, h=torch.tensor(init.Ts))
 
 

@@ -9,24 +9,24 @@ from neuromancer.dataset import DictDataset
 from neuromancer.dynamics import integrators
 from neuromancer.trainer import Trainer
 from neuromancer.loggers import BasicLogger
+from argparse import ArgumentParser
 import time
-torch.manual_seed(202)
 
 class MIDPC_policy():
         def __init__(self, nsteps, load_path, measure_inference_time = False):
-            self.nsteps = nsteps
-            self.load_path = load_path
-            self.cl_system = torch.load(load_path, weights_only=False, map_location=torch.device('cpu'))
-            self.integer_relaxed_node = self.cl_system.nodes[0]
-            self.integer_node = self.cl_system.nodes[1]
-            self.T_evap_node = self.cl_system.nodes[2]
-            self.flow_node = self.cl_system.nodes[3]
-            self.measure_inference_time = measure_inference_time
+                self.nsteps = nsteps
+                self.load_path = load_path
+                self.cl_system = torch.load(load_path, weights_only=False, map_location=torch.device('cpu'))
+                self.integer_relaxed_node = self.cl_system.nodes[0]
+                self.integer_node = self.cl_system.nodes[1]
+                self.T_evap_node = self.cl_system.nodes[2]
+                self.flow_node = self.cl_system.nodes[3]
+                self.measure_inference_time = measure_inference_time
         def __call__(self, T_supply=None, T_return=None, load=None):
                 input_dict = {
-                       'T_supply_and_return': torch.cat((T_supply,T_return), dim=-1).reshape(1,-1),
-                       'load': load.reshape(1,-1)
-                              }
+                        'T_supply_and_return': torch.cat((T_supply,T_return), dim=-1).reshape(1,-1),
+                        'load': load.reshape(1,-1)
+                                }
                 
                 with torch.no_grad():
                         if not self.measure_inference_time:
@@ -60,23 +60,28 @@ def relaxed_binary(x, slope=5.0, threshold=0.5):
 def round_fn(x):
         return torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
 
-
-
 if __name__=='__main__':
+    parser = ArgumentParser()
+    parser.add_argument('-nsteps', default=100, type=int)
+    parser.add_argument('-Ts', default=300, type=int)
+    args, unknown = parser.parse_known_args()
+    nsteps = args.nsteps
+    Ts = args.Ts
+
+    torch.manual_seed(202)
     layer_norm = False
     affine_norm = False
     spectral_norm = False
     # exponent = 2
     load_min = 0
     load_max = 1000
-    nsteps = 100
-    Ts = init.Ts
     mins = [init.T_supply_min] * init.M + [init.T_return_min] * 1 + [load_min] * (nsteps) 
     maxs = [init.T_supply_max] * init.M + [init.T_return_max] * 1 + [load_max] * (nsteps) 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     torch.set_default_device(device=device)
     system = ChillerSystem(M=init.M, Ts=Ts, C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
-                            a=init.a, b=init.b, c=init.c, gamma=init.gamma, exponent=init.exponent)
+                            a=init.a, b=init.b, c=init.c, gamma=init.gamma, 
+                            exponent=init.exponent, Q_rated=init.Q_delivered_max)
     integrator = integrators.RK4(system, h=torch.tensor(Ts))
 
     net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[120, 120, 120, 120],
@@ -155,7 +160,6 @@ if __name__=='__main__':
     
     #%% CONTROL OBJECTIVES
     chiller_loss = 0.01 * ((system.get_chiller_power_PLR(integer_status=integer_variable, 
-                                                    Q_rated=init.Q_delivered_max,
                                                     mass_flow=flow_variable,
                                                     T_return=T_return_variable,
                                                     T_supply=T_supply_variable) == 0.))

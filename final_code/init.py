@@ -11,10 +11,13 @@ ramp_hours = 4
 # SYSTEM PARAMETERS
 M = 2 # Number of chillers
 c_p = 4.184 # Specific heat of water [kJ/kgC]
-fluid_per_chiller = 2000 # kg of water per chiller / ~liters
+fluid_per_chiller = 3500 # kg of water per chiller / ~liters
 C_i = c_p * fluid_per_chiller # Thermal capacitance of chiller [kJ/C] 
-fluid_in_system = 6000 # Amount of fluid in the whole system [kg] / ~[liter]
+fluid_in_system = 7000 # Amount of fluid in the whole system [kg] / ~[liter]
 C_r = fluid_in_system*c_p # Thermal capacitance of the system [kJ/C]
+
+eta_supply=0.7 # Heat transition efficiency coefficients (chiller)
+eta_return=0.75 # Heat transition efficiency coefficients (cooling end)
 
 # Chiller power curve coefficients with respect to PLR
 a = 1.0 # kW

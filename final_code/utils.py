@@ -218,7 +218,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     axes[5].set_ylabel(f"Pump [kW]")
 
     axes[6].plot(time, data['mass_flow'][0,:,:], label=[f'Chiller{i+1}' for i in rng])
-    axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k:'); axes[6].plot(torch.ones(s_length)*init.flow_max,'k:', label='bounds')
+    axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k:'); axes[6].plot(time, torch.ones(s_length)*init.flow_max,'k:', label='bounds')
     axes[6].set_xlabel("Timestep")
     axes[6].set_ylabel("Mass flowrates [kg/s]")
     axes[6].legend(); axes[6].grid(True)

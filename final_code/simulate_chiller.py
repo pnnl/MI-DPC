@@ -90,7 +90,7 @@ if __name__=='__main__':
             PLR_off=0.2,
             n_active_chillers=init.M,
             T_evap_const=9., 
-            mass_flow_const=15.
+            mass_flow_const=10.
             )
    
     elif args.policy == 'MIDPC':
@@ -115,8 +115,8 @@ if __name__=='__main__':
                                     C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
                                     gamma=init.gamma, exponent=init.exponent, M=init.M, 
                                     Ts=Ts, Q_rated=init.Q_delivered_max,
-                                    eta_supply=0.65,
-                                    eta_return=0.75
+                                    eta_supply=init.eta_supply,
+                                    eta_return=init.eta_return
                                     )
     
     integrator = integrators.RK4(chiller_system, h=torch.tensor(Ts))
@@ -140,8 +140,8 @@ if __name__=='__main__':
                         T_return_0=T_return_0, # IC
                         load_signal=load_test, # Disturbance
                         # dynamics_forward=integrator, # Dynamics model [integrator or chiller_system.forward]
-                        # dynamics_forward=chiller_system.exact_discretization,
-                        dynamics_forward=chiller_system.forward_euler,
+                        dynamics_forward=chiller_system.exact_discretization,
+                        # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
                         verbose=False, # Print current timestep
@@ -152,4 +152,4 @@ if __name__=='__main__':
     torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}.pt')
     
     if args.plotting:
-        plot_chiller_data(outputs, Ts=Ts, save_path=f'plots/{args.policy}/data_N{args.nsteps}.pdf')
+        plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}.pdf')

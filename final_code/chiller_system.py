@@ -47,7 +47,7 @@ class ChillerSystem(torch.nn.Module):
 
         Ts = self.Ts if Ts is None else Ts
         
-        T_supply_next = T_supply + Ts/self.C_i * self.eta_supply * (-integer_status * mass_flow * self.c_p * (T_supply - T_evap))
+        T_supply_next = T_supply + Ts/self.C_i * self.eta_supply * torch.clip((-integer_status * mass_flow * self.c_p * (T_supply - T_evap)), min=0., max=self.Q_rated)
         temp_diff = T_return - T_supply
         energy_diff = torch.sum(self.c_p*integer_status*mass_flow*temp_diff, dim=-1, keepdim=True) 
         T_return_next = T_return + Ts/self.C_r * (load - energy_diff * self.eta_return)

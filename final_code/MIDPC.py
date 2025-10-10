@@ -61,12 +61,12 @@ def round_fn(x):
         return torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
 
 if __name__=='__main__':
-    for nsteps in [10,20,30,40,50,60,70,80]:
+#     for nsteps in [10,20,30,40,50,60,70,80]:
         parser = ArgumentParser()
         parser.add_argument('-nsteps', default=100, type=int)
         parser.add_argument('-Ts', default=300, type=int)
         args, unknown = parser.parse_known_args()
-        #     nsteps = args.nsteps
+        nsteps = args.nsteps
         Ts = args.Ts
 
         torch.manual_seed(202)
@@ -187,7 +187,7 @@ if __name__=='__main__':
         T_supply_lb = 10.*(T_supply_and_return_variable[:,:,:init.M] >= init.T_supply_min) 
         T_supply_ub = 10.*(T_supply_and_return_variable[:,:,:init.M] <= init.T_supply_max)
         
-        cooling_bound = 0.1* (cooling_delivered_variable[:,:nsteps,:] >= load_variable[:,:nsteps,:]) # Cooling constr
+        cooling_bound = 0.01* (cooling_delivered_variable[:,:nsteps,:] >= load_variable[:,:nsteps,:]) # Cooling constr
         cooling_bound.name='cooling_bound'
 
         flow_lb = 10.*(flow_variable >= init.flow_min); flow_ub = 10.* (flow_variable <= init.flow_max) # Decisions
@@ -208,7 +208,7 @@ if __name__=='__main__':
                 flow_lb, flow_ub,
                 T_evap_lb, T_evap_ub,
                 relaxed_integer_variable_lb, relaxed_integer_variable_ub,
-                # cooling_bound,
+                cooling_bound,
                 ]
         
         # PROBLEM DEFINITION
@@ -219,9 +219,13 @@ if __name__=='__main__':
         T_supply_t = torch.rand(num_data, 1, init.M).uniform_(init.T_supply_min, init.T_supply_max)
         T_return_t = T_supply_t.mean(-1, keepdim=True).uniform_(init.T_supply_max, init.T_return_max)
 
-        _, loads_t_1d = utils.generate_datacenter_load(number_of_days=14000, sampling_time=Ts, 
-                                ramp_hours=init.ramp_hours, day_baseline=init.day_baseline, 
-                                night_baseline=init.night_baseline)
+        _, loads_t_1d = utils.generate_datacenter_load(
+                                                        number_of_days=14000, 
+                                                        sampling_time=Ts, 
+                                                        ramp_hours=init.ramp_hours,
+                                                        day_baseline=init.day_baseline, 
+                                                        night_baseline=init.night_baseline
+                                                        )
         
         # loads_t = loads_t_1d.unfold(0,nsteps+1,1)
         # loads_t = loads_t[:num_data,:].unsqueeze(-1)
@@ -239,6 +243,7 @@ if __name__=='__main__':
         dev_loader = torch.utils.data.DataLoader(dev_data, batch_size=batch_size, collate_fn=dev_data.collate_fn)
         # logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
         #%% Optimizer
+        print(f'Training MIDPC policy for N={nsteps} at Ts={Ts}')
         optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.001, weight_decay=0.0)
         trainer = Trainer(
                 problem.to(device),
@@ -255,8 +260,11 @@ if __name__=='__main__':
                 device=device,
                 # logger=logger,
         )
-
+        start_time = time.time()
         best_model = trainer.train()    # start optimization
         trainer.model.load_state_dict(best_model) # load best 
-        torch.save(cl_system, f'results/MIDPC/policies/N_{nsteps}.pt')
-        
+        training_time = time.time() - start_time
+        training_data = {'eltime': training_time, 'n_epochs': trainer.current_epoch}
+        torch.save(cl_system, f'results/MIDPC/policies/N_{nsteps}_Ts_{Ts}.pt')
+        torch.save(training_data, f'results/MIDPC/policies/training_data_N_{nsteps}_Ts_{Ts}.pt')
+# %%

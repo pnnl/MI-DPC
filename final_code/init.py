@@ -39,7 +39,7 @@ flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
 Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
 # Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
-delta_penalty = 10. # penalty coefficient for chiller status switching
+delta_penalty = 100. # penalty coefficient for chiller status switching
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt

@@ -1,0 +1,29 @@
+Running with Ts=60 and nsteps=10
+Finished run with nsteps=10 at Thu Oct  9 08:30:59 PM CEST 2025
+Running with Ts=60 and nsteps=20
+Finished run with nsteps=20 at Thu Oct  9 08:31:00 PM CEST 2025
+Running with Ts=60 and nsteps=10
+Finished run with nsteps=10 at Thu Oct  9 08:33:49 PM CEST 2025
+Running with Ts=60 and nsteps=20
+Finished run with nsteps=20 at Thu Oct  9 08:33:50 PM CEST 2025
+Running with Ts=60 and nsteps=10
+Finished run with nsteps=10 at Thu Oct  9 09:55:22 PM CEST 2025
+Running with Ts=60 and nsteps=20
+Finished run with nsteps=20 at Thu Oct  9 10:02:53 PM CEST 2025
+Running with Ts=60 and nsteps=30
+Finished run with nsteps=30 at Thu Oct  9 10:12:35 PM CEST 2025
+Running with Ts=60 and nsteps=40
+Terminated
+Finished run with nsteps=40 at Thu Oct  9 10:16:19 PM CEST 2025
+Running with Ts=60 and nsteps=50
+Terminated
+Finished run with nsteps=50 at Thu Oct  9 10:16:29 PM CEST 2025
+Running with Ts=60 and nsteps=60
+Terminated
+Finished run with nsteps=60 at Thu Oct  9 10:16:42 PM CEST 2025
+Running with Ts=60 and nsteps=70
+Terminated
+Finished run with nsteps=70 at Thu Oct  9 10:16:49 PM CEST 2025
+Running with Ts=60 and nsteps=80
+Terminated
+Finished run with nsteps=80 at Thu Oct  9 10:16:57 PM CEST 2025

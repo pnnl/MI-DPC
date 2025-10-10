@@ -237,11 +237,13 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     # label=[f'Chiller{i+1}' for i in rng]
     )
     axes[8].set_ylabel("PLR [-]"); axes[8].set_xlabel("Timestep")
-    axes[8].legend(); axes[8].grid(True)
+    # axes[8].legend()
+    axes[8].grid(True)
     
     axes[9].plot(time, COP[0,:,:], label=[f'Chiller{i+1}' for i in rng])
     axes[9].set_ylabel("COP [-]"); axes[9].set_xlabel("Timestep")
-    axes[9].legend(); axes[9].grid(True)
+    axes[9].legend()
+    axes[9].grid(True)
 
     n_violations = 0; tolerance = 2 # [kW]
     for i in range(s_length):

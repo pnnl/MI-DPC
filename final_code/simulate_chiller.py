@@ -20,7 +20,7 @@ def simulate(
     [], [], [], [], [], [], []      
  
     T_supply, T_return = T_supply_0, T_return_0 # Initial conditions
-    T_supply_hist.append(T_supply_0); T_return_hist.append(T_return_0) # Save initial condition``
+    T_supply_hist.append(T_supply_0); T_return_hist.append(T_return_0) # Save initial condition
     s_length = int((n_days*24*60*60)/(Ts)) # Simulation length
     
     for k in range(s_length): # Simulation Loop
@@ -74,10 +74,10 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIMPC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=100, type=int)
-    parser.add_argument('-Ts', default=300, type=int)
+    parser.add_argument('-nsteps', default=2, type=int)
+    parser.add_argument('-Ts', default=180, type=int)
     parser.add_argument('-n_days', default=1, type=int)
     parser.add_argument('-plotting', default=True, type=bool)
     # args = parser.parse_args()
@@ -95,7 +95,7 @@ if __name__=='__main__':
    
     elif args.policy == 'MIDPC':
         policy = MIDPC_policy(
-            load_path=f'results/MIDPC/policies/N_{args.nsteps}.pt',
+            load_path=f'results/MIDPC/policies/N_{args.nsteps}_Ts_{args.Ts}.pt',
             nsteps=args.nsteps,
             measure_inference_time=True,
             )
@@ -104,8 +104,9 @@ if __name__=='__main__':
         policy = MIMPC_policy(
             nsteps=args.nsteps,
             measure_inference_time=True,
-            continous_time_formulation=False,
+            ocp_formulation=0,
             exponent=init.exponent,
+            solver='gurobi',
             verbose=True
         )
 
@@ -144,12 +145,12 @@ if __name__=='__main__':
                         # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
-                        verbose=False, # Print current timestep
+                        verbose=True, # Print current timestep
                         system=chiller_system, # For computing score variables
                         n_days=args.n_days
                        ) # Returns dictionary
     # # # Save outputs for analysis
-    torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}.pt')
+    torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}.pt')
     
     if args.plotting:
-        plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}.pdf')
+        plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}.pdf')

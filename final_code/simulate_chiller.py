@@ -27,12 +27,11 @@ def simulate(
         print("Timestep: ", k) if verbose else None
         decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps,:]) # Compute decisions
         # # # Read data
-        relaxed_integer = decisions.get('relaxed_integer')
-        inference_time = decisions.get('inference_time')
+        relaxed_integer, inference_time = decisions.get('relaxed_integer'), decisions.get('inference_time')
         integer, mass_flow, T_evap = decisions['integer'], decisions['flow'], decisions['T_evap']
         # # # Dynamics
         x = dynamics_forward(torch.cat((T_supply,T_return), dim=-1),
-                            integer, mass_flow, T_evap, load_signal[:,[k],:]) # Forward dynamics
+                            integer, mass_flow, T_evap, system.apply_load_filter(load_signal[:,[k],:])) # Forward dynamics
         # # # Decouple
         T_supply = x[:,:,:init.M]
         T_return = x[:,:,[-1]] # Last state is T_return
@@ -74,7 +73,7 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIMPC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
     parser.add_argument('-nsteps', default=2, type=int)
     parser.add_argument('-Ts', default=180, type=int)
@@ -117,7 +116,10 @@ if __name__=='__main__':
                                     gamma=init.gamma, exponent=init.exponent, M=init.M, 
                                     Ts=Ts, Q_rated=init.Q_delivered_max,
                                     eta_supply=init.eta_supply,
-                                    eta_return=init.eta_return
+                                    eta_return=1.,
+                                    h_filter=[0.1]*10,
+                                    # h_filter=[1.]
+
                                     )
     
     integrator = integrators.RK4(chiller_system, h=torch.tensor(Ts))
@@ -140,8 +142,8 @@ if __name__=='__main__':
                         T_supply_0=T_supply_0, # IC
                         T_return_0=T_return_0, # IC
                         load_signal=load_test, # Disturbance
-                        # dynamics_forward=integrator, # Dynamics model [integrator or chiller_system.forward]
-                        dynamics_forward=chiller_system.exact_discretization,
+                        dynamics_forward=integrator, # Dynamics model [integrator or chiller_system.forward]
+                        # dynamics_forward=chiller_system.exact_discretization,
                         # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]

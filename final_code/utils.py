@@ -129,7 +129,7 @@ signal_seed=303,
         ona = osc_night_amp * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
 
         # day/night factor
-        day_factor = smooth_transition(td % 24, 8 - ramp_hours, 8) \
+        day_factor = smooth_transition(td % 24, 12 - ramp_hours, 12) \
                    * (1 - smooth_transition(td % 24, 20, 20 + ramp_hours))
         baseline = nb + (db - nb) * day_factor
 
@@ -265,10 +265,10 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
 # SIGNAL PLOT
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    t, load = generate_datacenter_load(sampling_time=300, number_of_days=7, ramp_hours=2,
+    t, load = generate_datacenter_load(sampling_time=300, number_of_days=7, ramp_hours=init.ramp_hours,
                                        f_day=5, f_night=6, 
-                                       day_baseline=lambda: torch.rand(1).uniform_(300,900), 
-                                       night_baseline=lambda: torch.rand(1).uniform_(50,350),
+                                       day_baseline=init.day_baseline, 
+                                       night_baseline=init.night_baseline,
                                        osc_night_amp=20, osc_day_amp=20,
                                        noise_scale=5)
     

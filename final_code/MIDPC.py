@@ -57,6 +57,7 @@ def relaxed_binary(x, slope=5.0, threshold=0.5):
         logits = slope * (x - threshold)
         sig = torch.sigmoid(logits)
         return (x > threshold).float() + (sig - sig.detach())
+
 def round_fn(x):
         return torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
 
@@ -223,8 +224,11 @@ if __name__=='__main__':
                                                         number_of_days=14000, 
                                                         sampling_time=Ts, 
                                                         ramp_hours=init.ramp_hours,
+                                                        f_day=5, f_night=6, 
                                                         day_baseline=init.day_baseline, 
-                                                        night_baseline=init.night_baseline
+                                                        night_baseline=init.night_baseline,
+                                                        osc_night_amp=20, osc_day_amp=20,
+                                                        noise_scale=5
                                                         )
         
         # loads_t = loads_t_1d.unfold(0,nsteps+1,1)

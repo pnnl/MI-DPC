@@ -4,7 +4,6 @@ from chiller_system import ChillerSystem
 from neuromancer.dynamics import integrators
 import matplotlib.pyplot as plt
 torch.manual_seed(init.seed)
-#%%
 # add argparse for all script level arguments
 
 system = ChillerSystem(M=init.M, Ts=init.Ts, C_r=init.C_r, C_i=init.C_i, 
@@ -39,8 +38,7 @@ class RBC_policy():
     elif PLR < self.PLR_off:
       self.n_active_chillers -= 1
     
-    if self.n_active_chillers == 0:
-      self.n_active_chillers = 1
+    self.n_active_chillers = max(1, min(self.n_active_chillers, init.M)) # at least one on
     
     output={'integer': integer, 'flow': self.mass_flow, 'T_evap': self.T_evap}
     return output

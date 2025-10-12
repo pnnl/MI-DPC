@@ -61,19 +61,19 @@ class MIMPC_policy():
         m.COP = Var(m.t, m.i, bounds=(P_min, P_max))
 
         def Q_lb1_rule(m, t, i):
-            return m.Q_delivered[t,i] * m.flow_active[t,i] >= COP_min * m.P_chiller[t,i]  + P_min * m.COP[t,i] - COP_min * P_min
+            return m.Q_delivered[t,i] >= COP_min * m.P_chiller[t,i]  + P_min * m.COP[t,i] - COP_min * P_min
         m.Q_lb1 = Constraint(m.t, m.i, rule=Q_lb1_rule)
 
         def Q_lb2_rule(m, t, i):
-            return m.Q_delivered[t,i] * m.flow_active[t,i] >= COP_max * m.P_chiller[t,i]  + P_max * m.COP[t,i] - COP_max * P_max
+            return m.Q_delivered[t,i] >= COP_max * m.P_chiller[t,i]  + P_max * m.COP[t,i] - COP_max * P_max
         m.Q_lb2 = Constraint(m.t, m.i, rule=Q_lb2_rule)
 
         def Q_ub1_rule(m, t, i):
-            return m.Q_delivered[t,i] * m.flow_active[t,i] <= COP_min * m.P_chiller[t,i]  + P_max * m.COP[t,i] - COP_min * P_max
+            return m.Q_delivered[t,i] <= COP_min * m.P_chiller[t,i]  + P_max * m.COP[t,i] - COP_min * P_max
         m.Q_ub1 = Constraint(m.t, m.i, rule=Q_ub1_rule)
 
         def Q_ub2_rule(m, t, i):
-            return m.Q_delivered[t,i] * m.flow_active[t,i] <= COP_max * m.P_chiller[t,i]  + P_min * m.COP[t,i] - COP_max * P_min
+            return m.Q_delivered[t,i] <= COP_max * m.P_chiller[t,i]  + P_min * m.COP[t,i] - COP_max * P_min
         m.Q_ub2 = Constraint(m.t, m.i, rule=Q_ub2_rule)
 
        

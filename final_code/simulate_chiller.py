@@ -77,7 +77,7 @@ if __name__=='__main__':
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
     parser.add_argument('-nsteps', default=30, type=int)
     parser.add_argument('-Ts', default=180, type=int)
-    parser.add_argument('-n_days', default=4, type=int)
+    parser.add_argument('-n_days', default=7, type=int)
     parser.add_argument('-plotting', default=True, type=bool)
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -86,10 +86,10 @@ if __name__=='__main__':
     if args.policy == 'RBC':
         policy = RBC_policy(
             PLR_on=0.6, 
-            PLR_off=0.2,
+            PLR_off=0.15,
             n_active_chillers=init.M,
             T_evap_const=9., 
-            mass_flow_const=10.
+            mass_flow_const=12.
             )
    
     elif args.policy == 'MIDPC':
@@ -152,7 +152,7 @@ if __name__=='__main__':
                         # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
-                        verbose=True, # Print current timestep
+                        verbose=False, # Print current timestep
                         system=chiller_system, # For computing score variables
                         n_days=args.n_days
                        ) # Returns dictionary
@@ -161,3 +161,12 @@ if __name__=='__main__':
     
     if args.plotting:
         plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}.pdf')
+# if __name__ == '__main__':
+#     import matplotlib.pyplot as plt
+#     plt.show()
+#     PLR = outputs['Q_delivered'][0,:,:].sum(-1,keepdim=True)/ \
+#              (init.Q_delivered_max*outputs['chiller_status'][0,:,:].sum(-1,keepdim=True))
+#     plt.plot(outputs['Q_delivered'][0,:,:].sum(-1,keepdim=True)/
+#              (init.Q_delivered_max*outputs['chiller_status'][0,:,:].sum(-1,keepdim=True)))
+#     plt.plot(outputs['chiller_status'][0,:,:])
+#     print(PLR[1400:1600])

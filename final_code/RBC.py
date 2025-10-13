@@ -30,12 +30,12 @@ class RBC_policy():
     del load
     integer = torch.zeros(1,1,init.M) # initialize
     integer[:,:,:self.n_active_chillers] = 1. # overwrite number of active integer
-    PLR = system.get_cooling_delivered(integer, self.mass_flow,
-                                        T_return, T_supply) \
-            /(init.Q_delivered_max*integer.sum().item())
+    PLR = system.get_cooling_delivered_per_chiller(integer, self.mass_flow,
+                                        T_return, T_supply).sum(-1, keepdim=True) \
+            /(init.Q_delivered_max*self.n_active_chillers)
     if PLR > self.PLR_on:
       self.n_active_chillers += 1
-    elif PLR < self.PLR_off:
+    if PLR < self.PLR_off:
       self.n_active_chillers -= 1
     
     self.n_active_chillers = max(1, min(self.n_active_chillers, init.M)) # at least one on

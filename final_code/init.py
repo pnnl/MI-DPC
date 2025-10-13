@@ -5,9 +5,10 @@ Ts = 300.0 # Sampling time [s]
 
 # # # Load signal parameters
 night_baseline=lambda: torch.rand(1).uniform_(150,350)
-day_baseline=lambda: torch.rand(1).uniform_(300,1000)
+day_baseline=lambda: torch.rand(1).uniform_(300,1500)
 ramp_hours = 4
-
+tolerance = 5 # tolerance for cooling bound [kW]
+chiller_on_cost = 10.
 # SYSTEM PARAMETERS
 M = 2 # Number of chillers
 c_p = 4.184 # Specific heat of water [kJ/kgC]
@@ -27,7 +28,7 @@ b = 19.33 #kW
 c = -18.33 #kW
 exponent = 3 # Pump power curve exponent
 if exponent == 3:
-    gamma = 8.625*1e-4  #8 Pump power coefficient [kWs^3/kg^3]
+    gamma = 9.625*1e-4  #8 Pump power coefficient [kWs^3/kg^3]
 elif exponent == 2:
     gamma = 1.395*1e-2 # Pump power coefficient [kWs^2/kg^2]
 

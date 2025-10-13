@@ -1,11 +1,14 @@
 #%%
 import torch
 import numpy as np
+import init
 
 class ChillerSystem(torch.nn.Module):
     def __init__(self, M, Ts, C_r, C_i, c_p, a, b, c , gamma, 
-                    exponent=3, Q_rated=1000., eta_return=1., eta_supply=1.,
-                    h_filter=[0.75,0.15,0.1,0.05], power_on_cost=10.):
+                    exponent=init.exponent, Q_rated=init.Q_delivered_max, 
+                    eta_return=init.eta_return, eta_supply=init.eta_supply,
+                    h_filter=init.load_filter, chiller_on_cost=init.chiller_on_cost,
+                    ):
 
         super(ChillerSystem, self).__init__()
         self.M = M  # number of chillers
@@ -19,7 +22,7 @@ class ChillerSystem(torch.nn.Module):
         self.b = b
         self.c = c
         self.gamma = gamma
-        self.power_on_cost = power_on_cost
+        self.chiller_on_cost = chiller_on_cost
         self.in_features = 1 # Number of input features for integrator
         self.out_features = self.M + 1 # Number of output features (T) for integrator
         self.exponent = exponent
@@ -244,19 +247,19 @@ class ChillerSystem(torch.nn.Module):
         COP = torch.relu(COP)
         power = cooling / (COP)
         power = torch.clip(power, min=0., max=self.Q_rated) # gives stable training
-        return power + integer_status*self.power_on_cost
+        return power + integer_status*self.chiller_on_cost
     
     def get_pump_consumption(self, integer_status, mass_flow) -> torch.Tensor:
         power = self.gamma * torch.pow(mass_flow, self.exponent)
-        total_power = integer_status * power
+        total_power = integer_status * (power)
         # total_power = self.gamma* torch.sum(integer_status, dim=-1, keepdim=True) * torch.pow(mass_flow, exponent)
         return total_power
 
     def get_cooling_delivered(self, integer_status, mass_flow, T_return, T_supply) -> torch.Tensor:
-        temp_diff = T_return - T_supply
-        cooling_power = torch.clip(self.c_p*integer_status*mass_flow*temp_diff, min=0., max=self.Q_rated)
+        cooling_power = self.get_cooling_delivered_per_chiller(integer_status=integer_status,mass_flow=mass_flow,
+                                                               T_return=T_return, T_supply=T_supply)
         cooling_power_total =  torch.sum(cooling_power, dim=-1, keepdim=True) 
-        return cooling_power_total*self.eta_return
+        return cooling_power_total
     
     def get_cooling_delivered_per_chiller(self, integer_status, mass_flow, T_return, T_supply) -> torch.Tensor:
         # temp_diff = T_return - T_supply

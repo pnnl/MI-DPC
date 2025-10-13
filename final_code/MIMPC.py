@@ -21,7 +21,7 @@ class MIMPC_policy():
         self.M = M
         self.exponent = exponent
         self.verbose = verbose
-
+    # # # FORWARD EULER DISCRETIZATION
     def discrete_time_model(self, T_supply, T_return, load, Ts):
         m = ConcreteModel()
         m.T = RangeSet(0,self.nsteps)
@@ -107,9 +107,9 @@ class MIMPC_policy():
             return m.COP[t,i] == init.a*m.integer[t,i]+init.b*(m.Q_delivered[t,i]/(init.Q_delivered_max)) + init.c*(m.Q_delivered[t,i]/init.Q_delivered_max)**2
         m.COP_constr = Constraint(m.t, m.i, rule=COP_fn)
 
-        # def P_chiller_fn(m,t,i):
-        #     return m.P_chiller[t,i] == m.Q_delivered[t,i]/m.COP[t,i]
-        # m.P_chiller_constr = Constraint(m.t, m.i, rule=P_chiller_fn)
+        def P_chiller_fn(m,t,i):
+            return m.P_chiller[t,i] == m.Q_delivered[t,i]/m.COP[t,i]
+        m.P_chiller_constr = Constraint(m.t, m.i, rule=P_chiller_fn)
 
 
         # m.P_chiller_contr = Constraint(m.t, rule=lambda m,t: m.P_chiller[t]== \
@@ -183,7 +183,7 @@ class MIMPC_policy():
         m.flow_active_lb2 = Constraint(m.t, m.i, 
                             rule=lambda m,t,i: m.flow_active[t,i] >= m.flow[t,i] - init.flow_max * (1 - m.integer[t,i]))
         # New auxiliary variable for squares of flow
-        m.flow_sq = Var(m.t, m.i, bounds=(0, init.flow_max**2), within=NonNegativeReals)
+        m.flow_sq = Var(m.t, m.i, bounds=(0, init.flow_max), within=NonNegativeReals)
 
         # # # Constraints
         def dynamics_supply_fn(m,t,i):

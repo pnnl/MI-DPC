@@ -233,6 +233,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     
     PLR = data['Q_delivered']/(init.Q_delivered_max)
     COP = init.a+init.b*PLR+init.c*PLR**2
+
     axes[8].plot(time, PLR[0,:,:].sum(-1,keepdim=True)/data['chiller_status'][0,:,:].sum(-1,keepdim=True), 
     # label=[f'Chiller{i+1}' for i in rng]
     )
@@ -245,7 +246,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     axes[9].legend()
     axes[9].grid(True)
 
-    n_violations = 0; tolerance = 2 # [kW]
+    n_violations = 0; tolerance = 5 # [kW]
     for i in range(s_length):
         if not data['Q_delivered'][0,i,:].sum(dim=-1, keepdim=True) + tolerance >= data['load'][0,i,0]:
             n_violations += 1

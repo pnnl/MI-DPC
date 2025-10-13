@@ -17,10 +17,14 @@ class MIDPC_policy():
                 self.nsteps = nsteps
                 self.load_path = load_path
                 self.cl_system = torch.load(load_path, weights_only=False, map_location=torch.device('cpu'))
+                self.cl_system.eval()
                 self.integer_relaxed_node = self.cl_system.nodes[0]
                 self.integer_node = self.cl_system.nodes[1]
                 self.T_evap_node = self.cl_system.nodes[2]
                 self.flow_node = self.cl_system.nodes[3]
+                self.integer_relaxed_node.callable.clipping = True
+                self.T_evap_node.callable.clipping = True
+                self.flow_node.callable.clipping = True
                 self.measure_inference_time = measure_inference_time
         def __call__(self, T_supply=None, T_return=None, load=None):
                 input_dict = {
@@ -53,13 +57,22 @@ class MIDPC_policy():
                 output['T_evap'] = T_evap['T_evap'].unsqueeze(0)
                 return output
 
-def relaxed_binary(x, slope=5.0, threshold=0.5):
+def relaxed_binary(x, slope=15.0, threshold=0.5):
         logits = slope * (x - threshold)
         sig = torch.sigmoid(logits)
         return (x > threshold).float() + (sig - sig.detach())
 
 def round_fn(x):
         return torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
+
+system_filter = ChillerSystem(M=init.M, Ts=180, C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
+                                a=init.a, b=init.b, c=init.c, gamma=init.gamma, 
+                                exponent=init.exponent, Q_rated=init.Q_delivered_max,
+                                eta_supply=init.eta_supply, eta_return=init.eta_return,
+                                h_filter=init.load_filter)
+
+def load_filter(x):
+        return system_filter.apply_load_filter(x)
 
 if __name__=='__main__':
 #     for nsteps in [10,20,30,40,50,60,70,80]:
@@ -81,31 +94,39 @@ if __name__=='__main__':
         maxs = [init.T_supply_max] * init.M + [init.T_return_max] * 1 + [load_max] * (nsteps) 
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         torch.set_default_device(device=device)
+
         system = ChillerSystem(M=init.M, Ts=Ts, C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
                                 a=init.a, b=init.b, c=init.c, gamma=init.gamma, 
-                                exponent=init.exponent, Q_rated=init.Q_delivered_max)
+                                exponent=init.exponent, Q_rated=init.Q_delivered_max,
+                                eta_supply=init.eta_supply, eta_return=init.eta_return)
+       
+
         integrator = integrators.RK4(system, h=torch.tensor(Ts))
 
-        net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[120, 120, 120, 120],
-                                        nonlin=torch.nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+        net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[120, 120, 120],
+                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                         mins=mins, maxs=maxs, u_min=init.flow_min, u_max=init.flow_max, 
                                         clipping=False, spectral_norm=spectral_norm)
 
-        net_evap = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[120, 120, 120, 120], 
-                                nonlin=torch.nn.Mish(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+        net_evap = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[120, 120, 120], 
+                                nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                 mins=mins, maxs=maxs, u_min=init.T_evap_min, u_max=init.T_evap_max, 
                                 clipping=False, spectral_norm=spectral_norm)
 
-        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M-1, hsizes=[120, 120, 120, 120],
-                                        nonlin=torch.nn.Tanh(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0, outsize=init.M-1, hsizes=[120, 120, 120],
+                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
                                         mins=mins, maxs=maxs, u_min=-0.49, u_max=1.49, 
                                         clipping=False, spectral_norm=spectral_norm)
 
         # NEUROMANCER NODES
+        load_filter_node = Node(load_filter, input_keys=['load'], output_keys=['filtered_load'])
+        load_filter_node({'load': torch.zeros(1,1, device=device)})
+
         dynamics_node = Node(integrator,
-                                input_keys=['T_supply_and_return', 'integer', 'flow', 'T_evap', 'load'],
+                                input_keys=['T_supply_and_return', 'integer', 'flow', 'T_evap', 'filtered_load'],
                                 output_keys=['T_supply_and_return'],
                                 name='system_dynamics')
+        
 
         policy_integer_node = Node(net_integer,
                         input_keys=['T_supply_and_return','load'],
@@ -127,13 +148,13 @@ if __name__=='__main__':
                         name='policy_evap')
 
         # NEUROMANCER SYSTEM
-        cl_system = SystemPreview([policy_integer_node, rounding_node, policy_evap_node, policy_flow_node, dynamics_node],
+        cl_system = SystemPreview([policy_integer_node, rounding_node, policy_evap_node, policy_flow_node, load_filter_node, dynamics_node],
                                         nsteps=nsteps, name='cl_system', pad_mode='reflect', pad_constant = 300,
                                         preview_keys_map={'load': ['policy_flow', 'policy_integer', 'policy_evap']},
                                         preview_length={'load': nsteps-1})
 
         test_output = cl_system({ 'T_supply_and_return': torch.rand(1,1,init.M+1),
-                                'load': torch.rand(1,nsteps+1,1),})
+                                'load': torch.rand(1,nsteps,1),})
         
         #%%
         """ Variables
@@ -161,25 +182,28 @@ if __name__=='__main__':
                                                                         T_supply=T_supply_variable) # Decisions
         
         #%% CONTROL OBJECTIVES
-        chiller_loss = 0.01 * ((system.get_chiller_power_PLR(integer_status=integer_variable, 
+        chiller_loss =  ((system.get_chiller_power_PLR(integer_status=integer_variable, 
                                                         mass_flow=flow_variable,
                                                         T_return=T_return_variable,
                                                         T_supply=T_supply_variable) == 0.))
         
-        pump_loss = 0.01 * ((system.get_pump_consumption(mass_flow=flow_variable, 
+        pump_loss =  ((system.get_pump_consumption(mass_flow=flow_variable, 
                                 integer_status=integer_variable) == 0.))
         
-        c = init.delta_penalty # Switching cost coefficient
+        # c = init.delta_penalty # Switching cost coefficient
+        c = 100.
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
-        # switching_loss = c*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
+        polar_loss = c*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
         # switching_loss = c*(integer_variable == 0)
+        # polar_loss = c*((relaxed_integer_variable[:,:,[0]] == integer_variable[:,:,[0]])^2)
 
         chiller_loss.name = 'chiller_loss'; pump_loss.name = 'pump_loss'; switching_loss.name = 'switching_loss'
         loss_list = [
                         chiller_loss,
                         pump_loss,
-                        switching_loss, 
+                        # switching_loss, 
+                        polar_loss
                         ]
         #%% CONSTRAINTS
         # T_out_lb, T_out_ub = 10.*(T_out_variable >= init.T_min), 10.*(T_out_variable <= init.T_max)
@@ -188,7 +212,7 @@ if __name__=='__main__':
         T_supply_lb = 10.*(T_supply_and_return_variable[:,:,:init.M] >= init.T_supply_min) 
         T_supply_ub = 10.*(T_supply_and_return_variable[:,:,:init.M] <= init.T_supply_max)
         
-        cooling_bound = 0.01* (cooling_delivered_variable[:,:nsteps,:] >= load_variable[:,:nsteps,:]) # Cooling constr
+        cooling_bound = 0.1 * (torch.sum(cooling_delivered_variable[:,:nsteps,:],dim=-1,keepdim=True) >= load_variable[:,:nsteps,:]) # Cooling constr
         cooling_bound.name='cooling_bound'
 
         flow_lb = 10.*(flow_variable >= init.flow_min); flow_ub = 10.* (flow_variable <= init.flow_max) # Decisions
@@ -233,7 +257,7 @@ if __name__=='__main__':
         
         # loads_t = loads_t_1d.unfold(0,nsteps+1,1)
         # loads_t = loads_t[:num_data,:].unsqueeze(-1)
-        loads_t = loads_t_1d[:num_data*(nsteps+1)].reshape(num_data,nsteps+1,1)
+        loads_t = loads_t_1d[:num_data*(nsteps)].reshape(num_data,nsteps,1)
         
         train_data = DictDataset({'T_supply_and_return':torch.cat((T_supply_t[:num_train_data].to(device),
                                                                 T_return_t[:num_train_data].to(device)),dim=-1),
@@ -248,20 +272,21 @@ if __name__=='__main__':
         # logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps} at Ts={Ts}')
-        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.001, weight_decay=0.0)
+        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.0001, weight_decay=0.0)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,
                 optimizer=optimizer,
-                epochs=1000,
+                epochs=300,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
                 eval_metric='dev_loss',
                 warmup=20,
-                patience=500,
+                patience=100,
                 clip=torch.inf, 
                 lr_scheduler=False,
                 device=device,
+                epoch_verbose=10
                 # logger=logger,
         )
         start_time = time.time()

@@ -6,7 +6,7 @@ from chiller_system import ChillerSystem
 from utils import generate_datacenter_load, plot_chiller_data
 from RBC import RBC_policy
 from utils import customMPL;
-from MIDPC import round_fn, MIDPC_policy
+from MIDPC import round_fn, MIDPC_policy, load_filter
 from MIMPC import MIMPC_policy
 torch.set_default_device('cpu')
 
@@ -73,11 +73,11 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIDPC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=2, type=int)
+    parser.add_argument('-nsteps', default=30, type=int)
     parser.add_argument('-Ts', default=180, type=int)
-    parser.add_argument('-n_days', default=1, type=int)
+    parser.add_argument('-n_days', default=4, type=int)
     parser.add_argument('-plotting', default=True, type=bool)
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -116,8 +116,10 @@ if __name__=='__main__':
                                     gamma=init.gamma, exponent=init.exponent, M=init.M, 
                                     Ts=Ts, Q_rated=init.Q_delivered_max,
                                     eta_supply=init.eta_supply,
-                                    eta_return=1.,
-                                    h_filter=[0.1]*10,
+                                    eta_return=init.eta_return,
+                                    h_filter=init.load_filter,
+                                    # h_filter=[1.]
+                                    # h_filter=[0.05]*20,
                                     # h_filter=[1.]
 
                                     )
@@ -129,9 +131,12 @@ if __name__=='__main__':
     load_time, load_test = generate_datacenter_load(number_of_days=args.n_days+1,
                                                     sampling_time=Ts, 
                                                     signal_seed=seed,
-                                                    ramp_hours=4,
+                                                    ramp_hours=init.ramp_hours,
+                                                    f_day=5, f_night=6, 
+                                                    day_baseline=init.day_baseline, 
                                                     night_baseline=init.night_baseline,
-                                                    day_baseline=init.day_baseline,
+                                                    osc_night_amp=20, osc_day_amp=20,
+                                                    noise_scale=5
                                                     )
     load_test = load_test.reshape(1,-1,1)
     # # # Initial conditions

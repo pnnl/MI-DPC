@@ -3,7 +3,10 @@ import torch
 import numpy as np
 
 class ChillerSystem(torch.nn.Module):
-    def __init__(self, M, Ts, C_r, C_i, c_p, a, b, c , gamma, exponent=3, Q_rated=1000., eta_return=1., eta_supply=1., h_filter=[0.75,0.15,0.1,0.05]):
+    def __init__(self, M, Ts, C_r, C_i, c_p, a, b, c , gamma, 
+                    exponent=3, Q_rated=1000., eta_return=1., eta_supply=1.,
+                    h_filter=[0.75,0.15,0.1,0.05], power_on_cost=10.):
+
         super(ChillerSystem, self).__init__()
         self.M = M  # number of chillers
         self.Ts = Ts  # sampling time
@@ -16,6 +19,7 @@ class ChillerSystem(torch.nn.Module):
         self.b = b
         self.c = c
         self.gamma = gamma
+        self.power_on_cost = power_on_cost
         self.in_features = 1 # Number of input features for integrator
         self.out_features = self.M + 1 # Number of output features (T) for integrator
         self.exponent = exponent
@@ -28,35 +32,93 @@ class ChillerSystem(torch.nn.Module):
         # Initialize zero buffer for load history
         self.register_buffer("load_buffer", torch.zeros((1, self.L)))  # shape (1, L), expanded later per batch
 
+    # def apply_load_filter(self, load: torch.Tensor) -> torch.Tensor:
+    #     """
+    #     Apply moving filter to the current load signal and update internal buffer.
+
+    #     Args:
+    #         load: (batch, 1, 1)  — current load at this timestep
+
+    #     Returns:
+    #         filtered_load: (batch, 1, 1) — filtered load, same shape as input
+    #     """
+    #     # load: (batch, 1, 1)
+    #     batch_size = load.shape[0]
+    #     device = load.device
+    #     print(device)
+    #     # Flatten to (batch,) for internal buffer math
+    #     load_flat = load.view(batch_size)
+
+    #     # Ensure buffer shape matches batch
+    #     if self.load_buffer.shape[0] != batch_size:
+    #         self.load_buffer = torch.zeros((batch_size, self.L), device=device)
+
+    #     # Shift buffer and add newest load value at the front
+    #     self.load_buffer = torch.cat([load_flat.unsqueeze(1), self.load_buffer[:, :-1].to(device)], dim=1)  # (batch, L)
+    #     # Moving average / convolution with h_filter
+    #     filtered_flat = torch.sum(self.load_buffer * self.h_filter, dim=1, keepdim=True)  # (batch, 1)
+    #     # print(filtered_flat.unsqueeze(-1).shape)
+
+    #     # Reshape back to (batch, 1, 1) for downstream compatibility
+    #     return filtered_flat
+    # def apply_load_filter(self, load: torch.Tensor) -> torch.Tensor: # working but slow
+    #     """
+    #     Apply moving filter to the current load signal and update internal buffer.
+
+    #     Args:
+    #         load: (batch, 1, 1) — current load at this timestep
+
+    #     Returns:
+    #         filtered_load: (batch, 1, 1) — filtered load, same shape as input
+    #     """
+    #     batch_size = load.shape[0]
+    #     device = load.device
+    #     load_flat = load.view(batch_size)
+
+    #     # Ensure buffer exists and is on correct device
+    #     if (self.load_buffer is None or
+    #         self.load_buffer.shape[0] != batch_size or
+    #         self.load_buffer.device != device):
+    #         self.load_buffer = torch.zeros((batch_size, self.L), device=device)
+
+    #     # Ensure h_filter is also on correct device
+    #     if self.h_filter.device != device:
+    #         self.h_filter = self.h_filter.to(device)
+
+    #     # Shift buffer and add newest load value
+    #     self.load_buffer = torch.cat(
+    #         [load_flat.unsqueeze(1), self.load_buffer[:, :-1]], dim=1
+    #     )
+
+    #     # Moving average / convolution
+    #     filtered_flat = torch.sum(self.load_buffer * self.h_filter, dim=1, keepdim=True)
+
+    #     return filtered_flat
+
     def apply_load_filter(self, load: torch.Tensor) -> torch.Tensor:
-        """
-        Apply moving filter to the current load signal and update internal buffer.
-
-        Args:
-            load: (batch, 1, 1)  — current load at this timestep
-
-        Returns:
-            filtered_load: (batch, 1, 1) — filtered load, same shape as input
-        """
-        # load: (batch, 1, 1)
         batch_size = load.shape[0]
         device = load.device
-
-        # Flatten to (batch,) for internal buffer math
         load_flat = load.view(batch_size)
 
-        # Ensure buffer shape matches batch
-        if self.load_buffer.shape[0] != batch_size:
+        # Allocate once if needed
+        if (self.load_buffer is None or
+            self.load_buffer.shape[0] != batch_size or
+            self.load_buffer.device != device):
             self.load_buffer = torch.zeros((batch_size, self.L), device=device)
 
-        # Shift buffer and add newest load value at the front
-        self.load_buffer = torch.cat([load_flat.unsqueeze(1), self.load_buffer[:, :-1]], dim=1)  # (batch, L)
-        print(self.load_buffer)
-        # Moving average / convolution with h_filter
-        filtered_flat = torch.sum(self.load_buffer * self.h_filter, dim=1, keepdim=True)  # (batch, 1)
+        # Ensure h_filter on same device
+        if self.h_filter.device != device:
+            self.h_filter = self.h_filter.to(device)
 
-        # Reshape back to (batch, 1, 1) for downstream compatibility
-        return filtered_flat.unsqueeze(1)
+        # ---- SAFE IN-PLACE UPDATE ----
+        self.load_buffer[:, 1:] = self.load_buffer[:, :-1].clone()
+        self.load_buffer[:, 0] = load_flat
+
+        # Compute filtered output
+        filtered_flat = torch.sum(self.load_buffer * self.h_filter, dim=1, keepdim=True)
+        return filtered_flat
+
+
 
 
     def forward_euler(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor:  
@@ -182,7 +244,7 @@ class ChillerSystem(torch.nn.Module):
         COP = torch.relu(COP)
         power = cooling / (COP)
         power = torch.clip(power, min=0., max=self.Q_rated) # gives stable training
-        return power
+        return power + integer_status*self.power_on_cost
     
     def get_pump_consumption(self, integer_status, mass_flow) -> torch.Tensor:
         power = self.gamma * torch.pow(mass_flow, self.exponent)

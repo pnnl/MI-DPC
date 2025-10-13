@@ -83,7 +83,7 @@ class customMPL(nn.Module):
         # apply 0-1 normalization
         x = self.norm_0_1(x)
         out = self.net(x)
-        if  self.clipping:
+        if self.clipping:
             out = torch.clip(out, self.u_min, self.u_max)
         return out
 

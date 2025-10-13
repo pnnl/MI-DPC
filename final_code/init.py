@@ -5,7 +5,7 @@ Ts = 300.0 # Sampling time [s]
 
 # # # Load signal parameters
 night_baseline=lambda: torch.rand(1).uniform_(150,350)
-day_baseline=lambda: torch.rand(1).uniform_(300,900)
+day_baseline=lambda: torch.rand(1).uniform_(300,1000)
 ramp_hours = 4
 
 # SYSTEM PARAMETERS
@@ -16,6 +16,8 @@ C_i = c_p * fluid_per_chiller # Thermal capacitance of chiller [kJ/C]
 fluid_in_system = 7000 # Amount of fluid in the whole system [kg] / ~[liter]
 C_r = fluid_in_system*c_p # Thermal capacitance of the system [kJ/C]
 
+load_filter = [0.75,0.15,0.1,0.05]
+# load_filter = [1.]
 eta_supply=0.7 # Heat transition efficiency coefficients (chiller)
 eta_return=0.75 # Heat transition efficiency coefficients (cooling end)
 
@@ -39,7 +41,7 @@ flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
 Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
 # Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
-delta_penalty = 100. # penalty coefficient for chiller status switching
+delta_penalty = 1. # penalty coefficient for chiller status switching
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt

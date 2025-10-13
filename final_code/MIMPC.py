@@ -51,15 +51,17 @@ class MIMPC_policy():
         m.flow_active_lb2 = Constraint(m.t, m.i, 
                             rule=lambda m,t,i: m.flow_active[t,i] >= m.flow[t,i] - init.flow_max * (1 - m.integer[t,i]))
        
-       # NOT SURE ABOUT THIS :(
-        COP_min = 1.
-        COP_max = 30.
-        P_min = 0.
-        P_max = 1000.
+       # NOT SURE ABOUT THIS :( FAILED MCCORMICK ATTEMPT
+        COP_min = 1. # around 1
+        COP_max = 30. # around 6
+        P_min = 0. # 0 
+        P_max = 160. # around 160
+        # P_max = init.Q_delivered_max/COP(PLR=1.) # around 160
         m.Q_delivered = Var(m.t, m.i, bounds=(0, init.Q_delivered_max))
         m.P_chiller = Var(m.t, m.i, bounds=(P_min, P_max))
         m.COP = Var(m.t, m.i, bounds=(P_min, P_max))
 
+        # We need an additional variable for McCormick
         def Q_lb1_rule(m, t, i):
             return m.Q_delivered[t,i] >= COP_min * m.P_chiller[t,i]  + P_min * m.COP[t,i] - COP_min * P_min
         m.Q_lb1 = Constraint(m.t, m.i, rule=Q_lb1_rule)
@@ -261,8 +263,8 @@ class MIMPC_policy():
         elif self.ocp_formulation == 1:
             model = self.discrete_time_exact_model(T_supply=T_supply, T_return=T_return, load=load, Ts=Ts)
         elif self.ocp_formulation == 2:
-            model = self.ocp_formulation()
-        
+            pass
+
         # self.solver.set_instance(model)
         result = self.solver.solve(model, tee=False, symbolic_solver_labels=True)
     #     result = SolverFactory('mindtpy').solve(

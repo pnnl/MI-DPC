@@ -1,11 +1,11 @@
 #!/bin/bash
 # Control strategy to use in simulation options [MIMPC, MIDPC, RBC]
-POLICY="RBC"
+POLICY="MIDPC"
 
 # Python env
 env=/home/desktop309/git/.venv/bin/python
 # Sampling time
-Ts=300
+Ts=180
 
 # Log file
 LOGFILE="logs/${POLICY}_simulation.log"

@@ -1,4 +1,4 @@
-===== Starting runs at Mon Oct 13 09:51:58 CEST 2025 =====
+===== Starting runs at Mon Oct 13 07:21:23 PM CEST 2025 =====
 Running with Ts=180 and nsteps=30
 
 A module that was compiled using NumPy 1.x cannot be run in
@@ -64,19 +64,3 @@ epoch: 50  train_loss: 106.88743591308594
 epoch: 60  train_loss: 92.9338607788086
 epoch: 70  train_loss: 87.38599395751953
 epoch: 80  train_loss: 83.46473693847656
-epoch: 90  train_loss: 80.90373229980469
-epoch: 100  train_loss: 69.81929779052734
-epoch: 110  train_loss: 69.07975769042969
-epoch: 120  train_loss: 64.23011779785156
-epoch: 130  train_loss: 66.67002868652344
-epoch: 140  train_loss: 65.75965881347656
-epoch: 150  train_loss: 65.93603515625
-epoch: 160  train_loss: 65.96525573730469
-epoch: 170  train_loss: 66.09188842773438
-epoch: 180  train_loss: 66.26387023925781
-epoch: 190  train_loss: 66.45692443847656
-epoch: 200  train_loss: 66.69439697265625
-Early stopping!!!
-Finished run with nsteps=30 at Mon Oct 13 09:55:28 CEST 2025
------------------------------------
-===== All runs completed at Mon Oct 13 09:55:28 CEST 2025 =====

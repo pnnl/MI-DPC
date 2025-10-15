@@ -7,7 +7,7 @@ from utils import generate_datacenter_load, plot_chiller_data
 from RBC import RBC_policy
 from utils import customMPL;
 from MIDPC import round_fn, MIDPC_policy, load_filter
-from MIMPC import MIMPC_policy
+from MIMPC_elad import MIMPC_policy
 torch.set_default_device('cpu')
 # init.M = 2
 def simulate(
@@ -73,11 +73,11 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIMPC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=50, type=int)
+    parser.add_argument('-nsteps', default=20, type=int)
     parser.add_argument('-Ts', default=180, type=int)
-    parser.add_argument('-n_days', default=30, type=int)
+    parser.add_argument('-n_days', default=1, type=int)
     parser.add_argument('-plotting', default=True, type=bool)
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -154,7 +154,7 @@ if __name__=='__main__':
                         # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
-                        verbose=False, # Print current timestep
+                        verbose=True, # Print current timestep
                         system=chiller_system, # For computing score variables
                         n_days=args.n_days
                        ) # Returns dictionary

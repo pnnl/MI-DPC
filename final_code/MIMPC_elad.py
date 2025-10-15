@@ -1,3 +1,4 @@
+#%%
 import utils; import init
 import numpy as np
 import torch
@@ -9,7 +10,10 @@ class MIMPC_policy():
     def __init__(self, nsteps, measure_inference_time = True, M=init.M,
                   solver="gurobi", # solver type options ['scip', 'gurobi']
                   ocp_formulation=False, # options [0 - discret euler, 1 - discrete exact, 2 - continous time]
-                  exponent=init.exponent, verbose=True):
+                  exponent=init.exponent, 
+                  verbose=True,
+                  max_solver_time = 300.
+                  ):
         self.nsteps = nsteps
         self.measure_inference_time = measure_inference_time
         self.solver = SolverFactory(solver)
@@ -19,6 +23,7 @@ class MIMPC_policy():
         self.M = M
         self.exponent = exponent
         self.verbose = verbose
+        self.max_solver_time = max_solver_time
 
 
     def discrete_model(self, T_supply, T_return, load, Ts):

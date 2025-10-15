@@ -1,0 +1,304 @@
+===== Starting runs at Wed Oct 15 06:30:23 PM CEST 2025 =====
+Running with Ts=180 and nsteps=20
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+    from neuromancer.dynamics import integrators
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
+    from pandas.compat import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
+    from pandas.compat.pyarrow import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
+    import pyarrow as pa
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+    from neuromancer.dynamics import integrators
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
+    from pandas.core.api import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
+    from pandas.core.dtypes.dtypes import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
+    from pandas._libs import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+Simulating chiller with MIMPC, N=20, M=2
+Timestep:  0
+Solution time:  1.4031240940093994 Solution:  optimal
+Timestep:  1
+Solution time:  0.11230802536010742 Solution:  optimal
+Timestep:  2
+Solution time:  0.10439586639404297 Solution:  optimal
+Timestep:  3
+Solution time:  0.11089086532592773 Solution:  optimal
+Timestep:  4
+Solution time:  0.11894083023071289 Solution:  optimal
+Timestep:  5
+Solution time:  1.4827461242675781 Solution:  optimal
+Timestep:  6
+Solution time:  0.985090970993042 Solution:  optimal
+Timestep:  7
+Solution time:  0.9075958728790283 Solution:  optimal
+Timestep:  8
+Solution time:  1.3026800155639648 Solution:  optimal
+Timestep:  9
+Solution time:  0.9942080974578857 Solution:  optimal
+Timestep:  10
+Solution time:  1.374330997467041 Solution:  optimal
+Timestep:  11
+Solution time:  1.1645169258117676 Solution:  optimal
+Timestep:  12
+Solution time:  0.9476280212402344 Solution:  optimal
+Timestep:  13
+Solution time:  1.5113799571990967 Solution:  optimal
+Timestep:  14
+Solution time:  1.001025915145874 Solution:  optimal
+Timestep:  15
+Solution time:  0.909930944442749 Solution:  optimal
+Timestep:  16
+Solution time:  0.9703450202941895 Solution:  optimal
+Timestep:  17
+Solution time:  1.0522031784057617 Solution:  optimal
+Timestep:  18
+Solution time:  1.0875229835510254 Solution:  optimal
+Timestep:  19
+Solution time:  0.9957180023193359 Solution:  optimal
+Timestep:  20
+Solution time:  0.9989891052246094 Solution:  optimal
+Timestep:  21
+Solution time:  1.3153910636901855 Solution:  optimal
+Timestep:  22
+Solution time:  1.3213138580322266 Solution:  optimal
+Timestep:  23
+Solution time:  0.9413449764251709 Solution:  optimal
+Timestep:  24
+Solution time:  1.4158098697662354 Solution:  optimal
+Timestep:  25
+Solution time:  0.9414260387420654 Solution:  optimal
+Timestep:  26
+Solution time:  1.4917898178100586 Solution:  optimal
+Timestep:  27
+Solution time:  1.3212170600891113 Solution:  optimal
+Timestep:  28
+Solution time:  1.4148361682891846 Solution:  optimal
+Timestep:  29
+Solution time:  1.4925649166107178 Solution:  optimal
+Timestep:  30
+Solution time:  1.3020439147949219 Solution:  optimal
+Timestep:  31
+Solution time:  1.0121371746063232 Solution:  optimal
+Timestep:  32
+Solution time:  1.4016649723052979 Solution:  optimal
+Timestep:  33
+Solution time:  0.9695320129394531 Solution:  optimal
+Timestep:  34
+Solution time:  1.309156894683838 Solution:  optimal
+Timestep:  35
+Solution time:  0.859105110168457 Solution:  optimal
+Timestep:  36
+Solution time:  1.026055097579956 Solution:  optimal
+Timestep:  37
+Solution time:  1.0733709335327148 Solution:  optimal
+Timestep:  38
+Solution time:  0.8748569488525391 Solution:  optimal
+Timestep:  39
+Solution time:  0.817147970199585 Solution:  optimal
+Timestep:  40
+Solution time:  0.9083380699157715 Solution:  optimal
+Timestep:  41
+Solution time:  0.9500079154968262 Solution:  optimal
+Timestep:  42
+Solution time:  0.9221689701080322 Solution:  optimal
+Timestep:  43
+Solution time:  0.9356958866119385 Solution:  optimal
+Timestep:  44
+Solution time:  1.2334718704223633 Solution:  optimal
+Timestep:  45
+Solution time:  1.4144959449768066 Solution:  optimal
+Timestep:  46
+Solution time:  0.8980569839477539 Solution:  optimal
+Timestep:  47
+Solution time:  0.9461760520935059 Solution:  optimal
+Timestep:  48
+Solution time:  0.8788979053497314 Solution:  optimal
+Timestep:  49
+Solution time:  1.3460748195648193 Solution:  optimal
+Timestep:  50
+Solution time:  0.8711779117584229 Solution:  optimal
+Timestep:  51
+Solution time:  0.961982011795044 Solution:  optimal
+Timestep:  52
+Solution time:  1.2186639308929443 Solution:  optimal
+Timestep:  53
+Solution time:  0.9830520153045654 Solution:  optimal
+Timestep:  54
+Solution time:  0.9856410026550293 Solution:  optimal
+Timestep:  55
+Solution time:  1.4406487941741943 Solution:  optimal
+Timestep:  56
+Solution time:  1.2261579036712646 Solution:  optimal
+Timestep:  57
+Solution time:  0.8124079704284668 Solution:  optimal
+Timestep:  58
+Solution time:  1.407148838043213 Solution:  optimal
+Timestep:  59
+Solution time:  1.2628660202026367 Solution:  optimal
+Timestep:  60
+Solution time:  0.8377668857574463 Solution:  optimal
+Timestep:  61
+Solution time:  1.16749906539917 Solution:  optimal
+Timestep:  62
+Solution time:  1.468487024307251 Solution:  optimal
+Timestep:  63
+Solution time:  1.2065510749816895 Solution:  optimal
+Timestep:  64
+Solution time:  1.3666119575500488 Solution:  optimal
+Timestep:  65
+Solution time:  0.9245679378509521 Solution:  optimal
+Timestep:  66
+Solution time:  0.9102990627288818 Solution:  optimal
+Timestep:  67
+Solution time:  0.8554351329803467 Solution:  optimal
+Timestep:  68
+Solution time:  0.8219201564788818 Solution:  optimal
+Timestep:  69
+Solution time:  1.3100171089172363 Solution:  optimal
+Timestep:  70
+Solution time:  0.9361457824707031 Solution:  optimal
+Timestep:  71
+Solution time:  1.1718089580535889 Solution:  optimal
+Timestep:  72
+Solution time:  0.837332010269165 Solution:  optimal
+Timestep:  73
+Solution time:  1.5783491134643555 Solution:  optimal
+Timestep:  74
+Solution time:  0.894737958908081 Solution:  optimal
+Timestep:  75
+Solution time:  0.978816032409668 Solution:  optimal
+Timestep:  76
+Solution time:  1.0485901832580566 Solution:  optimal
+Timestep:  77
+Solution time:  1.036250114440918 Solution:  optimal
+Timestep:  78
+Solution time:  1.316870927810669 Solution:  optimal
+Timestep:  79
+Solution time:  0.9721601009368896 Solution:  optimal
+Timestep:  80
+Solution time:  0.9510040283203125 Solution:  optimal
+Timestep:  81
+Solution time:  0.9501168727874756 Solution:  optimal
+Timestep:  82
+Solution time:  0.9701988697052002 Solution:  optimal
+Timestep:  83
+Solution time:  0.9076712131500244 Solution:  optimal
+Timestep:  84
+Solution time:  1.5483520030975342 Solution:  optimal
+Timestep:  85
+Solution time:  1.3476920127868652 Solution:  optimal
+Timestep:  86
+Solution time:  1.4366698265075684 Solution:  optimal
+Timestep:  87
+Solution time:  0.989375114440918 Solution:  optimal
+Timestep:  88
+Solution time:  0.8369710445404053 Solution:  optimal
+Timestep:  89
+Solution time:  1.0232131481170654 Solution:  optimal
+Timestep:  90
+Solution time:  0.9960951805114746 Solution:  optimal
+Timestep:  91
+Solution time:  1.166511058807373 Solution:  optimal
+Timestep:  92
+Solution time:  1.6220149993896484 Solution:  optimal
+Timestep:  93
+Solution time:  0.9048008918762207 Solution:  optimal
+Timestep:  94
+Solution time:  1.1194498538970947 Solution:  optimal
+Timestep:  95
+Solution time:  0.15421509742736816 Solution:  optimal
+Timestep:  96
+Solution time:  1.291504144668579 Solution:  optimal
+Timestep:  97
+Solution time:  1.05525803565979 Solution:  optimal
+Timestep:  98
+Solution time:  0.6825940608978271 Solution:  optimal
+Timestep:  99
+Solution time:  1.2062339782714844 Solution:  optimal
+Timestep:  100
+Solution time:  0.8622040748596191 Solution:  optimal
+Timestep:  101
+Solution time:  1.5316600799560547 Solution:  optimal
+Timestep:  102
+Solution time:  1.4786970615386963 Solution:  optimal
+Timestep:  103
+Solution time:  0.0686960220336914 Solution:  optimal
+Timestep:  104
+Solution time:  0.9688670635223389 Solution:  optimal
+Timestep:  105
+Solution time:  1.537909984588623 Solution:  optimal
+Timestep:  106
+Solution time:  1.070605993270874 Solution:  optimal
+Timestep:  107
+Solution time:  0.06409192085266113 Solution:  optimal
+Timestep:  108
+Solution time:  1.322843074798584 Solution:  optimal
+Timestep:  109
+Solution time:  225.16721391677856 Solution:  optimal
+Timestep:  110
+Solution time:  1.853088140487671 Solution:  optimal
+Timestep:  111
+Solution time:  0.9674310684204102 Solution:  optimal
+Timestep:  112
+Solution time:  0.0723869800567627 Solution:  optimal
+Timestep:  113
+Solution time:  2.2688679695129395 Solution:  optimal
+Timestep:  114
+Solution time:  0.06592798233032227 Solution:  optimal
+Timestep:  115
+Solution time:  0.06553792953491211 Solution:  optimal
+Timestep:  116
+Solution time:  220.54033184051514 Solution:  optimal
+Timestep:  117
+Solution time:  0.0635080337524414 Solution:  optimal
+Timestep:  118
+Solution time:  0.7989687919616699 Solution:  optimal
+Timestep:  119
+Solution time:  1781.3187761306763 Solution:  optimal
+Timestep:  120
+Solution time:  667.641597032547 Solution:  optimal
+Timestep:  121
+Solution time:  1.8909528255462646 Solution:  optimal
+Timestep:  122
+Solution time:  2.2880938053131104 Solution:  optimal
+Timestep:  123
+Solution time:  0.06147599220275879 Solution:  optimal
+Timestep:  124
+Solution time:  218.7292070388794 Solution:  optimal
+Timestep:  125

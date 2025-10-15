@@ -4,7 +4,9 @@ seed = 209
 Ts = 300.0 # Sampling time [s]
 
 M = 2 # Number of chillers
-Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
+
+Q_delivered_max = 500 # rated chiller cooling [kW] - This value is provided by the manufacturer
+
 # # # Load signal parameters
 night_baseline=lambda: torch.rand(1).uniform_(150,350)
 day_baseline=lambda: torch.rand(1).uniform_(300,1500)
@@ -14,7 +16,7 @@ chiller_on_cost = 10.
 # SYSTEM PARAMETERS
 M = 2 # Number of chillers
 c_p = 4.184 # Specific heat of water [kJ/kgC]
-fluid_per_chiller = 3500 # kg of water per chiller / ~liters
+fluid_per_chiller = 6000 # kg of water per chiller / ~liters
 C_i = c_p * fluid_per_chiller # Thermal capacitance of chiller [kJ/C] 
 fluid_in_system = 7000 # Amount of fluid in the whole system [kg] / ~[liter]
 C_r = fluid_in_system*c_p # Thermal capacitance of the system [kJ/C]

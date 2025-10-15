@@ -107,3 +107,19 @@ Running with Ts=180 and nsteps=80
 Terminated
 Finished run with nsteps=80 at Mon Oct 13 02:23:46 CEST 2025
 ./run_training.sh: line 23: unexpected EOF while looking for matching `"'
+Running with Ts=180 and nsteps=10
+Finished run with nsteps=10 at Wed Oct 15 02:00:36 AM CEST 2025
+Running with Ts=180 and nsteps=20
+Finished run with nsteps=20 at Wed Oct 15 02:10:30 AM CEST 2025
+Running with Ts=180 and nsteps=30
+Finished run with nsteps=30 at Wed Oct 15 02:19:55 AM CEST 2025
+Running with Ts=180 and nsteps=40
+Finished run with nsteps=40 at Wed Oct 15 02:30:13 AM CEST 2025
+Running with Ts=180 and nsteps=50
+Finished run with nsteps=50 at Wed Oct 15 02:40:03 AM CEST 2025
+Running with Ts=180 and nsteps=60
+Finished run with nsteps=60 at Wed Oct 15 02:50:03 AM CEST 2025
+Running with Ts=180 and nsteps=70
+Finished run with nsteps=70 at Wed Oct 15 03:00:15 AM CEST 2025
+Running with Ts=180 and nsteps=80
+Finished run with nsteps=80 at Wed Oct 15 03:08:33 AM CEST 2025

@@ -4,7 +4,7 @@ import numpy as np
 import init
 
 class ChillerSystem(torch.nn.Module):
-    def __init__(self, M, Ts, C_r, C_i, c_p, a, b, c , gamma, 
+    def __init__(self, M, C_r, C_i, c_p, a, b, c , gamma, Ts=180, 
                     exponent=init.exponent, Q_rated=init.Q_delivered_max, 
                     eta_return=init.eta_return, eta_supply=init.eta_supply,
                     h_filter=init.load_filter, chiller_on_cost=init.chiller_on_cost,

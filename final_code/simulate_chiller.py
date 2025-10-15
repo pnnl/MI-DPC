@@ -9,7 +9,7 @@ from utils import customMPL;
 from MIDPC import round_fn, MIDPC_policy, load_filter
 from MIMPC import MIMPC_policy
 torch.set_default_device('cpu')
-
+# init.M = 2
 def simulate(
         T_supply_0, T_return_0, load_signal, 
         dynamics_forward, policy, nsteps=10, 
@@ -73,11 +73,11 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIDPC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=30, type=int)
+    parser.add_argument('-nsteps', default=50, type=int)
     parser.add_argument('-Ts', default=180, type=int)
-    parser.add_argument('-n_days', default=7, type=int)
+    parser.add_argument('-n_days', default=30, type=int)
     parser.add_argument('-plotting', default=True, type=bool)
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -86,15 +86,15 @@ if __name__=='__main__':
     if args.policy == 'RBC':
         policy = RBC_policy(
             PLR_on=0.6, 
-            PLR_off=0.15,
+            PLR_off=0.2,
             n_active_chillers=init.M,
-            T_evap_const=9., 
-            mass_flow_const=12.
+            T_evap_const=10., 
+            mass_flow_const=15.
             )
    
     elif args.policy == 'MIDPC':
         policy = MIDPC_policy(
-            load_path=f'results/MIDPC/policies/N_{args.nsteps}_Ts_{args.Ts}.pt',
+            load_path=f'results/MIDPC/policies/N_{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pt',
             nsteps=args.nsteps,
             measure_inference_time=True,
             )
@@ -117,9 +117,10 @@ if __name__=='__main__':
                                     Ts=Ts, Q_rated=init.Q_delivered_max,
                                     eta_supply=init.eta_supply,
                                     eta_return=init.eta_return,
-                                    h_filter=init.load_filter,
-                                    # h_filter=[1.]
-                                    # h_filter=[0.05]*20,
+                                    # eta_return=1.,
+                                    # h_filter=init.load_filter,
+                                    # h_filter=[0.2,]
+                                    # h_filter=[0.1]*10,
                                     # h_filter=[1.]
 
                                     )
@@ -131,18 +132,19 @@ if __name__=='__main__':
     load_time, load_test = generate_datacenter_load(number_of_days=args.n_days+1,
                                                     sampling_time=Ts, 
                                                     signal_seed=seed,
-                                                    ramp_hours=init.ramp_hours,
+                                                    ramp_hours=6,
                                                     f_day=5, f_night=6, 
                                                     day_baseline=init.day_baseline, 
                                                     night_baseline=init.night_baseline,
                                                     osc_night_amp=20, osc_day_amp=20,
-                                                    noise_scale=5
+                                                    noise_scale=5,
+                                                    daily_variation=0.1
                                                     )
     load_test = load_test.reshape(1,-1,1)
     # # # Initial conditions
     T_supply_0 = torch.ones(1,1,init.M) * 8.
     T_return_0 = torch.ones(1,1,1) * 8.
-
+    print(f'Simulating chiller with {args.policy}, N={args.nsteps}, M={init.M}')
     outputs = simulate(
                         T_supply_0=T_supply_0, # IC
                         T_return_0=T_return_0, # IC
@@ -157,10 +159,10 @@ if __name__=='__main__':
                         n_days=args.n_days
                        ) # Returns dictionary
     # # # Save outputs for analysis
-    torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}.pt')
+    torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pt')
     
     if args.plotting:
-        plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}.pdf')
+        plot_chiller_data(outputs, Ts=Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
 # if __name__ == '__main__':
 #     import matplotlib.pyplot as plt
 #     plt.show()

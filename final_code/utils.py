@@ -179,10 +179,10 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     [axes[0].plot(time, 
                     data['T_supply'][0,:-1,i], 
                     label=[f"T_supply{i+1}"],
-                    linestyle=ls[i],
+                    linestyle=ls[i//2],
                     alpha=0.7) for i in rng]
 
-    [axes[0].plot(time, data['T_evap'][0,:,i], label=[f"T_evap{i+1}"], linestyle=ls[i],
+    [axes[0].plot(time, data['T_evap'][0,:,i], label=[f"T_evap{i+1}"], linestyle=ls[i//2],
                    alpha=0.7) for i in rng]
     axes[0].legend(loc='upper center', bbox_to_anchor=(0.5, 1.5), ncol=3); axes[0].grid(True)
     axes[0].set_xlabel("Timestep"); axes[0].set_ylabel("Temperature [°C]")
@@ -258,7 +258,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
 
     axes[1].set_title(f'Total cost of operation:  {cost.item():.1f} [kWh] \n  \
                         Tracking RMSE: {control_RMSE.item():.1f} [kW] \n \
-                        Number of violations {n_violations} [-]') 
+                        Number of violations {n_violations} [-], mean COP {COP.mean():.2f}') 
     # print('Total cost of operation: ', cost.item(), 'kWh')
     if save_path is not None:
         plt.savefig(save_path)

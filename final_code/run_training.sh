@@ -11,6 +11,7 @@ echo "===== Starting runs at $(date) =====" > "$LOGFILE"
 
 # Loop over different nsteps values
 for nsteps in 10 20 30 40 50 60 70 80
+# for nsteps in 10 20 30 40 50
 # for nsteps in 30
 do
     echo "Running with Ts=$Ts and nsteps=$nsteps" | tee -a "$LOGFILE"

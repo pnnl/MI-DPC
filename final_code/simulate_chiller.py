@@ -85,7 +85,7 @@ if __name__=='__main__':
     # # # Initialize policy
     if args.policy == 'RBC':
         policy = RBC_policy(
-            PLR_on=0.6, 
+            PLR_on=0.7, 
             PLR_off=0.2,
             n_active_chillers=init.M,
             T_evap_const=10., 
@@ -132,7 +132,7 @@ if __name__=='__main__':
     load_time, load_test = generate_datacenter_load(number_of_days=args.n_days+1,
                                                     sampling_time=Ts, 
                                                     signal_seed=seed,
-                                                    ramp_hours=6,
+                                                    ramp_hours=4,
                                                     f_day=5, f_night=6, 
                                                     day_baseline=init.day_baseline, 
                                                     night_baseline=init.night_baseline,

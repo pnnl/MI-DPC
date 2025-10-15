@@ -3,8 +3,8 @@ import torch; import torch.nn as nn
 seed = 209
 Ts = 300.0 # Sampling time [s]
 
-M = 2 # Number of chillers
-Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
+M = 4 # Number of chillers
+Q_delivered_max = 500 # rated chiller cooling [kW] - This value is provided by the manufacturer
 # # # Load signal parameters
 night_baseline=lambda: torch.rand(1).uniform_(150,500)
 day_baseline=lambda: torch.rand(1).uniform_(300,int(M*Q_delivered_max*0.75))

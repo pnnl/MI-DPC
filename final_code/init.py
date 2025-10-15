@@ -3,29 +3,29 @@ import torch; import torch.nn as nn
 seed = 209
 Ts = 300.0 # Sampling time [s]
 
-M = 4 # Number of chillers
-Q_delivered_max = 500 # rated chiller cooling [kW] - This value is provided by the manufacturer
+M = 2 # Number of chillers
+Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
 # # # Load signal parameters
-night_baseline=lambda: torch.rand(1).uniform_(150,500)
-day_baseline=lambda: torch.rand(1).uniform_(300,int(M*Q_delivered_max*0.75))
-# day_baseline=lambda: torch.rand(1).uniform_(300,1500)
-ramp_hours = 10
+night_baseline=lambda: torch.rand(1).uniform_(150,350)
+day_baseline=lambda: torch.rand(1).uniform_(300,1500)
+ramp_hours = 4
 tolerance = 5 # tolerance for cooling bound [kW]
 chiller_on_cost = 10.
 # SYSTEM PARAMETERS
+M = 2 # Number of chillers
 c_p = 4.184 # Specific heat of water [kJ/kgC]
-fluid_per_chiller = 2500 # kg of water per chiller / ~liters
+fluid_per_chiller = 3500 # kg of water per chiller / ~liters
 C_i = c_p * fluid_per_chiller # Thermal capacitance of chiller [kJ/C] 
-fluid_in_system = 10000 # Amount of fluid in the whole system [kg] / ~[liter]
+fluid_in_system = 7000 # Amount of fluid in the whole system [kg] / ~[liter]
 C_r = fluid_in_system*c_p # Thermal capacitance of the system [kJ/C]
-
-load_filter = [0.55,0.20,0.15,0.05, 0.05]
+P0 = 10  # Power penalty for having chiller on
+load_filter = [0.75,0.15,0.1,0.05]
 # load_filter = [1.]
 eta_supply=0.7 # Heat transition efficiency coefficients (chiller)
-eta_return=0.85 # Heat transition efficiency coefficients (cooling end)
+eta_return=0.75 # Heat transition efficiency coefficients (cooling end)
 
 # Chiller power curve coefficients with respect to PLR
-a = 1. # kW
+a = 1.0 # kW
 b = 19.33 #kW
 c = -18.33 #kW
 exponent = 3 # Pump power curve exponent
@@ -40,6 +40,9 @@ T_supply_min, T_supply_max = 8., 12. # Supply temperature bounds [C]
 T_evap_min, T_evap_max = 8., 12. # Evaporation temperature bounds [C]
 T_return_min, T_return_max = 8., 40. # Return temperature bounds [C]
 flow_min, flow_max = 5., 20. # Mass flow bounds [kg/s]
+# Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller
+Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
+# Q_delivered_min = (T_return_max - T_evap_min) * c_p * flow_min
 
 delta_penalty = 1. # penalty coefficient for chiller status switching
 

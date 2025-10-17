@@ -1,7 +1,9 @@
 #%%
-import torch; import torch.nn as nn; import init
+import torch; import torch.nn as nn;
+from init import SystemParameters
 import matplotlib.pyplot as plt
 
+init = SystemParameters()
 # Custom MLP
 class customMPL(nn.Module):
     def __init__(

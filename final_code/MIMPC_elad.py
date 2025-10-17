@@ -1,18 +1,22 @@
 #%%
-import utils; import init
+import utils; 
+from init import SystemParameters
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
 from pyomo.environ import *
 
+init = SystemParameters()
 class MIMPC_policy():
     def __init__(self, nsteps, measure_inference_time = True, M=init.M,
                   solver="gurobi", # solver type options ['scip', 'gurobi']
                   ocp_formulation=False, # options [0 - discret euler, 1 - discrete exact, 2 - continous time]
                   exponent=init.exponent, 
                   verbose=True,
-                  max_solver_time = 300.
+                  max_solver_time = 300,
+                  McCormick = False,
+                  Ts = None,
                   ):
         self.nsteps = nsteps
         self.measure_inference_time = measure_inference_time
@@ -24,9 +28,13 @@ class MIMPC_policy():
         self.exponent = exponent
         self.verbose = verbose
         self.max_solver_time = max_solver_time
+        self.solver.options['TimeLimit'] = self.max_solver_time
+        # self.solver.options['warmstart'] = True
+        self.solver.options['mipgap'] = 1e-5
+        self.McCormick = McCormick
+        self.Ts = Ts
 
-
-    def discrete_model(self, T_supply, T_return, load, Ts):
+    def discrete_model(self, T_supply, T_return, load, filtered_load, Ts):
 
         # __      __        _       _     _           
         # \ \    / /       (_)     | |   | |          
@@ -63,15 +71,27 @@ class MIMPC_policy():
                                    
         # Slack variable for under-delivered cooling and flow auxilliary variables for quadratic bullshit
         m.Q_slack = Var(m.t, within=NonNegativeReals)
-        m.active_flow = Var(m.t, m.i, within=NonNegativeReals)
         m.flow_sq = Var(m.t, m.i, within=NonNegativeReals)
         m.integer_smooth = Var(m.t, m.i, bounds=(0,1) , within=NonNegativeReals)
-
-        # # # # Constraints
-        def active_flow_fn(m,t,i):
-            return m.active_flow[t,i] == m.integer[t,i] * m.flow[t,i]
-        m.active_flow_constr = Constraint(m.t,m.i, rule = active_flow_fn)
+        m.flow_smooth = Var(m.t, m.i, within=NonNegativeReals)
+        m.active_flow = Var(m.t, m.i, within=NonNegativeReals)
         
+        # # # # Constraints
+        if self.McCormick:
+        # # # McCormick
+            m.active_flow_ub1 = Constraint(m.t, m.i,
+                                rule=lambda m,t,i: m.active_flow[t,i] <= init.flow_max * m.integer[t,i])
+            m.active_flow_lb1 = Constraint(m.t, m.i, 
+                                rule=lambda m,t,i: m.active_flow[t,i] >= init.flow_min * m.integer[t,i])
+            m.active_flow_ub2 = Constraint(m.t, m.i, 
+                                rule=lambda m,t,i: m.active_flow[t,i] <= m.flow[t,i] - init.flow_min * (1 - m.integer[t,i]))
+            m.active_flow_lb2 = Constraint(m.t, m.i, 
+                                rule=lambda m,t,i: m.active_flow[t,i] >= m.flow[t,i] - init.flow_max * (1 - m.integer[t,i]))
+        else:
+            def active_flow_fn(m,t,i):
+                return m.active_flow[t,i] == m.integer[t,i] * m.flow[t,i]
+            m.active_flow_constr = Constraint(m.t,m.i, rule = active_flow_fn)
+            
         def flow_sq_fn(m,t,i):
             return m.flow_sq[t,i] == m.flow[t,i]**2
         m.flow_sq_constr = Constraint(m.t,m.i, rule = flow_sq_fn)
@@ -134,21 +154,26 @@ class MIMPC_policy():
 
         def COP_fn(m,t,i):
             return m.COP[t,i] == init.a*m.integer[t,i]+init.b*(m.Q_delivered[t,i]/(init.Q_delivered_max)) + init.c*(m.Q_delivered[t,i]/init.Q_delivered_max)**2
+            # return m.COP[t,i] == init.a+init.b*(m.Q_delivered[t,i]/(init.Q_delivered_max)) + init.c*(m.Q_delivered[t,i]/init.Q_delivered_max)**2
         m.COP_constr = Constraint(m.t, m.i, rule=COP_fn)
 
         def P_chiller_fn(m,t,i):
             return m.COP[t,i] * m.P_chiller[t,i] - init.P0 * m.COP[t,i] * m.integer[t,i] == m.Q_delivered[t,i]
+            # return m.COP[t,i] * m.P_chiller[t,i] - init.P0 * m.COP[t,i] * m.integer[t,i] == m.Q_delivered[t,i]
+            # return m.P_chiller[t,i] == m.Q_delivered[t,i]/m.COP[t,i] + init.P0*m.integer[t,i]
+
         m.P_chiller_constr = Constraint(m.t, m.i, rule=P_chiller_fn)
 
         def P_pump_fn(m,t,i):
+            # return m.P_pump[t,i] == init.gamma * m.flow_sq[t,i] * m.active_flow[t,i]
             return m.P_pump[t,i] == init.gamma * m.flow_sq[t,i] * m.active_flow[t,i]
 
         m.P_pump_constr = Constraint(m.t, m.i, rule=P_pump_fn) # TODO: PW approximation
-        m.flow_constr = Constraint(m.t, m.i, rule= lambda m,t,i: m.flow[t,i] <= init.flow_max*m.integer[t,i])
+        # m.flow_constr = Constraint(m.t, m.i, rule= lambda m,t,i: m.flow[t,i] <= init.flow_max*m.integer[t,i]) # maybe redundant
         
-        def cooling_cnstr_fn(m,t):
-            return m.Q_slack[t] >= load[t] - quicksum(m.Q_delivered[t,i] for i in m.i)
-        m.Q_slack_constr = Constraint(m.t, rule=cooling_cnstr_fn)
+        # def cooling_cnstr_fn(m,t):
+        #     return m.Q_slack[t] >= load[t] - quicksum(m.Q_delivered[t,i] for i in m.i)
+        # m.Q_slack_constr = Constraint(m.t, rule=cooling_cnstr_fn)
 
 
         #   _____                       _   _     
@@ -168,6 +193,15 @@ class MIMPC_policy():
         m.integer_smooth_constr1 = Constraint(m.tm1, m.i, rule = integer_smooth_1)
         m.integer_smooth_constr2 = Constraint(m.tm1, m.i, rule = integer_smooth_2) 
         
+        def flow_smooth_1(m,t,i):
+            return m.flow_smooth[t,i] >= m.flow[t+1,i] - m.flow[t,i]
+        
+        def flow_smooth_2(m,t,i):
+            return m.flow_smooth[t,i] >= m.flow[t,i] - m.flow[t+1,i]
+
+        m.flow_smooth_constr1 = Constraint(m.tm1, m.i, rule = flow_smooth_1)
+        m.flow_smooth_constr2 = Constraint(m.tm1, m.i, rule = flow_smooth_2) 
+        
 
         #   ____  _     _           _   _           
         #  / __ \| |   (_)         | | (_)          
@@ -183,9 +217,11 @@ class MIMPC_policy():
         m.obj = Objective(
             expr=(
                 quicksum(
-                    m.P_chiller[t,i] + m.P_pump[t,i] + m.integer_smooth[t,i] for t in m.t for i in m.i
+                   0.01*(quicksum(m.Q_delivered[t,i] for i in m.i) - load[t])**2 + \
+                    m.P_chiller[t,i] + m.P_pump[t,i] + \
+                    1000.* m.integer_smooth[t,i] + 1000.* m.flow_smooth[t,i] for t in m.t for i in m.i
                 ) 
-                + under_delivery_gain * quicksum(m.Q_slack[t] for t in m.t)
+                # + under_delivery_gain * quicksum(m.Q_slack[t] for t in m.t)
             )
                     ,
             sense=minimize
@@ -236,27 +272,15 @@ class MIMPC_policy():
             
         return outputs
 
-    def __call__(self, T_supply=None, T_return=None, load=None, Ts=300.):
+    def __call__(self, T_supply=None, T_return=None, load=None, filtered_load=None, Ts=None):
+        Ts = self.Ts if Ts is None else Ts
         T_supply = T_supply.view(-1).numpy()
         T_return = T_return.view(-1).numpy()
         load = load.view(-1).numpy()
-        
-        model = self.discrete_model(T_supply=T_supply, T_return=T_return, load=load, Ts=Ts)
-        # elif self.ocp_formulation == 2:
-        #     pass
-
-        # self.solver.set_instance(model)
+        filtered_load = filtered_load.view(-1).numpy()
+        model = self.discrete_model(T_supply=T_supply, T_return=T_return, load=load, filtered_load=filtered_load, Ts=Ts)        
         result = self.solver.solve(model, tee=False, symbolic_solver_labels=True)
-    #     result = SolverFactory('mindtpy').solve(
-    #     model,
-    #     strategy='OA',            # or 'ECP'
-    #     mip_solver='gurobi',
-    #     nlp_solver='ipopt',
-    #     tee=True
-    # )
-        # print(result.solver.status)
-        # print(result.solver.termination_condition)
-
+        
         if self.verbose:
             print(f'Solution time: ', result.solver.wall_time, 'Solution: ', result.solver.termination_condition)
         

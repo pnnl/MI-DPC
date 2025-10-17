@@ -1,5 +1,6 @@
 #%%
-import utils; import torch; import init
+import utils; import torch
+from init import SystemParameters
 from chiller_system import ChillerSystem
 from neuromancer.system import Node, SystemPreview
 from neuromancer.constraint import variable
@@ -12,6 +13,7 @@ from neuromancer.loggers import BasicLogger
 from argparse import ArgumentParser
 import time
 
+init = SystemParameters()
 class MIDPC_policy():
         def __init__(self, nsteps, load_path, measure_inference_time = False):
                 self.nsteps = nsteps
@@ -27,7 +29,7 @@ class MIDPC_policy():
                 self.T_evap_node.callable.clipping = True
                 self.flow_node.callable.clipping = True
                 self.measure_inference_time = measure_inference_time
-        def __call__(self, T_supply=None, T_return=None, load=None):
+        def __call__(self, T_supply=None, T_return=None, load=None, filtered_load=None):
                 input_dict = {
                         'T_supply_and_return': torch.cat((T_supply,T_return), dim=-1).reshape(1,-1),
                         'load': load.reshape(1,-1)
@@ -60,65 +62,56 @@ class MIDPC_policy():
                 output['T_evap'] = T_evap['T_evap'].unsqueeze(0)
                 return output
 
-def relaxed_binary(x, slope=10.0, threshold=0.5):
+def relaxed_binary(x, slope=5.0, threshold=0.5):
         logits = slope * (x - threshold)
-        sig = torch.sigmoid(logits)
+        sig = torch.tanh(logits)
         return (x > threshold).float() + (sig - sig.detach())
 
 def round_fn(x):
         return torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)
 
-system_filter = ChillerSystem(M=init.M, Ts=180, C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
-                                a=init.a, b=init.b, c=init.c, gamma=init.gamma, 
-                                exponent=init.exponent, Q_rated=init.Q_delivered_max,
-                                eta_supply=init.eta_supply, eta_return=init.eta_return,
-                                h_filter=init.load_filter)
+system_filter = ChillerSystem(init = init)
 
 def load_filter(x):
         return system_filter.apply_load_filter(x[:,[0]])
 
 if __name__=='__main__':
 #     for nsteps in [10,20,30,40,50,60,70,80]:
+        torch.manual_seed(202)
         parser = ArgumentParser()
         parser.add_argument('-nsteps', default=100, type=int)
-        parser.add_argument('-Ts', default=300, type=int)
+        parser.add_argument('-Ts', default=180, type=int)
+        parser.add_argument('-M', default=2, type=int)
         args, unknown = parser.parse_known_args()
         nsteps = args.nsteps
         Ts = args.Ts
-
-        torch.manual_seed(202)
-        layer_norm = False
-        affine_norm = False
-        spectral_norm = False
+        init = SystemParameters(M=args.M)
+        layer_norm = False; affine_norm = False; spectral_norm = False
         # exponent = 2
-        load_min = 0
-        load_max = 1000
+        load_min = 0; load_max = (init.Q_delivered_max*init.M)*0.75
         mins = [init.T_supply_min] * init.M + [init.T_return_min] * 1 + [load_min] * (nsteps+1) 
         maxs = [init.T_supply_max] * init.M + [init.T_return_max] * 1 + [load_max] * (nsteps+1) 
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         torch.set_default_device(device=device)
 
-        system = ChillerSystem(M=init.M, Ts=Ts, C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
-                                a=init.a, b=init.b, c=init.c, gamma=init.gamma, 
-                                exponent=init.exponent, Q_rated=init.Q_delivered_max,
-                                eta_supply=init.eta_supply, eta_return=init.eta_return)
+        system = ChillerSystem(init=init)
        
 
         integrator = integrators.RK4(system, h=torch.tensor(Ts))
-
-        net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M, hsizes=[120, 120, 120],
-                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
-                                        mins=mins, maxs=maxs, u_min=init.flow_min, u_max=init.flow_max, 
+                        # In Size: T_supply + T_return + load + filtered_load+ relaxed_integer
+        net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+1, outsize=init.M, hsizes=[120, 120, 120],
+                                        nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                        mins=mins+[0.], maxs=maxs+[1.], u_min=init.flow_min, u_max=init.flow_max, 
                                         clipping=False, spectral_norm=spectral_norm)
 
-        net_evap = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M, hsizes=[120, 120, 120], 
-                                nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
-                                mins=mins, maxs=maxs, u_min=init.T_evap_min, u_max=init.T_evap_max, 
+        net_evap = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+1, outsize=init.M, hsizes=[120, 120, 120], 
+                                nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                mins=mins+[0.], maxs=maxs+[1.], u_min=init.T_evap_min, u_max=init.T_evap_max, 
                                 clipping=False, spectral_norm=spectral_norm)
 
         net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M-1, hsizes=[120, 120, 120],
                                         nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
-                                        mins=mins, maxs=maxs, u_min=-0.49, u_max=1.49, 
+                                        mins=mins, maxs=maxs, u_min=0., u_max=1., 
                                         clipping=False, spectral_norm=spectral_norm)
 
         # NEUROMANCER NODES
@@ -141,12 +134,12 @@ if __name__=='__main__':
         rounding_node = Node(round_fn, input_keys=['relaxed_integer'], output_keys=['integer'], name='soft_rounding')
 
         policy_flow_node = Node(net_flow,
-                        input_keys=['T_supply_and_return','load', 'filtered_load'],
+                        input_keys=['T_supply_and_return','load', 'filtered_load', 'relaxed_integer'],
                         output_keys=['flow'],
                         name='policy_flow')
 
         policy_evap_node = Node(net_evap,
-                        input_keys=['T_supply_and_return','load', 'filtered_load'],
+                        input_keys=['T_supply_and_return','load', 'filtered_load', 'relaxed_integer'],
                         output_keys=['T_evap'],
                         name='policy_evap')
 
@@ -284,12 +277,12 @@ if __name__=='__main__':
                 problem.to(device),
                 train_loader, dev_loader,
                 optimizer=optimizer,
-                epochs=500,
+                epochs=1000,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
                 eval_metric='dev_loss',
                 warmup=20,
-                patience=100,
+                patience=200,
                 clip=torch.inf, 
                 lr_scheduler=False,
                 device=device,

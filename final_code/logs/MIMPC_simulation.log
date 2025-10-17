@@ -1,4 +1,4 @@
-===== Starting runs at Wed Oct 15 06:30:23 PM CEST 2025 =====
+===== Starting runs at Thu Oct 16 06:32:18 PM CEST 2025 =====
 Running with Ts=180 and nsteps=20
 
 A module that was compiled using NumPy 1.x cannot be run in
@@ -52,253 +52,938 @@ Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/M
 AttributeError: _ARRAY_API not found
 Simulating chiller with MIMPC, N=20, M=2
 Timestep:  0
-Solution time:  1.4031240940093994 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008304834365845 Solution:  maxTimeLimit
 Timestep:  1
-Solution time:  0.11230802536010742 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01047110557556 Solution:  maxTimeLimit
 Timestep:  2
-Solution time:  0.10439586639404297 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.014358043670654 Solution:  maxTimeLimit
 Timestep:  3
-Solution time:  0.11089086532592773 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01176381111145 Solution:  maxTimeLimit
 Timestep:  4
-Solution time:  0.11894083023071289 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011394023895264 Solution:  maxTimeLimit
 Timestep:  5
-Solution time:  1.4827461242675781 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010648012161255 Solution:  maxTimeLimit
 Timestep:  6
-Solution time:  0.985090970993042 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.04817795753479 Solution:  maxTimeLimit
 Timestep:  7
-Solution time:  0.9075958728790283 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01183009147644 Solution:  maxTimeLimit
 Timestep:  8
-Solution time:  1.3026800155639648 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010546922683716 Solution:  maxTimeLimit
 Timestep:  9
-Solution time:  0.9942080974578857 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0092658996582 Solution:  maxTimeLimit
 Timestep:  10
-Solution time:  1.374330997467041 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.018593072891235 Solution:  maxTimeLimit
 Timestep:  11
-Solution time:  1.1645169258117676 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00829815864563 Solution:  maxTimeLimit
 Timestep:  12
-Solution time:  0.9476280212402344 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01021194458008 Solution:  maxTimeLimit
 Timestep:  13
-Solution time:  1.5113799571990967 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01606893539429 Solution:  maxTimeLimit
 Timestep:  14
-Solution time:  1.001025915145874 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01109218597412 Solution:  maxTimeLimit
 Timestep:  15
-Solution time:  0.909930944442749 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00912284851074 Solution:  maxTimeLimit
 Timestep:  16
-Solution time:  0.9703450202941895 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01210308074951 Solution:  maxTimeLimit
 Timestep:  17
-Solution time:  1.0522031784057617 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01008105278015 Solution:  maxTimeLimit
 Timestep:  18
-Solution time:  1.0875229835510254 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01318311691284 Solution:  maxTimeLimit
 Timestep:  19
-Solution time:  0.9957180023193359 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0132417678833 Solution:  maxTimeLimit
 Timestep:  20
-Solution time:  0.9989891052246094 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01444697380066 Solution:  maxTimeLimit
 Timestep:  21
-Solution time:  1.3153910636901855 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01165986061096 Solution:  maxTimeLimit
 Timestep:  22
-Solution time:  1.3213138580322266 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01883506774902 Solution:  maxTimeLimit
 Timestep:  23
-Solution time:  0.9413449764251709 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01374316215515 Solution:  maxTimeLimit
 Timestep:  24
-Solution time:  1.4158098697662354 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011783838272095 Solution:  maxTimeLimit
 Timestep:  25
-Solution time:  0.9414260387420654 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01260495185852 Solution:  maxTimeLimit
 Timestep:  26
-Solution time:  1.4917898178100586 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01536989212036 Solution:  maxTimeLimit
 Timestep:  27
-Solution time:  1.3212170600891113 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01035809516907 Solution:  maxTimeLimit
 Timestep:  28
-Solution time:  1.4148361682891846 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00686979293823 Solution:  maxTimeLimit
 Timestep:  29
-Solution time:  1.4925649166107178 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01493692398071 Solution:  maxTimeLimit
 Timestep:  30
-Solution time:  1.3020439147949219 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01319885253906 Solution:  maxTimeLimit
 Timestep:  31
-Solution time:  1.0121371746063232 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00894212722778 Solution:  maxTimeLimit
 Timestep:  32
-Solution time:  1.4016649723052979 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00928282737732 Solution:  maxTimeLimit
 Timestep:  33
-Solution time:  0.9695320129394531 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007863998413086 Solution:  maxTimeLimit
 Timestep:  34
-Solution time:  1.309156894683838 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0118510723114 Solution:  maxTimeLimit
 Timestep:  35
-Solution time:  0.859105110168457 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01076698303223 Solution:  maxTimeLimit
 Timestep:  36
-Solution time:  1.026055097579956 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.024502992630005 Solution:  maxTimeLimit
 Timestep:  37
-Solution time:  1.0733709335327148 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.006738901138306 Solution:  maxTimeLimit
 Timestep:  38
-Solution time:  0.8748569488525391 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.069393157958984 Solution:  maxTimeLimit
 Timestep:  39
-Solution time:  0.817147970199585 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007572889328 Solution:  maxTimeLimit
 Timestep:  40
-Solution time:  0.9083380699157715 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011460065841675 Solution:  maxTimeLimit
 Timestep:  41
-Solution time:  0.9500079154968262 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00939202308655 Solution:  maxTimeLimit
 Timestep:  42
-Solution time:  0.9221689701080322 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.013243198394775 Solution:  maxTimeLimit
 Timestep:  43
-Solution time:  0.9356958866119385 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01345896720886 Solution:  maxTimeLimit
 Timestep:  44
-Solution time:  1.2334718704223633 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02285599708557 Solution:  maxTimeLimit
 Timestep:  45
-Solution time:  1.4144959449768066 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01388216018677 Solution:  maxTimeLimit
 Timestep:  46
-Solution time:  0.8980569839477539 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01389408111572 Solution:  maxTimeLimit
 Timestep:  47
-Solution time:  0.9461760520935059 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.038634061813354 Solution:  maxTimeLimit
 Timestep:  48
-Solution time:  0.8788979053497314 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01405310630798 Solution:  maxTimeLimit
 Timestep:  49
-Solution time:  1.3460748195648193 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008891105651855 Solution:  maxTimeLimit
 Timestep:  50
-Solution time:  0.8711779117584229 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01127290725708 Solution:  maxTimeLimit
 Timestep:  51
-Solution time:  0.961982011795044 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01471519470215 Solution:  maxTimeLimit
 Timestep:  52
-Solution time:  1.2186639308929443 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00677704811096 Solution:  maxTimeLimit
 Timestep:  53
-Solution time:  0.9830520153045654 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008825063705444 Solution:  maxTimeLimit
 Timestep:  54
-Solution time:  0.9856410026550293 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011542081832886 Solution:  maxTimeLimit
 Timestep:  55
-Solution time:  1.4406487941741943 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0110650062561 Solution:  maxTimeLimit
 Timestep:  56
-Solution time:  1.2261579036712646 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.059597969055176 Solution:  maxTimeLimit
 Timestep:  57
-Solution time:  0.8124079704284668 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01558017730713 Solution:  maxTimeLimit
 Timestep:  58
-Solution time:  1.407148838043213 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.014094829559326 Solution:  maxTimeLimit
 Timestep:  59
-Solution time:  1.2628660202026367 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012316942214966 Solution:  maxTimeLimit
 Timestep:  60
-Solution time:  0.8377668857574463 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01083493232727 Solution:  maxTimeLimit
 Timestep:  61
-Solution time:  1.16749906539917 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011963844299316 Solution:  maxTimeLimit
 Timestep:  62
-Solution time:  1.468487024307251 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00715088844299 Solution:  maxTimeLimit
 Timestep:  63
-Solution time:  1.2065510749816895 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01267695426941 Solution:  maxTimeLimit
 Timestep:  64
-Solution time:  1.3666119575500488 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00893712043762 Solution:  maxTimeLimit
 Timestep:  65
-Solution time:  0.9245679378509521 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01168704032898 Solution:  maxTimeLimit
 Timestep:  66
-Solution time:  0.9102990627288818 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008310079574585 Solution:  maxTimeLimit
 Timestep:  67
-Solution time:  0.8554351329803467 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008111000061035 Solution:  maxTimeLimit
 Timestep:  68
-Solution time:  0.8219201564788818 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02505898475647 Solution:  maxTimeLimit
 Timestep:  69
-Solution time:  1.3100171089172363 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01342487335205 Solution:  maxTimeLimit
 Timestep:  70
-Solution time:  0.9361457824707031 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01545596122742 Solution:  maxTimeLimit
 Timestep:  71
-Solution time:  1.1718089580535889 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01110887527466 Solution:  maxTimeLimit
 Timestep:  72
-Solution time:  0.837332010269165 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.006322145462036 Solution:  maxTimeLimit
 Timestep:  73
-Solution time:  1.5783491134643555 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.052067041397095 Solution:  maxTimeLimit
 Timestep:  74
-Solution time:  0.894737958908081 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00797891616821 Solution:  maxTimeLimit
 Timestep:  75
-Solution time:  0.978816032409668 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0099720954895 Solution:  maxTimeLimit
 Timestep:  76
-Solution time:  1.0485901832580566 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00997805595398 Solution:  maxTimeLimit
 Timestep:  77
-Solution time:  1.036250114440918 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0111620426178 Solution:  maxTimeLimit
 Timestep:  78
-Solution time:  1.316870927810669 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.009397983551025 Solution:  maxTimeLimit
 Timestep:  79
-Solution time:  0.9721601009368896 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.017277002334595 Solution:  maxTimeLimit
 Timestep:  80
-Solution time:  0.9510040283203125 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01281785964966 Solution:  maxTimeLimit
 Timestep:  81
-Solution time:  0.9501168727874756 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01186490058899 Solution:  maxTimeLimit
 Timestep:  82
-Solution time:  0.9701988697052002 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00801706314087 Solution:  maxTimeLimit
 Timestep:  83
-Solution time:  0.9076712131500244 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00787091255188 Solution:  maxTimeLimit
 Timestep:  84
-Solution time:  1.5483520030975342 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00856018066406 Solution:  maxTimeLimit
 Timestep:  85
-Solution time:  1.3476920127868652 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0080771446228 Solution:  maxTimeLimit
 Timestep:  86
-Solution time:  1.4366698265075684 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00811696052551 Solution:  maxTimeLimit
 Timestep:  87
-Solution time:  0.989375114440918 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01101803779602 Solution:  maxTimeLimit
 Timestep:  88
-Solution time:  0.8369710445404053 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00867414474487 Solution:  maxTimeLimit
 Timestep:  89
-Solution time:  1.0232131481170654 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.009697914123535 Solution:  maxTimeLimit
 Timestep:  90
-Solution time:  0.9960951805114746 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01081109046936 Solution:  maxTimeLimit
 Timestep:  91
-Solution time:  1.166511058807373 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010534048080444 Solution:  maxTimeLimit
 Timestep:  92
-Solution time:  1.6220149993896484 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008715867996216 Solution:  maxTimeLimit
 Timestep:  93
-Solution time:  0.9048008918762207 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01171898841858 Solution:  maxTimeLimit
 Timestep:  94
-Solution time:  1.1194498538970947 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.015424966812134 Solution:  maxTimeLimit
 Timestep:  95
-Solution time:  0.15421509742736816 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.03165006637573 Solution:  maxTimeLimit
 Timestep:  96
-Solution time:  1.291504144668579 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01076912879944 Solution:  maxTimeLimit
 Timestep:  97
-Solution time:  1.05525803565979 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012784004211426 Solution:  maxTimeLimit
 Timestep:  98
-Solution time:  0.6825940608978271 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00805592536926 Solution:  maxTimeLimit
 Timestep:  99
-Solution time:  1.2062339782714844 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00948190689087 Solution:  maxTimeLimit
 Timestep:  100
-Solution time:  0.8622040748596191 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00915718078613 Solution:  maxTimeLimit
 Timestep:  101
-Solution time:  1.5316600799560547 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01185202598572 Solution:  maxTimeLimit
 Timestep:  102
-Solution time:  1.4786970615386963 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0367329120636 Solution:  maxTimeLimit
 Timestep:  103
-Solution time:  0.0686960220336914 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01908302307129 Solution:  maxTimeLimit
 Timestep:  104
-Solution time:  0.9688670635223389 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01201605796814 Solution:  maxTimeLimit
 Timestep:  105
-Solution time:  1.537909984588623 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0125789642334 Solution:  maxTimeLimit
 Timestep:  106
-Solution time:  1.070605993270874 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00967717170715 Solution:  maxTimeLimit
 Timestep:  107
-Solution time:  0.06409192085266113 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.05308198928833 Solution:  maxTimeLimit
 Timestep:  108
-Solution time:  1.322843074798584 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01232719421387 Solution:  maxTimeLimit
 Timestep:  109
-Solution time:  225.16721391677856 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01155376434326 Solution:  maxTimeLimit
 Timestep:  110
-Solution time:  1.853088140487671 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01319193840027 Solution:  maxTimeLimit
 Timestep:  111
-Solution time:  0.9674310684204102 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.027535915374756 Solution:  maxTimeLimit
 Timestep:  112
-Solution time:  0.0723869800567627 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012272119522095 Solution:  maxTimeLimit
 Timestep:  113
-Solution time:  2.2688679695129395 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01060199737549 Solution:  maxTimeLimit
 Timestep:  114
-Solution time:  0.06592798233032227 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010947942733765 Solution:  maxTimeLimit
 Timestep:  115
-Solution time:  0.06553792953491211 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02627611160278 Solution:  maxTimeLimit
 Timestep:  116
-Solution time:  220.54033184051514 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.009788036346436 Solution:  maxTimeLimit
 Timestep:  117
-Solution time:  0.0635080337524414 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01720404624939 Solution:  maxTimeLimit
 Timestep:  118
-Solution time:  0.7989687919616699 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012386083602905 Solution:  maxTimeLimit
 Timestep:  119
-Solution time:  1781.3187761306763 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010692834854126 Solution:  maxTimeLimit
 Timestep:  120
-Solution time:  667.641597032547 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.045350074768066 Solution:  maxTimeLimit
 Timestep:  121
-Solution time:  1.8909528255462646 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.015401124954224 Solution:  maxTimeLimit
 Timestep:  122
-Solution time:  2.2880938053131104 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012075901031494 Solution:  maxTimeLimit
 Timestep:  123
-Solution time:  0.06147599220275879 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01224994659424 Solution:  maxTimeLimit
 Timestep:  124
-Solution time:  218.7292070388794 Solution:  optimal
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011605978012085 Solution:  maxTimeLimit
 Timestep:  125
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00816106796265 Solution:  maxTimeLimit
+Timestep:  126
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011849880218506 Solution:  maxTimeLimit
+Timestep:  127
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.062248945236206 Solution:  maxTimeLimit
+Timestep:  128
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.014249086380005 Solution:  maxTimeLimit
+Timestep:  129
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01400685310364 Solution:  maxTimeLimit
+Timestep:  130
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.014212131500244 Solution:  maxTimeLimit
+Timestep:  131
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.022002935409546 Solution:  maxTimeLimit
+Timestep:  132
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011940002441406 Solution:  maxTimeLimit
+Timestep:  133
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007128953933716 Solution:  maxTimeLimit
+Timestep:  134
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00745415687561 Solution:  maxTimeLimit
+Timestep:  135
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01547598838806 Solution:  maxTimeLimit
+Timestep:  136
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01238179206848 Solution:  maxTimeLimit
+Timestep:  137
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01178193092346 Solution:  maxTimeLimit
+Timestep:  138
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.027458906173706 Solution:  maxTimeLimit
+Timestep:  139
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0111300945282 Solution:  maxTimeLimit
+Timestep:  140
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00707197189331 Solution:  maxTimeLimit
+Timestep:  141
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012168169021606 Solution:  maxTimeLimit
+Timestep:  142
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01137900352478 Solution:  maxTimeLimit
+Timestep:  143
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00773096084595 Solution:  maxTimeLimit
+Timestep:  144
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00819802284241 Solution:  maxTimeLimit
+Timestep:  145
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0199019908905 Solution:  maxTimeLimit
+Timestep:  146
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011857986450195 Solution:  maxTimeLimit
+Timestep:  147
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0155930519104 Solution:  maxTimeLimit
+Timestep:  148
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01135301589966 Solution:  maxTimeLimit
+Timestep:  149
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01288604736328 Solution:  maxTimeLimit
+Timestep:  150
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01258301734924 Solution:  maxTimeLimit
+Timestep:  151
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00687098503113 Solution:  maxTimeLimit
+Timestep:  152
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01377820968628 Solution:  maxTimeLimit
+Timestep:  153
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00969099998474 Solution:  maxTimeLimit
+Timestep:  154
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01258587837219 Solution:  maxTimeLimit
+Timestep:  155
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01220512390137 Solution:  maxTimeLimit
+Timestep:  156
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012338161468506 Solution:  maxTimeLimit
+Timestep:  157
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011507987976074 Solution:  maxTimeLimit
+Timestep:  158
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00850486755371 Solution:  maxTimeLimit
+Timestep:  159
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01232886314392 Solution:  maxTimeLimit
+Timestep:  160
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0125789642334 Solution:  maxTimeLimit
+Timestep:  161
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.006056785583496 Solution:  maxTimeLimit
+Timestep:  162
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.013965129852295 Solution:  maxTimeLimit
+Timestep:  163
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007277965545654 Solution:  maxTimeLimit
+Timestep:  164
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010977029800415 Solution:  maxTimeLimit
+Timestep:  165
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.018534898757935 Solution:  maxTimeLimit
+Timestep:  166
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01141595840454 Solution:  maxTimeLimit
+Timestep:  167
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008151054382324 Solution:  maxTimeLimit
+Timestep:  168
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0110502243042 Solution:  maxTimeLimit
+Timestep:  169
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01104688644409 Solution:  maxTimeLimit
+Timestep:  170
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.008695125579834 Solution:  maxTimeLimit
+Timestep:  171
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.006059885025024 Solution:  maxTimeLimit
+Timestep:  172
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.017186880111694 Solution:  maxTimeLimit
+Timestep:  173
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.033628940582275 Solution:  maxTimeLimit
+Timestep:  174
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02005887031555 Solution:  maxTimeLimit
+Timestep:  175
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012195110321045 Solution:  maxTimeLimit
+Timestep:  176
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01056098937988 Solution:  maxTimeLimit
+Timestep:  177
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01195001602173 Solution:  maxTimeLimit
+Timestep:  178
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01038193702698 Solution:  maxTimeLimit
+Timestep:  179
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.03162598609924 Solution:  maxTimeLimit
+Timestep:  180
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01279902458191 Solution:  maxTimeLimit
+Timestep:  181
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0150671005249 Solution:  maxTimeLimit
+Timestep:  182
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.010154008865356 Solution:  maxTimeLimit
+Timestep:  183
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01619100570679 Solution:  maxTimeLimit
+Timestep:  184
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011033058166504 Solution:  maxTimeLimit
+Timestep:  185
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02667498588562 Solution:  maxTimeLimit
+Timestep:  186
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01157307624817 Solution:  maxTimeLimit
+Timestep:  187
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0087890625 Solution:  maxTimeLimit
+Timestep:  188
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.024168968200684 Solution:  maxTimeLimit
+Timestep:  189
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01009702682495 Solution:  maxTimeLimit
+Timestep:  190
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01196002960205 Solution:  maxTimeLimit
+Timestep:  191
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.012118101119995 Solution:  maxTimeLimit
+Timestep:  192
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00865316390991 Solution:  maxTimeLimit
+Timestep:  193
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011674880981445 Solution:  maxTimeLimit
+Timestep:  194
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01099395751953 Solution:  maxTimeLimit
+Timestep:  195
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007587909698486 Solution:  maxTimeLimit
+Timestep:  196
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01156210899353 Solution:  maxTimeLimit
+Timestep:  197
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01095509529114 Solution:  maxTimeLimit
+Timestep:  198
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.013219118118286 Solution:  maxTimeLimit
+Timestep:  199
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01123094558716 Solution:  maxTimeLimit
+Timestep:  200
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.0089168548584 Solution:  maxTimeLimit
+Timestep:  201
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01168704032898 Solution:  maxTimeLimit
+Timestep:  202
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00770401954651 Solution:  maxTimeLimit
+Timestep:  203
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01306486129761 Solution:  maxTimeLimit
+Timestep:  204
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.05419993400574 Solution:  maxTimeLimit
+Timestep:  205
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01087999343872 Solution:  maxTimeLimit
+Timestep:  206
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01015090942383 Solution:  maxTimeLimit
+Timestep:  207
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.017943143844604 Solution:  maxTimeLimit
+Timestep:  208
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00915813446045 Solution:  maxTimeLimit
+Timestep:  209
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.02460789680481 Solution:  maxTimeLimit
+Timestep:  210
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.007822036743164 Solution:  maxTimeLimit
+Timestep:  211
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01172494888306 Solution:  maxTimeLimit
+Timestep:  212
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.03982496261597 Solution:  maxTimeLimit
+Timestep:  213
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01226592063904 Solution:  maxTimeLimit
+Timestep:  214
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011775970458984 Solution:  maxTimeLimit
+Timestep:  215
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.050580978393555 Solution:  maxTimeLimit
+Timestep:  216
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00621199607849 Solution:  maxTimeLimit
+Timestep:  217
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.011481046676636 Solution:  maxTimeLimit
+Timestep:  218
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01235795021057 Solution:  maxTimeLimit
+Timestep:  219
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.013705015182495 Solution:  maxTimeLimit
+Timestep:  220
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.013625144958496 Solution:  maxTimeLimit
+Timestep:  221
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01283502578735 Solution:  maxTimeLimit
+Timestep:  222
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01182579994202 Solution:  maxTimeLimit
+Timestep:  223
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01279401779175 Solution:  maxTimeLimit
+Timestep:  224
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01269507408142 Solution:  maxTimeLimit
+Timestep:  225
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01370096206665 Solution:  maxTimeLimit
+Timestep:  226
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00802206993103 Solution:  maxTimeLimit
+Timestep:  227
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01907396316528 Solution:  maxTimeLimit
+Timestep:  228
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01215314865112 Solution:  maxTimeLimit
+Timestep:  229
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01315903663635 Solution:  maxTimeLimit
+Timestep:  230
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.00915813446045 Solution:  maxTimeLimit
+Timestep:  231
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.04878282546997 Solution:  maxTimeLimit
+Timestep:  232
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time:  50.01386284828186 Solution:  maxTimeLimit
+Timestep:  233
+WARNING (W1002): Setting Var 'T_return[0]' to a numeric value
+`40.01362549674142` outside the bounds (8.0, 40.0).
+    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1002

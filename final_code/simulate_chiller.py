@@ -177,7 +177,7 @@ if __name__=='__main__':
     
     if args.plotting:
         plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
-if __name__ == '__main__':
+# if __name__ == '__main__':
 #     import matplotlib.pyplot as plt
 #     plt.show()
 #     PLR = outputs['Q_delivered'][0,:,:].sum(-1,keepdim=True)/ \

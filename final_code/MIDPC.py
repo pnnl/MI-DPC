@@ -60,11 +60,12 @@ class MIDPC_policy():
                 output['relaxed_integer'] = relaxed_integer['relaxed_integer'].unsqueeze(0)
                 output['flow'] = mass_flow['flow'].unsqueeze(0)
                 output['T_evap'] = T_evap['T_evap'].unsqueeze(0)
+                output['filtered_load'] = filtered_load['filtered_load'].unsqueeze(0)
                 return output
 
 def relaxed_binary(x, slope=5.0, threshold=0.5):
         logits = slope * (x - threshold)
-        sig = torch.tanh(logits)
+        sig = torch.sigmoid(logits)
         return (x > threshold).float() + (sig - sig.detach())
 
 def round_fn(x):
@@ -76,7 +77,6 @@ def load_filter(x):
         return system_filter.apply_load_filter(x[:,[0]])
 
 if __name__=='__main__':
-#     for nsteps in [10,20,30,40,50,60,70,80]:
         torch.manual_seed(202)
         parser = ArgumentParser()
         parser.add_argument('-nsteps', default=100, type=int)
@@ -99,18 +99,24 @@ if __name__=='__main__':
 
         integrator = integrators.RK4(system, h=torch.tensor(Ts))
                         # In Size: T_supply + T_return + load + filtered_load+ relaxed_integer
-        net_flow = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+1, outsize=init.M, hsizes=[120, 120, 120],
-                                        nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
-                                        mins=mins+[0.], maxs=maxs+[1.], u_min=init.flow_min, u_max=init.flow_max, 
+        net_flow = utils.customMPL(
+                                        # insize=1*init.M+1+1*(nsteps)+1+(init.M-1), outsize=init.M, hsizes=[120, 120, 120],
+                                        insize=1*init.M+1+1*(nsteps)+1, outsize=init.M, hsizes=[120, 120, 120, 120],
+                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                        # mins=mins+([0.]*(init.M-1)), maxs=maxs+([1.]*(init.M-1)), u_min=init.flow_min, u_max=init.flow_max, 
+                                        mins=mins, maxs=maxs, u_min=init.flow_min, u_max=init.flow_max, 
                                         clipping=False, spectral_norm=spectral_norm)
 
-        net_evap = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+1, outsize=init.M, hsizes=[120, 120, 120], 
-                                nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
-                                mins=mins+[0.], maxs=maxs+[1.], u_min=init.T_evap_min, u_max=init.T_evap_max, 
+        net_evap = utils.customMPL(
+                                # insize=1*init.M+1+1*(nsteps)+1+(init.M-1), outsize=init.M, hsizes=[120, 120, 120], 
+                                insize=1*init.M+1+1*(nsteps)+1, outsize=init.M, hsizes=[120, 120, 120, 120], 
+                                nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                # mins=mins+([0.]*(init.M-1)), maxs=maxs+([1.]*(init.M-1)), u_min=init.T_evap_min, u_max=init.T_evap_max, 
+                                mins=mins, maxs=maxs, u_min=init.T_evap_min, u_max=init.T_evap_max, 
                                 clipping=False, spectral_norm=spectral_norm)
 
-        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M-1, hsizes=[120, 120, 120],
-                                        nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M-1, hsizes=[120, 120, 120, 120],
+                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
                                         mins=mins, maxs=maxs, u_min=0., u_max=1., 
                                         clipping=False, spectral_norm=spectral_norm)
 
@@ -134,12 +140,12 @@ if __name__=='__main__':
         rounding_node = Node(round_fn, input_keys=['relaxed_integer'], output_keys=['integer'], name='soft_rounding')
 
         policy_flow_node = Node(net_flow,
-                        input_keys=['T_supply_and_return','load', 'filtered_load', 'relaxed_integer'],
+                        input_keys=['T_supply_and_return','load', 'filtered_load'],
                         output_keys=['flow'],
                         name='policy_flow')
 
         policy_evap_node = Node(net_evap,
-                        input_keys=['T_supply_and_return','load', 'filtered_load', 'relaxed_integer'],
+                        input_keys=['T_supply_and_return','load', 'filtered_load'],
                         output_keys=['T_evap'],
                         name='policy_evap')
 
@@ -191,7 +197,7 @@ if __name__=='__main__':
         # c = init.delta_penalty # Switching cost coefficient
         c = 10.
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
-        binary_regularization = 500.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
+        binary_regularization = 100.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
         # switching_loss = c*(integer_variable == 0)
         # polar_loss = c*((relaxed_integer_variable[:,:,[0]] == integer_variable[:,:,[0]])^2)
@@ -232,7 +238,7 @@ if __name__=='__main__':
                 T_supply_lb, T_supply_ub,
                 flow_lb, flow_ub,
                 T_evap_lb, T_evap_ub,
-                # relaxed_integer_variable_lb, relaxed_integer_variable_ub,
+                relaxed_integer_variable_lb, relaxed_integer_variable_ub,
                 # cooling_bound,
                 ]
         
@@ -272,7 +278,7 @@ if __name__=='__main__':
         # logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps} at Ts={Ts}')
-        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.0001, weight_decay=0.00)
+        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.0003, weight_decay=0.00)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,
@@ -293,7 +299,12 @@ if __name__=='__main__':
         best_model = trainer.train()    # start optimization
         trainer.model.load_state_dict(best_model) # load best 
         training_time = time.time() - start_time
-        training_data = {'eltime': training_time, 'n_epochs': trainer.current_epoch}
+        
+        def count_parameters(model):
+            return sum(p.numel() for p in model.parameters() if p.requires_grad)
+        n_parameters = count_parameters(cl_system)
+        
+        training_data = {'eltime': training_time, 'n_epochs': trainer.current_epoch, 'n_parameters': n_parameters}
         torch.save(cl_system, f'results/MIDPC/policies/N_{nsteps}_Ts_{Ts}_M_{init.M}.pt')
         torch.save(training_data, f'results/MIDPC/policies/training_data_N_{nsteps}_Ts_{Ts}_M_{init.M}.pt')
 # %%

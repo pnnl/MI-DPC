@@ -11,7 +11,7 @@ class SystemParameters():
         self.Q_delivered_max = 500 # rated chiller cooling [kW] - This value is provided by the manufacturer
 
         # # # Load signal parameters
-        self.night_baseline=lambda: torch.rand(1).uniform_(100,350)
+        self.night_baseline=lambda: torch.rand(1).uniform_(50,300)
         self.day_baseline=lambda: torch.rand(1).uniform_(300,(self.M*self.Q_delivered_max)*0.75)
         self.ramp_hours = 4
         self.tolerance = 5 # tolerance for cooling bound [kW]

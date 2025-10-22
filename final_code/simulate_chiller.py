@@ -77,7 +77,7 @@ if __name__=='__main__':
     parser.add_argument('-nsteps', default=2, type=int, help='Prediction horizon length')
     parser.add_argument('-Ts', default=180, type=int, help='Sampling time')
     parser.add_argument('-M', default=2, type=int, help='Number of chillers')
-    parser.add_argument('-n_days', default=1, type=int, help='Number of days of simulation')
+    parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation')
     parser.add_argument('-plotting', default=True, type=bool, help='Plot or not')
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
@@ -168,7 +168,7 @@ if __name__=='__main__':
                         # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
-                        verbose=True, # Print current timestep
+                        verbose=False, # Print current timestep
                         system=chiller_system, # For computing score variables
                         n_days=args.n_days
                        ) # Returns dictionary

@@ -2,6 +2,7 @@
 import torch; import torch.nn as nn;
 from init import SystemParameters
 import matplotlib.pyplot as plt
+import matplotlib
 
 init = SystemParameters()
 # Custom MLP
@@ -219,7 +220,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     axes[5].set_xlabel("Timestep")
     axes[5].set_ylabel(f"Pump [kW]")
 
-    axes[6].plot(time, data['mass_flow'][0,:,:], label=[f'Chiller{i+1}' for i in rng])
+    axes[6].plot(time, data['mass_flow'][0,:,:]*data['chiller_status'][0,:,:], label=[f'Chiller{i+1}' for i in rng])
     axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k:'); axes[6].plot(time, torch.ones(s_length)*init.flow_max,'k:', label='bounds')
     axes[6].set_xlabel("Timestep")
     axes[6].set_ylabel("Mass flowrates [kg/s]")
@@ -243,7 +244,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     # axes[8].legend()
     axes[8].grid(True)
     
-    axes[9].plot(time, COP[0,:,:], label=[f'Chiller{i+1}' for i in rng])
+    axes[9].plot(time, COP[0,:,:].mean(-1,keepdim=True), label=[f'Chiller{i+1}' for i in rng])
     axes[9].set_ylabel("COP [-]"); axes[9].set_xlabel("Timestep")
     axes[9].legend()
     axes[9].grid(True)
@@ -264,6 +265,177 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     # print('Total cost of operation: ', cost.item(), 'kWh')
     if save_path is not None:
         plt.savefig(save_path)
+    plt.show()
+
+
+def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_unit=None):
+    """
+    Plot chiller data for one or more datasets on shared axes.
+    Supports multiple datasets and LaTeX/PGF export.
+    """
+    # --- LaTeX + PGF setup ---
+    matplotlib.use("pgf")
+    plt.rcParams.update({
+        "pgf.texsystem": "pdflatex",
+        "text.usetex": True,
+        "font.family": "serif",
+        "font.size": 10,
+        "pgf.rcfonts": False,
+        "legend.fontsize": 6,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8
+    })
+
+    # --- Handle colors and styles ---
+    base_colors = ["royalblue", "crimson", "darkorange", "seagreen"]
+    base_styles = ["-", "--", "-.", ":"]
+    n_data = len(datas)
+    if labels is None:
+        labels = [f"Data {i+1}" for i in range(n_data)]
+
+    # --- Time vector setup (assuming same length for all datasets) ---
+    d0 = datas[0]
+    s_length = d0["chiller_status"].size(1)
+    if time_unit == "h":
+        time = torch.arange(0, d0["load"].size(1)) * (Ts / 3600)
+        x_label = "Time [h]"
+    elif time_unit == "s":
+        time = torch.arange(0, d0["load"].size(1)) * Ts
+        x_label = "Time [s]"
+    else:
+        time = torch.arange(0, d0["load"].size(1))
+        x_label = "Timestep [-]"
+
+    # --- Create figure ---
+    fig, axes = plt.subplots(5, 2, figsize=(7.16, 5), sharex=True)
+    axes = axes.flatten()
+
+    # --- Main plotting loop ---
+    for idx, data in enumerate(datas):
+        # color = base_colors[idx % len(base_colors)]
+        color = None
+        style = base_styles[idx % len(base_styles)]
+        label_tag = labels[idx]
+
+        # 1) T_evap vs T_supply
+        for i in range(data["T_evap"].size(-1)):
+            axes[0].plot(
+                time, data["T_supply"][0, :-1, i],
+                linestyle=style, color=color, alpha=0.8,
+                label=fr"${{\mathrm{{Chiller\;{i+1}}}}}\ \mathrm{{{label_tag}}}$"
+            )
+            # axes[0].plot(
+            #     time, data["T_evap"][0, :, i],
+            #     linestyle=style, color=color, alpha=0.5,
+            #     label=fr"$T_{{\mathrm{{evap,{i+1}}}}}\ \mathrm{{{label_tag}}}$"
+            # )
+        axes[0].plot(time, torch.ones(s_length)*init.T_min, 'k--')
+        axes[0].plot(time, torch.ones(s_length)*init.T_max, 'k--')
+        # 2) Load vs Q_delivered
+        axes[1].plot(
+            time, data["load"][0, :, :].cpu(),
+            'k--',
+            label=fr"$Q_\mathrm{{load}}\ \mathrm{{{label_tag}}}$"
+        )
+        axes[1].plot(
+            time, data["Q_delivered"][0, :, :].sum(-1).cpu(),
+            linestyle=style, color=color,
+            label=fr"$Q\ \mathrm{{{label_tag}}}$"
+        )
+
+        # 3) T_out
+        axes[2].plot(
+            time, data["T_out"][0, :, :].cpu(),
+            linestyle=style, color=color, alpha=0.8,
+            label=fr"$T_\mathrm{{out}}\ \mathrm{{{label_tag}}}$"
+        )
+        axes[2].plot(time, torch.ones(s_length)*init.T_min, 'k--')
+        axes[2].plot(time, torch.ones(s_length)*init.T_max, 'k--')
+
+        # 4) P_chiller
+        for i in range(data["P_chiller"].size(-1)):
+            axes[3].plot(
+                time, data["P_chiller"][0, :, i].cpu(),
+                linestyle=style, color=color,
+                label=fr"$\mathrm{{Chiller}}\;{i+1} \mathrm{{{label_tag}}}$"
+            )
+
+        # 5) T_return
+        axes[4].plot(
+            time, data["T_return"][0, :s_length, 0].cpu(),
+            linestyle=style, color=color,
+            label=fr"$T_\mathrm{{r}}\ \mathrm{{{label_tag}}}$"
+        )
+        axes[4].plot(time, torch.ones(s_length)*init.T_return_min, 'k--')
+        axes[4].plot(time, torch.ones(s_length)*init.T_return_max, 'k--')
+
+        # 6) P_pump
+        for i in range(data["P_pump"].size(-1)):
+            axes[5].plot(
+                time, data["P_pump"][0, :, i].cpu(),
+                linestyle=style, color=color,
+                label=fr"$\mathrm{{Chiller}}\; {i+1}\ \mathrm{{{label_tag}}}$"
+            )
+
+        # 7) mass_flow
+        for i in range(data["mass_flow"].size(-1)):
+            axes[6].plot(
+                time, data["mass_flow"][0, :, i].cpu()*data['chiller_status'][0,:,i],
+                linestyle=style, color=color,
+                label=fr"$\mathrm{{Chiller}}\;{i+1} \mathrm{{{label_tag}}}$"
+            )
+        axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k--')
+        axes[6].plot(time, torch.ones(s_length)*init.flow_max, 'k--')
+
+        # 8) status
+        for i in range(data["chiller_status"].size(-1)):
+            axes[7].plot(
+                time, data["chiller_status"][0, :, i].cpu(),
+                linestyle=style, color=color,
+                label=fr"$\mathrm{{Chiller}}\;{i+1}\ \mathrm{{{label_tag}}}$"
+            )
+
+        # 9) PLR
+        PLR = data["Q_delivered"] / init.Q_delivered_max
+        axes[8].plot(
+            time, PLR[0, :, :].sum(-1).cpu(),
+            linestyle=style, color=color,
+            label=fr"$\mathrm{{PLR}}\ \mathrm{{{label_tag}}}$"
+        )
+
+        # 10) COP
+        COP = init.a + init.b * PLR + init.c * PLR ** 2
+        axes[9].plot(
+            time, COP[0, :, :].mean(dim=-1,keepdim=True).cpu(),
+            linestyle=style, color=color,
+            label=fr"$\mathrm{{COP}}\ \mathrm{{{label_tag}}}$"
+        )
+
+    # --- Formatting & labels ---
+    ylabels = [
+        r"$T_\mathrm{s}^{(i)}$ [°C]", r"$Q$ [kW]", r"$T_\mathrm{out}$ [°C]",
+        r"$P_\mathrm{chiller}$ [kW]", r"$T_\mathrm{return}$ [°C]",
+        r"$P_\mathrm{pump}$ [kW]", r"$\dot m$ [kg/s]",
+        r"$\delta^{(i)}$ [-]", r"PLR [-]", r"COP [-]"
+    ]
+
+    for ax, yl in zip(axes, ylabels):
+        ax.set_ylabel(yl)
+        ax.grid(True)
+    for i in [0, 1, 3, 5, 6, 7]:
+        axes[i].legend(frameon=True, framealpha=0.8, loc="best")
+
+    axes[-1].set_xlabel(x_label)
+    axes[-2].set_xlabel(x_label)
+    fig.tight_layout(h_pad=0.1)
+    fig.subplots_adjust(hspace=0.1)
+    # --- Save ---
+    if save_path is not None:
+        fig.savefig(f"{save_path}.pdf", bbox_inches="tight", transparent=True, pad_inches=0.05)
+        fig.savefig(f"{save_path}.pgf", bbox_inches="tight", transparent=True, pad_inches=0.05)
+
+    plt.show()
+
 
 # SIGNAL PLOT
 if __name__ == '__main__':

@@ -221,7 +221,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     axes[5].set_ylabel(f"Pump [kW]")
 
     axes[6].plot(time, data['mass_flow'][0,:,:]*data['chiller_status'][0,:,:], label=[f'Chiller{i+1}' for i in rng])
-    axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k:'); axes[6].plot(time, torch.ones(s_length)*init.flow_max,'k:', label='bounds')
+    axes[6].plot(time, torch.ones(s_length)*0., 'k:'); axes[6].plot(time, torch.ones(s_length)*init.flow_max,'k:', label='bounds')
     axes[6].set_xlabel("Timestep")
     axes[6].set_ylabel("Mass flowrates [kg/s]")
     axes[6].legend(); axes[6].grid(True)
@@ -384,7 +384,7 @@ def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_uni
                 linestyle=style, color=color,
                 label=fr"$\mathrm{{Chiller}}\;{i+1} \mathrm{{{label_tag}}}$"
             )
-        axes[6].plot(time, torch.ones(s_length)*init.flow_min, 'k--')
+        axes[6].plot(time, torch.ones(s_length)*0., 'k--')
         axes[6].plot(time, torch.ones(s_length)*init.flow_max, 'k--')
 
         # 8) status
@@ -415,7 +415,7 @@ def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_uni
     ylabels = [
         r"$T_\mathrm{s}^{(i)}$ [°C]", r"$Q$ [kW]", r"$T_\mathrm{out}$ [°C]",
         r"$P_\mathrm{chiller}$ [kW]", r"$T_\mathrm{return}$ [°C]",
-        r"$P_\mathrm{pump}$ [kW]", r"$\dot m$ [kg/s]",
+        r"$P_\mathrm{pump}$ [kW]", r"$\delta^{(i)}\dot m^{(i)}$ [kg/s]",
         r"$\delta^{(i)}$ [-]", r"PLR [-]", r"COP [-]"
     ]
 

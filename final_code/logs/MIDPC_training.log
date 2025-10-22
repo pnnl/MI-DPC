@@ -869,3 +869,249 @@ epoch: 340  train_loss: 50.60048294067383
 epoch: 350  train_loss: 50.55805969238281
 epoch: 360  train_loss: 50.52461242675781
 epoch: 370  train_loss: 50.506202697753906
+epoch: 380  train_loss: 50.467018127441406
+epoch: 390  train_loss: 50.52185821533203
+epoch: 400  train_loss: 50.19447326660156
+epoch: 410  train_loss: 49.933631896972656
+epoch: 420  train_loss: 49.762428283691406
+epoch: 430  train_loss: 50.04790496826172
+Early stopping!!!
+Finished run with nsteps=50 at Wed Oct 22 10:19:29 PM CEST 2025
+-----------------------------------
+Running with Ts=180, nsteps=60, and M=3
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
+    from pandas.compat import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
+    from pandas.compat.pyarrow import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
+    import pyarrow as pa
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
+    from pandas.core.api import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
+    from pandas.core.dtypes.dtypes import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
+    from pandas._libs import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+Training MIDPC policy for N=60 at Ts=180
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1104.260009765625
+epoch: 10  train_loss: 274.9576110839844
+epoch: 20  train_loss: 120.20225524902344
+epoch: 30  train_loss: 69.94989013671875
+epoch: 40  train_loss: 59.94513702392578
+epoch: 50  train_loss: 57.456512451171875
+epoch: 60  train_loss: 57.3226203918457
+epoch: 70  train_loss: 56.43190002441406
+epoch: 80  train_loss: 53.544212341308594
+epoch: 90  train_loss: 52.561256408691406
+epoch: 100  train_loss: 54.89963912963867
+epoch: 110  train_loss: 60.65602493286133
+epoch: 120  train_loss: 52.34523010253906
+epoch: 130  train_loss: 52.021446228027344
+epoch: 140  train_loss: 53.86779022216797
+epoch: 150  train_loss: 51.97896957397461
+epoch: 160  train_loss: 53.5894889831543
+epoch: 170  train_loss: 56.363739013671875
+epoch: 180  train_loss: 55.10979080200195
+epoch: 190  train_loss: 55.18101119995117
+epoch: 200  train_loss: 54.440582275390625
+epoch: 210  train_loss: 48.555694580078125
+epoch: 220  train_loss: 49.210121154785156
+epoch: 230  train_loss: 50.27984619140625
+epoch: 240  train_loss: 51.92262649536133
+epoch: 250  train_loss: 49.6487922668457
+epoch: 260  train_loss: 48.34575653076172
+epoch: 270  train_loss: 47.39868927001953
+epoch: 280  train_loss: 47.57950973510742
+epoch: 290  train_loss: 47.13224792480469
+epoch: 300  train_loss: 46.89430618286133
+epoch: 310  train_loss: 46.776100158691406
+epoch: 320  train_loss: 46.570655822753906
+epoch: 330  train_loss: 46.474788665771484
+epoch: 340  train_loss: 46.40924072265625
+epoch: 350  train_loss: 46.371788024902344
+epoch: 360  train_loss: 46.42144775390625
+epoch: 370  train_loss: 46.520206451416016
+epoch: 380  train_loss: 46.747276306152344
+epoch: 390  train_loss: 47.60857391357422
+epoch: 400  train_loss: 49.913604736328125
+epoch: 410  train_loss: 50.92243576049805
+epoch: 420  train_loss: 52.03136444091797
+epoch: 430  train_loss: 53.35396957397461
+epoch: 440  train_loss: 54.42538070678711
+epoch: 450  train_loss: 54.728309631347656
+epoch: 460  train_loss: 56.999977111816406
+epoch: 470  train_loss: 53.187713623046875
+epoch: 480  train_loss: 44.990577697753906
+epoch: 490  train_loss: 44.97896957397461
+epoch: 500  train_loss: 45.36595916748047
+epoch: 510  train_loss: 45.290313720703125
+epoch: 520  train_loss: 45.33415222167969
+epoch: 530  train_loss: 45.27810287475586
+epoch: 540  train_loss: 45.216609954833984
+epoch: 550  train_loss: 45.176185607910156
+epoch: 560  train_loss: 45.160255432128906
+epoch: 570  train_loss: 45.15129852294922
+epoch: 580  train_loss: 45.15612030029297
+epoch: 590  train_loss: 45.16277313232422
+epoch: 600  train_loss: 45.18340301513672
+epoch: 610  train_loss: 45.19588851928711
+epoch: 620  train_loss: 45.210289001464844
+epoch: 630  train_loss: 45.22333526611328
+epoch: 640  train_loss: 45.238677978515625
+epoch: 650  train_loss: 45.251953125
+epoch: 660  train_loss: 45.262916564941406
+epoch: 670  train_loss: 45.275108337402344
+Early stopping!!!
+Finished run with nsteps=60 at Wed Oct 22 10:32:12 PM CEST 2025
+-----------------------------------
+Running with Ts=180, nsteps=30, and M=4
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
+    from pandas.compat import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
+    from pandas.compat.pyarrow import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
+    import pyarrow as pa
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
+    from pandas.core.api import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
+    from pandas.core.dtypes.dtypes import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
+    from pandas._libs import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+Training MIDPC policy for N=30 at Ts=180
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 862.7598876953125
+epoch: 10  train_loss: 230.0355987548828
+epoch: 20  train_loss: 114.71371459960938
+epoch: 30  train_loss: 69.68094635009766
+epoch: 40  train_loss: 60.00225830078125
+epoch: 50  train_loss: 57.15093994140625
+epoch: 60  train_loss: 57.04359817504883
+epoch: 70  train_loss: 59.66511154174805
+epoch: 80  train_loss: 58.6285400390625
+epoch: 90  train_loss: 60.17059326171875
+epoch: 100  train_loss: 55.51344299316406
+epoch: 110  train_loss: 55.26105499267578
+epoch: 120  train_loss: 55.51775360107422
+epoch: 130  train_loss: 52.97932815551758
+epoch: 140  train_loss: 55.147132873535156
+epoch: 150  train_loss: 60.74924087524414
+epoch: 160  train_loss: 51.00629425048828
+epoch: 170  train_loss: 55.686954498291016
+epoch: 180  train_loss: 48.98492431640625
+epoch: 190  train_loss: 52.055152893066406
+epoch: 200  train_loss: 49.95872497558594
+epoch: 210  train_loss: 50.07598876953125
+epoch: 220  train_loss: 51.08281707763672
+epoch: 230  train_loss: 51.1818733215332
+epoch: 240  train_loss: 51.20909881591797
+epoch: 250  train_loss: 51.56348419189453
+epoch: 260  train_loss: 51.933258056640625
+epoch: 270  train_loss: 52.06117248535156
+epoch: 280  train_loss: 52.14820098876953
+epoch: 290  train_loss: 51.7210693359375
+epoch: 300  train_loss: 51.8900146484375
+epoch: 310  train_loss: 51.90858459472656
+epoch: 320  train_loss: 57.63777160644531
+epoch: 330  train_loss: 57.26466369628906
+epoch: 340  train_loss: 56.724449157714844
+epoch: 350  train_loss: 48.994712829589844
+epoch: 360  train_loss: 53.15355682373047
+epoch: 370  train_loss: 54.85341262817383
+epoch: 380  train_loss: 55.90110397338867
+epoch: 390  train_loss: 56.98784255981445
+epoch: 400  train_loss: 56.687110900878906
+epoch: 410  train_loss: 68.92850494384766
+epoch: 420  train_loss: 54.17540740966797
+epoch: 430  train_loss: 53.17145919799805
+epoch: 440  train_loss: 48.337562561035156
+epoch: 450  train_loss: 54.093048095703125
+epoch: 460  train_loss: 54.30167007446289
+epoch: 470  train_loss: 56.261016845703125
+epoch: 480  train_loss: 56.78105926513672
+epoch: 490  train_loss: 57.08620071411133
+epoch: 500  train_loss: 60.577232360839844
+epoch: 510  train_loss: 60.765403747558594
+epoch: 520  train_loss: 59.751731872558594
+epoch: 530  train_loss: 59.4493408203125

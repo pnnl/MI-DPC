@@ -15002,7 +15002,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.221683in,y=1.714850in,,bottom,rotate=90.000000]{\color{textcolor}{\rmfamily\fontsize{10.000000}{12.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$\dot m$ [kg/s]}}%
+\pgftext[x=0.221683in,y=1.714850in,,bottom,rotate=90.000000]{\color{textcolor}{\rmfamily\fontsize{10.000000}{12.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$\delta^{(i)}\dot m^{(i)}$ [kg/s]}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfpathrectangle{\pgfqpoint{0.492518in}{1.316594in}}{\pgfqpoint{2.902714in}{0.796511in}}%
@@ -17141,9 +17141,9 @@
 \definecolor{currentstroke}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetdash{{5.550000pt}{2.400000pt}}{0.000000pt}%
-\pgfpathmoveto{\pgfqpoint{0.624459in}{1.533825in}}%
-\pgfpathlineto{\pgfqpoint{3.263290in}{1.533825in}}%
-\pgfpathlineto{\pgfqpoint{3.263290in}{1.533825in}}%
+\pgfpathmoveto{\pgfqpoint{0.624459in}{1.352799in}}%
+\pgfpathlineto{\pgfqpoint{3.263290in}{1.352799in}}%
+\pgfpathlineto{\pgfqpoint{3.263290in}{1.352799in}}%
 \pgfusepath{stroke}%
 \end{pgfscope}%
 \begin{pgfscope}%

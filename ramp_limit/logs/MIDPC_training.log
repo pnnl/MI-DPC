@@ -1,0 +1,99 @@
+===== Starting runs at Fri Oct 24 09:08:49 PM CEST 2025 =====
+Running with Ts=180, nsteps=30, and M=2
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
+    from pandas.compat import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
+    from pandas.compat.pyarrow import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
+    import pyarrow as pa
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
+    from neuromancer.system import Node, SystemPreview
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
+    from neuromancer import dataset
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
+    import pandas as pd
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
+    from pandas.core.api import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
+    from pandas.core.dtypes.dtypes import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
+    from pandas._libs import (
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
+    import pyarrow.lib as _lib
+AttributeError: _ARRAY_API not found
+Training MIDPC policy for N=30 at Ts=180
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 30, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 30, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1810.837646484375
+epoch: 10  train_loss: 277.2808837890625
+epoch: 20  train_loss: 163.73135375976562
+epoch: 30  train_loss: 139.94915771484375
+epoch: 40  train_loss: 133.25454711914062
+epoch: 50  train_loss: 129.47972106933594
+epoch: 60  train_loss: 125.29258728027344
+epoch: 70  train_loss: 120.97945404052734
+epoch: 80  train_loss: 117.50767517089844
+epoch: 90  train_loss: 115.67086791992188
+epoch: 100  train_loss: 114.06819915771484
+epoch: 110  train_loss: 112.51022338867188
+epoch: 120  train_loss: 111.79386138916016
+epoch: 130  train_loss: 112.03218078613281
+epoch: 140  train_loss: 108.32456970214844
+epoch: 150  train_loss: 103.36470031738281
+epoch: 160  train_loss: 98.51535034179688
+epoch: 170  train_loss: 94.29961395263672
+epoch: 180  train_loss: 90.9820556640625
+epoch: 190  train_loss: 87.61700439453125
+epoch: 200  train_loss: 84.94741821289062
+epoch: 210  train_loss: 82.88677978515625
+epoch: 220  train_loss: 81.30621337890625
+epoch: 230  train_loss: 80.01216125488281
+epoch: 240  train_loss: 78.96344757080078
+epoch: 250  train_loss: 78.08367919921875
+epoch: 260  train_loss: 77.30482482910156
+epoch: 270  train_loss: 76.622314453125
+epoch: 280  train_loss: 75.98750305175781
+epoch: 290  train_loss: 75.39561462402344
+epoch: 300  train_loss: 74.85069274902344
+epoch: 310  train_loss: 74.35134887695312
+epoch: 320  train_loss: 73.91127014160156
+epoch: 330  train_loss: 73.51286315917969
+epoch: 340  train_loss: 73.15451049804688
+epoch: 350  train_loss: 72.83416748046875
+epoch: 360  train_loss: 72.53312683105469
+epoch: 370  train_loss: 72.25719451904297

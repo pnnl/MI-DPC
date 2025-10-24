@@ -146,13 +146,12 @@ if __name__=='__main__':
     load_time, load_test = generate_datacenter_load(number_of_days=args.n_days+1,
                                                     sampling_time=args.Ts, 
                                                     signal_seed=seed,
-                                                    ramp_hours=4,
+                                                    ramp_hours=init.ramp_hours,
                                                     f_day=5, f_night=6, 
                                                     day_baseline=init.day_baseline, 
                                                     night_baseline=init.night_baseline,
                                                     osc_night_amp=20, osc_day_amp=20,
                                                     noise_scale=5,
-                                                    daily_variation=0.1
                                                     )
     load_test = load_test.reshape(1,-1,1)
     # # # Initial conditions

@@ -194,9 +194,9 @@ if __name__=='__main__':
         pump_loss =  ((system.get_pump_consumption(mass_flow=flow_variable, 
                                 integer_status=integer_variable) == 0.))
         
-        cooling_loss = 0.01*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
+        cooling_loss = 0.003*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
         # c = init.delta_penalty # Switching cost coefficient
-        c = 50.
+        c = 10.
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
         binary_regularization = 500.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)

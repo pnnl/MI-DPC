@@ -1,99 +1,1292 @@
-===== Starting runs at Fri Oct 24 09:08:49 PM CEST 2025 =====
-Running with Ts=180, nsteps=30, and M=2
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
-    from neuromancer.system import Node, SystemPreview
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
-    from pandas.compat import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
-    from pandas.compat.pyarrow import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
-    import pyarrow as pa
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/MIDPC.py", line 5, in <module>
-    from neuromancer.system import Node, SystemPreview
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
-    from pandas.core.api import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
-    from pandas.core.dtypes.dtypes import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
-    from pandas._libs import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-Training MIDPC policy for N=30 at Ts=180
-/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+===== Starting runs at Fri Oct 24 02:28:29 PM PDT 2025 =====
+Running with Ts=180, nsteps=20, and M=2
+Training MIDPC policy for N=20 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
   return func(*args, **kwargs)
-/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 30, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
   return func(*args, **kwargs)
-/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 30, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
   return func(*args, **kwargs)
-/home/desktop309/git/.venv/lib/python3.11/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 30, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
   return func(*args, **kwargs)
-epoch: 0  train_loss: 1810.837646484375
-epoch: 10  train_loss: 277.2808837890625
-epoch: 20  train_loss: 163.73135375976562
-epoch: 30  train_loss: 139.94915771484375
-epoch: 40  train_loss: 133.25454711914062
-epoch: 50  train_loss: 129.47972106933594
-epoch: 60  train_loss: 125.29258728027344
-epoch: 70  train_loss: 120.97945404052734
-epoch: 80  train_loss: 117.50767517089844
-epoch: 90  train_loss: 115.67086791992188
-epoch: 100  train_loss: 114.06819915771484
-epoch: 110  train_loss: 112.51022338867188
-epoch: 120  train_loss: 111.79386138916016
-epoch: 130  train_loss: 112.03218078613281
-epoch: 140  train_loss: 108.32456970214844
-epoch: 150  train_loss: 103.36470031738281
-epoch: 160  train_loss: 98.51535034179688
-epoch: 170  train_loss: 94.29961395263672
-epoch: 180  train_loss: 90.9820556640625
-epoch: 190  train_loss: 87.61700439453125
-epoch: 200  train_loss: 84.94741821289062
-epoch: 210  train_loss: 82.88677978515625
-epoch: 220  train_loss: 81.30621337890625
-epoch: 230  train_loss: 80.01216125488281
-epoch: 240  train_loss: 78.96344757080078
-epoch: 250  train_loss: 78.08367919921875
-epoch: 260  train_loss: 77.30482482910156
-epoch: 270  train_loss: 76.622314453125
-epoch: 280  train_loss: 75.98750305175781
-epoch: 290  train_loss: 75.39561462402344
-epoch: 300  train_loss: 74.85069274902344
-epoch: 310  train_loss: 74.35134887695312
-epoch: 320  train_loss: 73.91127014160156
-epoch: 330  train_loss: 73.51286315917969
-epoch: 340  train_loss: 73.15451049804688
-epoch: 350  train_loss: 72.83416748046875
-epoch: 360  train_loss: 72.53312683105469
-epoch: 370  train_loss: 72.25719451904297
+epoch: 0  train_loss: 699.505615234375
+epoch: 10  train_loss: 219.4624481201172
+epoch: 20  train_loss: 136.2615203857422
+epoch: 30  train_loss: 115.76226806640625
+epoch: 40  train_loss: 101.07168579101562
+epoch: 50  train_loss: 97.23394775390625
+epoch: 60  train_loss: 94.13864135742188
+epoch: 70  train_loss: 91.57197570800781
+epoch: 80  train_loss: 89.62554168701172
+epoch: 90  train_loss: 88.12435913085938
+epoch: 100  train_loss: 87.39453887939453
+epoch: 110  train_loss: 85.37227630615234
+epoch: 120  train_loss: 81.24806213378906
+epoch: 130  train_loss: 76.44197082519531
+epoch: 140  train_loss: 72.04763793945312
+epoch: 150  train_loss: 68.88409423828125
+epoch: 160  train_loss: 66.53860473632812
+epoch: 170  train_loss: 65.08218383789062
+epoch: 180  train_loss: 63.99814987182617
+epoch: 190  train_loss: 63.11823272705078
+epoch: 200  train_loss: 62.320648193359375
+epoch: 210  train_loss: 61.554771423339844
+epoch: 220  train_loss: 60.912513732910156
+epoch: 230  train_loss: 60.35355758666992
+epoch: 240  train_loss: 59.804656982421875
+epoch: 250  train_loss: 59.32347869873047
+epoch: 260  train_loss: 58.899208068847656
+epoch: 270  train_loss: 58.46244812011719
+epoch: 280  train_loss: 58.13991165161133
+epoch: 290  train_loss: 57.88362121582031
+epoch: 300  train_loss: 57.837711334228516
+epoch: 310  train_loss: 59.59708786010742
+epoch: 320  train_loss: 58.3206901550293
+epoch: 330  train_loss: 56.99083709716797
+epoch: 340  train_loss: 56.906551361083984
+epoch: 350  train_loss: 56.89299774169922
+epoch: 360  train_loss: 57.79917907714844
+epoch: 370  train_loss: 56.785675048828125
+epoch: 380  train_loss: 57.79480743408203
+epoch: 390  train_loss: 55.52897644042969
+epoch: 400  train_loss: 56.25165557861328
+epoch: 410  train_loss: 55.109130859375
+epoch: 420  train_loss: 55.0201530456543
+epoch: 430  train_loss: 55.25624465942383
+epoch: 440  train_loss: 54.99822235107422
+epoch: 450  train_loss: 55.37110900878906
+epoch: 460  train_loss: 54.643714904785156
+epoch: 470  train_loss: 54.16419982910156
+epoch: 480  train_loss: 54.13918685913086
+epoch: 490  train_loss: 53.994022369384766
+epoch: 500  train_loss: 53.986480712890625
+epoch: 510  train_loss: 53.96197509765625
+epoch: 520  train_loss: 53.70947265625
+epoch: 530  train_loss: 52.82209777832031
+epoch: 540  train_loss: 52.33694839477539
+epoch: 550  train_loss: 52.491966247558594
+epoch: 560  train_loss: 54.117286682128906
+epoch: 570  train_loss: 52.291542053222656
+epoch: 580  train_loss: 53.40589141845703
+epoch: 590  train_loss: 57.06010818481445
+epoch: 600  train_loss: 58.028648376464844
+epoch: 610  train_loss: 55.20447540283203
+epoch: 620  train_loss: 53.090354919433594
+epoch: 630  train_loss: 55.05382537841797
+epoch: 640  train_loss: 53.22431564331055
+epoch: 650  train_loss: 56.846153259277344
+epoch: 660  train_loss: 52.85102081298828
+epoch: 670  train_loss: 56.883827209472656
+epoch: 680  train_loss: 72.33512115478516
+epoch: 690  train_loss: 54.425025939941406
+epoch: 700  train_loss: 54.4664421081543
+epoch: 710  train_loss: 52.66259765625
+epoch: 720  train_loss: 51.4880485534668
+epoch: 730  train_loss: 58.915672302246094
+epoch: 740  train_loss: 53.35552978515625
+epoch: 750  train_loss: 53.757076263427734
+epoch: 760  train_loss: 57.279151916503906
+epoch: 770  train_loss: 52.98817443847656
+epoch: 780  train_loss: 52.483306884765625
+epoch: 790  train_loss: 60.663230895996094
+epoch: 800  train_loss: 55.655677795410156
+epoch: 810  train_loss: 52.70793151855469
+epoch: 820  train_loss: 59.30107116699219
+epoch: 830  train_loss: 55.706695556640625
+epoch: 840  train_loss: 53.07349395751953
+epoch: 850  train_loss: 58.093238830566406
+epoch: 860  train_loss: 54.39271545410156
+epoch: 870  train_loss: 52.67192077636719
+epoch: 880  train_loss: 52.09565734863281
+epoch: 890  train_loss: 55.47428894042969
+epoch: 900  train_loss: 52.649600982666016
+epoch: 910  train_loss: 71.34066772460938
+epoch: 920  train_loss: 61.989662170410156
+Early stopping!!!
+Finished run with nsteps=20 at Fri Oct 24 02:46:43 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=40, and M=2
+Training MIDPC policy for N=40 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 809.2178955078125
+epoch: 10  train_loss: 189.85745239257812
+epoch: 20  train_loss: 90.79966735839844
+epoch: 30  train_loss: 84.96854400634766
+epoch: 40  train_loss: 82.84794616699219
+epoch: 50  train_loss: 82.08383178710938
+epoch: 60  train_loss: 81.57774353027344
+epoch: 70  train_loss: 81.18190002441406
+epoch: 80  train_loss: 80.83950805664062
+epoch: 90  train_loss: 80.5369873046875
+epoch: 100  train_loss: 80.245849609375
+epoch: 110  train_loss: 79.93846130371094
+epoch: 120  train_loss: 79.63406372070312
+epoch: 130  train_loss: 79.3658447265625
+epoch: 140  train_loss: 79.42619323730469
+epoch: 150  train_loss: 78.8492431640625
+epoch: 160  train_loss: 78.25717163085938
+epoch: 170  train_loss: 77.30947875976562
+epoch: 180  train_loss: 75.99877166748047
+epoch: 190  train_loss: 74.41486358642578
+epoch: 200  train_loss: 72.80731201171875
+epoch: 210  train_loss: 71.3453598022461
+epoch: 220  train_loss: 69.92724609375
+epoch: 230  train_loss: 68.47102355957031
+epoch: 240  train_loss: 67.04554748535156
+epoch: 250  train_loss: 65.68806457519531
+epoch: 260  train_loss: 64.5925064086914
+epoch: 270  train_loss: 63.74574661254883
+epoch: 280  train_loss: 63.07344436645508
+epoch: 290  train_loss: 62.51912307739258
+epoch: 300  train_loss: 62.054412841796875
+epoch: 310  train_loss: 61.72528076171875
+epoch: 320  train_loss: 61.49696731567383
+epoch: 330  train_loss: 61.32142639160156
+epoch: 340  train_loss: 61.18511962890625
+epoch: 350  train_loss: 61.0610237121582
+epoch: 360  train_loss: 60.97042465209961
+epoch: 370  train_loss: 60.903228759765625
+epoch: 380  train_loss: 60.84913635253906
+epoch: 390  train_loss: 60.7050895690918
+epoch: 400  train_loss: 60.73953628540039
+epoch: 410  train_loss: 60.61500549316406
+epoch: 420  train_loss: 60.57653045654297
+epoch: 430  train_loss: 60.458656311035156
+epoch: 440  train_loss: 60.459686279296875
+epoch: 450  train_loss: 60.43693542480469
+epoch: 460  train_loss: 60.318382263183594
+epoch: 470  train_loss: 60.30757141113281
+epoch: 480  train_loss: 60.227840423583984
+epoch: 490  train_loss: 60.166542053222656
+epoch: 500  train_loss: 60.130859375
+epoch: 510  train_loss: 60.22105026245117
+epoch: 520  train_loss: 60.06559753417969
+epoch: 530  train_loss: 60.086997985839844
+epoch: 540  train_loss: 59.969764709472656
+epoch: 550  train_loss: 60.08525085449219
+epoch: 560  train_loss: 59.88822937011719
+epoch: 570  train_loss: 59.87921905517578
+epoch: 580  train_loss: 59.82637023925781
+epoch: 590  train_loss: 59.7297248840332
+epoch: 600  train_loss: 59.7318115234375
+epoch: 610  train_loss: 59.72071838378906
+epoch: 620  train_loss: 59.60804748535156
+epoch: 630  train_loss: 59.653541564941406
+epoch: 640  train_loss: 59.53434371948242
+epoch: 650  train_loss: 59.4504280090332
+epoch: 660  train_loss: 59.47911071777344
+epoch: 670  train_loss: 59.365028381347656
+epoch: 680  train_loss: 59.32331085205078
+epoch: 690  train_loss: 59.25395202636719
+epoch: 700  train_loss: 59.214927673339844
+epoch: 710  train_loss: 59.228111267089844
+epoch: 720  train_loss: 59.13867950439453
+epoch: 730  train_loss: 59.08716583251953
+epoch: 740  train_loss: 59.09773254394531
+epoch: 750  train_loss: 58.96307373046875
+epoch: 760  train_loss: 59.009857177734375
+epoch: 770  train_loss: 58.96819305419922
+epoch: 780  train_loss: 58.88420104980469
+epoch: 790  train_loss: 58.82004928588867
+epoch: 800  train_loss: 58.90052795410156
+epoch: 810  train_loss: 58.749061584472656
+epoch: 820  train_loss: 58.70844650268555
+epoch: 830  train_loss: 58.64408874511719
+epoch: 840  train_loss: 58.65311050415039
+epoch: 850  train_loss: 58.60382843017578
+epoch: 860  train_loss: 58.585914611816406
+epoch: 870  train_loss: 58.62970733642578
+epoch: 880  train_loss: 58.570316314697266
+epoch: 890  train_loss: 58.52103805541992
+epoch: 900  train_loss: 58.446495056152344
+epoch: 910  train_loss: 58.52408218383789
+epoch: 920  train_loss: 58.48026657104492
+epoch: 930  train_loss: 58.401241302490234
+epoch: 940  train_loss: 58.43758010864258
+epoch: 950  train_loss: 58.420372009277344
+epoch: 960  train_loss: 58.42084884643555
+epoch: 970  train_loss: 58.355140686035156
+epoch: 980  train_loss: 58.33722686767578
+epoch: 990  train_loss: 58.34550857543945
+Finished run with nsteps=40 at Fri Oct 24 03:10:50 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=60, and M=2
+Training MIDPC policy for N=60 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1091.9393310546875
+epoch: 10  train_loss: 238.48382568359375
+epoch: 20  train_loss: 152.01882934570312
+epoch: 30  train_loss: 103.95983123779297
+epoch: 40  train_loss: 87.56886291503906
+epoch: 50  train_loss: 81.45634460449219
+epoch: 60  train_loss: 78.51655578613281
+epoch: 70  train_loss: 76.8660888671875
+epoch: 80  train_loss: 75.58094787597656
+epoch: 90  train_loss: 74.2437744140625
+epoch: 100  train_loss: 72.93797302246094
+epoch: 110  train_loss: 71.69573974609375
+epoch: 120  train_loss: 70.5833740234375
+epoch: 130  train_loss: 69.59622192382812
+epoch: 140  train_loss: 68.59211730957031
+epoch: 150  train_loss: 67.60250854492188
+epoch: 160  train_loss: 66.6900634765625
+epoch: 170  train_loss: 65.59945678710938
+epoch: 180  train_loss: 64.44560241699219
+epoch: 190  train_loss: 63.42835998535156
+epoch: 200  train_loss: 62.588592529296875
+epoch: 210  train_loss: 61.901214599609375
+epoch: 220  train_loss: 61.29266357421875
+epoch: 230  train_loss: 60.88493347167969
+epoch: 240  train_loss: 60.440486907958984
+epoch: 250  train_loss: 60.13652038574219
+epoch: 260  train_loss: 59.95930480957031
+epoch: 270  train_loss: 60.80243682861328
+epoch: 280  train_loss: 59.787086486816406
+epoch: 290  train_loss: 59.350440979003906
+epoch: 300  train_loss: 58.988216400146484
+epoch: 310  train_loss: 59.021995544433594
+epoch: 320  train_loss: 58.714691162109375
+epoch: 330  train_loss: 58.55582809448242
+epoch: 340  train_loss: 58.391143798828125
+epoch: 350  train_loss: 58.18550109863281
+epoch: 360  train_loss: 57.96627426147461
+epoch: 370  train_loss: 57.89332580566406
+epoch: 380  train_loss: 57.68260192871094
+epoch: 390  train_loss: 57.44964599609375
+epoch: 400  train_loss: 57.220130920410156
+epoch: 410  train_loss: 57.00590515136719
+epoch: 420  train_loss: 56.793758392333984
+epoch: 430  train_loss: 56.58395767211914
+epoch: 440  train_loss: 56.39997100830078
+epoch: 450  train_loss: 56.79907989501953
+epoch: 460  train_loss: 58.50801086425781
+epoch: 470  train_loss: 56.07118606567383
+epoch: 480  train_loss: 57.544334411621094
+epoch: 490  train_loss: 55.363525390625
+epoch: 500  train_loss: 55.10945129394531
+epoch: 510  train_loss: 54.640289306640625
+epoch: 520  train_loss: 54.656002044677734
+epoch: 530  train_loss: 54.79677200317383
+epoch: 540  train_loss: 54.30030822753906
+epoch: 550  train_loss: 53.93121337890625
+epoch: 560  train_loss: 53.726173400878906
+epoch: 570  train_loss: 53.31146240234375
+epoch: 580  train_loss: 53.703147888183594
+epoch: 590  train_loss: 53.40843963623047
+epoch: 600  train_loss: 53.0234489440918
+epoch: 610  train_loss: 52.95981216430664
+epoch: 620  train_loss: 52.9521369934082
+epoch: 630  train_loss: 53.07231903076172
+epoch: 640  train_loss: 52.74626541137695
+epoch: 650  train_loss: 52.77527618408203
+epoch: 660  train_loss: 52.6651725769043
+epoch: 670  train_loss: 52.62113952636719
+epoch: 680  train_loss: 52.58453369140625
+epoch: 690  train_loss: 52.571617126464844
+epoch: 700  train_loss: 52.73598861694336
+epoch: 710  train_loss: 52.606536865234375
+epoch: 720  train_loss: 52.460899353027344
+epoch: 730  train_loss: 52.44611358642578
+epoch: 740  train_loss: 52.390933990478516
+epoch: 750  train_loss: 52.4410514831543
+epoch: 760  train_loss: 52.41382598876953
+epoch: 770  train_loss: 52.1565055847168
+epoch: 780  train_loss: 52.13771438598633
+epoch: 790  train_loss: 52.049163818359375
+epoch: 800  train_loss: 51.91914367675781
+epoch: 810  train_loss: 51.97566223144531
+epoch: 820  train_loss: 52.22686767578125
+epoch: 830  train_loss: 54.83503723144531
+epoch: 840  train_loss: 52.691551208496094
+epoch: 850  train_loss: 51.83454132080078
+epoch: 860  train_loss: 51.43629455566406
+epoch: 870  train_loss: 51.51490020751953
+epoch: 880  train_loss: 52.63701629638672
+epoch: 890  train_loss: 51.79639434814453
+epoch: 900  train_loss: 51.29735565185547
+epoch: 910  train_loss: 51.2589111328125
+epoch: 920  train_loss: 51.665184020996094
+epoch: 930  train_loss: 51.232540130615234
+epoch: 940  train_loss: 51.35869598388672
+epoch: 950  train_loss: 50.96166229248047
+epoch: 960  train_loss: 50.902462005615234
+epoch: 970  train_loss: 50.81458282470703
+epoch: 980  train_loss: 50.70207214355469
+epoch: 990  train_loss: 50.591732025146484
+Finished run with nsteps=60 at Fri Oct 24 03:37:48 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=80, and M=2
+Training MIDPC policy for N=80 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1307.83251953125
+epoch: 10  train_loss: 207.4920654296875
+epoch: 20  train_loss: 89.90507507324219
+epoch: 30  train_loss: 75.86192321777344
+epoch: 40  train_loss: 72.94760131835938
+epoch: 50  train_loss: 72.38301086425781
+epoch: 60  train_loss: 72.06610107421875
+epoch: 70  train_loss: 71.87225341796875
+epoch: 80  train_loss: 71.70651245117188
+epoch: 90  train_loss: 71.55610656738281
+epoch: 100  train_loss: 71.40522766113281
+epoch: 110  train_loss: 71.24716186523438
+epoch: 120  train_loss: 71.07757568359375
+epoch: 130  train_loss: 70.94332885742188
+epoch: 140  train_loss: 70.80879211425781
+epoch: 150  train_loss: 70.73722076416016
+epoch: 160  train_loss: 70.73126220703125
+epoch: 170  train_loss: 70.86759185791016
+epoch: 180  train_loss: 71.25892639160156
+epoch: 190  train_loss: 109.13320922851562
+epoch: 200  train_loss: 74.82694244384766
+epoch: 210  train_loss: 70.36920928955078
+epoch: 220  train_loss: 69.96038818359375
+epoch: 230  train_loss: 69.5028076171875
+epoch: 240  train_loss: 69.30261993408203
+epoch: 250  train_loss: 69.0644302368164
+epoch: 260  train_loss: 68.77445983886719
+epoch: 270  train_loss: 68.41022491455078
+epoch: 280  train_loss: 67.96856689453125
+epoch: 290  train_loss: 67.42521667480469
+epoch: 300  train_loss: 66.77762603759766
+epoch: 310  train_loss: 66.04153442382812
+epoch: 320  train_loss: 65.2211685180664
+epoch: 330  train_loss: 64.33167266845703
+epoch: 340  train_loss: 63.256526947021484
+epoch: 350  train_loss: 62.09858703613281
+epoch: 360  train_loss: nan
+epoch: 370  train_loss: nan
+epoch: 380  train_loss: nan
+epoch: 390  train_loss: nan
+epoch: 400  train_loss: nan
+epoch: 410  train_loss: nan
+epoch: 420  train_loss: nan
+epoch: 430  train_loss: nan
+epoch: 440  train_loss: nan
+epoch: 450  train_loss: nan
+epoch: 460  train_loss: nan
+epoch: 470  train_loss: nan
+epoch: 480  train_loss: nan
+epoch: 490  train_loss: nan
+epoch: 500  train_loss: nan
+epoch: 510  train_loss: nan
+epoch: 520  train_loss: nan
+epoch: 530  train_loss: nan
+epoch: 540  train_loss: nan
+epoch: 550  train_loss: nan
+epoch: 560  train_loss: nan
+Early stopping!!!
+Finished run with nsteps=80 at Fri Oct 24 03:55:40 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=20, and M=3
+Training MIDPC policy for N=20 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1166.28857421875
+epoch: 10  train_loss: 313.25689697265625
+epoch: 20  train_loss: 160.44500732421875
+epoch: 30  train_loss: 145.06837463378906
+epoch: 40  train_loss: 129.36398315429688
+epoch: 50  train_loss: 121.89643859863281
+epoch: 60  train_loss: 121.67335510253906
+epoch: 70  train_loss: 116.69168090820312
+epoch: 80  train_loss: 114.69480895996094
+epoch: 90  train_loss: 114.34436798095703
+epoch: 100  train_loss: 110.05799865722656
+epoch: 110  train_loss: 107.78495788574219
+epoch: 120  train_loss: 105.79444885253906
+epoch: 130  train_loss: 101.09080505371094
+epoch: 140  train_loss: 95.28118896484375
+epoch: 150  train_loss: 94.08586883544922
+epoch: 160  train_loss: 84.87588500976562
+epoch: 170  train_loss: 80.00959777832031
+epoch: 180  train_loss: 78.72667694091797
+epoch: 190  train_loss: 77.28007507324219
+epoch: 200  train_loss: 76.1684799194336
+epoch: 210  train_loss: 74.89604187011719
+epoch: 220  train_loss: 73.72711181640625
+epoch: 230  train_loss: 72.64013671875
+epoch: 240  train_loss: 71.79625701904297
+epoch: 250  train_loss: 71.06071472167969
+epoch: 260  train_loss: 70.36124420166016
+epoch: 270  train_loss: 69.74513244628906
+epoch: 280  train_loss: 69.16340637207031
+epoch: 290  train_loss: 68.62035369873047
+epoch: 300  train_loss: 68.13700103759766
+epoch: 310  train_loss: 67.67155456542969
+epoch: 320  train_loss: 67.23588562011719
+epoch: 330  train_loss: 66.8279037475586
+epoch: 340  train_loss: 66.44886779785156
+epoch: 350  train_loss: 66.10968780517578
+epoch: 360  train_loss: 65.79801177978516
+epoch: 370  train_loss: 65.52810668945312
+epoch: 380  train_loss: 65.32392120361328
+epoch: 390  train_loss: 65.21871948242188
+epoch: 400  train_loss: 65.07742309570312
+epoch: 410  train_loss: 66.5322265625
+epoch: 420  train_loss: 65.16583251953125
+epoch: 430  train_loss: 64.58851623535156
+epoch: 440  train_loss: 63.929473876953125
+epoch: 450  train_loss: 63.569541931152344
+epoch: 460  train_loss: 63.272216796875
+epoch: 470  train_loss: 62.98821258544922
+epoch: 480  train_loss: 62.762691497802734
+epoch: 490  train_loss: 62.49243927001953
+epoch: 500  train_loss: 62.17871856689453
+epoch: 510  train_loss: 61.87397003173828
+epoch: 520  train_loss: 61.60479736328125
+epoch: 530  train_loss: 61.32841110229492
+epoch: 540  train_loss: 61.07679748535156
+epoch: 550  train_loss: 60.82331466674805
+epoch: 560  train_loss: 60.561134338378906
+epoch: 570  train_loss: 60.326473236083984
+epoch: 580  train_loss: 60.09369659423828
+epoch: 590  train_loss: 59.870460510253906
+epoch: 600  train_loss: 59.640869140625
+epoch: 610  train_loss: 59.45940399169922
+epoch: 620  train_loss: 62.04719543457031
+epoch: 630  train_loss: 59.502777099609375
+epoch: 640  train_loss: 58.679527282714844
+epoch: 650  train_loss: 58.60367965698242
+epoch: 660  train_loss: 58.43075180053711
+epoch: 670  train_loss: 58.29432678222656
+epoch: 680  train_loss: 58.149009704589844
+epoch: 690  train_loss: 58.00117492675781
+epoch: 700  train_loss: 57.87458801269531
+epoch: 710  train_loss: 57.74261474609375
+epoch: 720  train_loss: 57.614959716796875
+epoch: 730  train_loss: 57.4908447265625
+epoch: 740  train_loss: 58.657981872558594
+epoch: 750  train_loss: 57.43518829345703
+epoch: 760  train_loss: 57.171775817871094
+epoch: 770  train_loss: 57.0950813293457
+epoch: 780  train_loss: 57.025264739990234
+epoch: 790  train_loss: 56.93362808227539
+epoch: 800  train_loss: 56.86982727050781
+epoch: 810  train_loss: 56.76926040649414
+epoch: 820  train_loss: 56.67675018310547
+epoch: 830  train_loss: 56.632843017578125
+epoch: 840  train_loss: 58.21331787109375
+epoch: 850  train_loss: 56.71189880371094
+epoch: 860  train_loss: 56.404945373535156
+epoch: 870  train_loss: 56.32228088378906
+epoch: 880  train_loss: 56.24827575683594
+epoch: 890  train_loss: 56.14826202392578
+epoch: 900  train_loss: 56.126495361328125
+epoch: 910  train_loss: 56.081268310546875
+epoch: 920  train_loss: 56.00334548950195
+epoch: 930  train_loss: 56.332374572753906
+epoch: 940  train_loss: 56.015724182128906
+epoch: 950  train_loss: 55.913780212402344
+epoch: 960  train_loss: 55.96098709106445
+epoch: 970  train_loss: 55.811073303222656
+epoch: 980  train_loss: 55.785804748535156
+epoch: 990  train_loss: 55.92550277709961
+Finished run with nsteps=20 at Fri Oct 24 04:17:11 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=40, and M=3
+Training MIDPC policy for N=40 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1306.4814453125
+epoch: 10  train_loss: 432.6993408203125
+epoch: 20  train_loss: 166.17474365234375
+epoch: 30  train_loss: 117.79966735839844
+epoch: 40  train_loss: 104.41072845458984
+epoch: 50  train_loss: 101.53146362304688
+epoch: 60  train_loss: 99.50955200195312
+epoch: 70  train_loss: 97.15074157714844
+epoch: 80  train_loss: 95.0631103515625
+epoch: 90  train_loss: 93.44278717041016
+epoch: 100  train_loss: 92.95820617675781
+epoch: 110  train_loss: 93.37947845458984
+epoch: 120  train_loss: 93.25965118408203
+epoch: 130  train_loss: 92.64524841308594
+epoch: 140  train_loss: 92.39091491699219
+epoch: 150  train_loss: 92.68080139160156
+epoch: 160  train_loss: 92.28863525390625
+epoch: 170  train_loss: 91.8137435913086
+epoch: 180  train_loss: 91.84066772460938
+epoch: 190  train_loss: 92.90972900390625
+epoch: 200  train_loss: 93.55679321289062
+epoch: 210  train_loss: 92.34130859375
+epoch: 220  train_loss: 91.38276672363281
+epoch: 230  train_loss: 90.91759490966797
+epoch: 240  train_loss: 90.4971694946289
+epoch: 250  train_loss: 90.52267456054688
+epoch: 260  train_loss: 91.37394714355469
+epoch: 270  train_loss: 89.64251708984375
+epoch: 280  train_loss: 88.97368621826172
+epoch: 290  train_loss: 85.80552673339844
+epoch: 300  train_loss: 85.91934967041016
+epoch: 310  train_loss: 84.20669555664062
+epoch: 320  train_loss: 83.57229614257812
+epoch: 330  train_loss: 77.99728393554688
+epoch: 340  train_loss: 77.068115234375
+epoch: 350  train_loss: 76.34835815429688
+epoch: 360  train_loss: 73.04200744628906
+epoch: 370  train_loss: 72.89530181884766
+epoch: 380  train_loss: 69.85340881347656
+epoch: 390  train_loss: 68.71492004394531
+epoch: 400  train_loss: 67.37222290039062
+epoch: 410  train_loss: 66.09061431884766
+epoch: 420  train_loss: 65.00051879882812
+epoch: 430  train_loss: 64.18754577636719
+epoch: 440  train_loss: 63.39188766479492
+epoch: 450  train_loss: 62.655242919921875
+epoch: 460  train_loss: 61.931358337402344
+epoch: 470  train_loss: 61.30706787109375
+epoch: 480  train_loss: 60.632423400878906
+epoch: 490  train_loss: 59.96997833251953
+epoch: 500  train_loss: 59.297576904296875
+epoch: 510  train_loss: 58.62394714355469
+epoch: 520  train_loss: 58.00163650512695
+epoch: 530  train_loss: 57.40415954589844
+epoch: 540  train_loss: 56.87480163574219
+epoch: 550  train_loss: 56.54510498046875
+epoch: 560  train_loss: 56.280235290527344
+epoch: 570  train_loss: 56.12348937988281
+epoch: 580  train_loss: 55.90020751953125
+epoch: 590  train_loss: 55.72281265258789
+epoch: 600  train_loss: 55.44712829589844
+epoch: 610  train_loss: 55.400840759277344
+epoch: 620  train_loss: 55.142822265625
+epoch: 630  train_loss: 54.88525390625
+epoch: 640  train_loss: 54.77436447143555
+epoch: 650  train_loss: 54.65409851074219
+epoch: 660  train_loss: 54.404457092285156
+epoch: 670  train_loss: 54.234649658203125
+epoch: 680  train_loss: 54.16947555541992
+epoch: 690  train_loss: 53.97840118408203
+epoch: 700  train_loss: 53.840328216552734
+epoch: 710  train_loss: 53.738037109375
+epoch: 720  train_loss: 53.61330032348633
+epoch: 730  train_loss: 53.50275421142578
+epoch: 740  train_loss: 53.4178352355957
+epoch: 750  train_loss: 53.326560974121094
+epoch: 760  train_loss: 53.247894287109375
+epoch: 770  train_loss: 53.17635726928711
+epoch: 780  train_loss: 53.10215759277344
+epoch: 790  train_loss: 53.02471160888672
+epoch: 800  train_loss: 52.97208023071289
+epoch: 810  train_loss: 52.904415130615234
+epoch: 820  train_loss: 52.81968688964844
+epoch: 830  train_loss: 52.76613235473633
+epoch: 840  train_loss: 52.73260498046875
+epoch: 850  train_loss: 52.66765594482422
+epoch: 860  train_loss: 52.6285400390625
+epoch: 870  train_loss: 52.588218688964844
+epoch: 880  train_loss: 52.5325927734375
+epoch: 890  train_loss: 52.48637390136719
+epoch: 900  train_loss: 52.42176055908203
+epoch: 910  train_loss: 52.419612884521484
+epoch: 920  train_loss: 52.365177154541016
+epoch: 930  train_loss: 52.30742263793945
+epoch: 940  train_loss: 52.2764778137207
+epoch: 950  train_loss: 52.23326110839844
+epoch: 960  train_loss: 52.18302536010742
+epoch: 970  train_loss: 52.14176940917969
+epoch: 980  train_loss: 52.08730697631836
+epoch: 990  train_loss: 52.11335754394531
+Finished run with nsteps=40 at Fri Oct 24 04:41:39 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=60, and M=3
+Training MIDPC policy for N=60 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1683.888671875
+epoch: 10  train_loss: 312.34234619140625
+epoch: 20  train_loss: 129.7762451171875
+epoch: 30  train_loss: 99.9963150024414
+epoch: 40  train_loss: 90.06459045410156
+epoch: 50  train_loss: 85.2254638671875
+epoch: 60  train_loss: 83.52261352539062
+epoch: 70  train_loss: 82.57353210449219
+epoch: 80  train_loss: 81.99189758300781
+epoch: 90  train_loss: 81.4637451171875
+epoch: 100  train_loss: 80.98330688476562
+epoch: 110  train_loss: 80.51670837402344
+epoch: 120  train_loss: 80.08143615722656
+epoch: 130  train_loss: 79.74414825439453
+epoch: 140  train_loss: 79.49595642089844
+epoch: 150  train_loss: 79.35749816894531
+epoch: 160  train_loss: 79.263427734375
+epoch: 170  train_loss: 79.622314453125
+epoch: 180  train_loss: 79.47710418701172
+epoch: 190  train_loss: 79.40731811523438
+epoch: 200  train_loss: 81.6351318359375
+epoch: 210  train_loss: 79.07695007324219
+epoch: 220  train_loss: 80.13260650634766
+epoch: 230  train_loss: 77.8712158203125
+epoch: 240  train_loss: 77.80532836914062
+epoch: 250  train_loss: 77.82815551757812
+epoch: 260  train_loss: 78.79367065429688
+epoch: 270  train_loss: 79.92310333251953
+epoch: 280  train_loss: 79.43675231933594
+epoch: 290  train_loss: 79.86465454101562
+epoch: 300  train_loss: 79.75575256347656
+epoch: 310  train_loss: 79.70869445800781
+epoch: 320  train_loss: 79.4141845703125
+epoch: 330  train_loss: 82.68629455566406
+epoch: 340  train_loss: 76.99361419677734
+epoch: 350  train_loss: 84.24522399902344
+epoch: 360  train_loss: 76.91087341308594
+epoch: 370  train_loss: 77.97261047363281
+epoch: 380  train_loss: 78.78425598144531
+epoch: 390  train_loss: 78.11598205566406
+epoch: 400  train_loss: 76.78104400634766
+epoch: 410  train_loss: 78.09788513183594
+epoch: 420  train_loss: 80.9952392578125
+epoch: 430  train_loss: 76.40631103515625
+epoch: 440  train_loss: 77.0704345703125
+epoch: 450  train_loss: 76.23060607910156
+epoch: 460  train_loss: 75.89442443847656
+epoch: 470  train_loss: 72.84453582763672
+epoch: 480  train_loss: 74.50861358642578
+epoch: 490  train_loss: 71.93323516845703
+epoch: 500  train_loss: 69.71571350097656
+epoch: 510  train_loss: 71.85392761230469
+epoch: 520  train_loss: 70.98865509033203
+epoch: 530  train_loss: 67.8154296875
+epoch: 540  train_loss: 73.27874755859375
+epoch: 550  train_loss: 113.50371551513672
+epoch: 560  train_loss: 83.76482391357422
+epoch: 570  train_loss: 79.08914184570312
+epoch: 580  train_loss: 75.63189697265625
+epoch: 590  train_loss: 73.20417785644531
+epoch: 600  train_loss: 71.07931518554688
+epoch: 610  train_loss: 69.59852600097656
+epoch: 620  train_loss: 68.49766540527344
+epoch: 630  train_loss: 67.68263244628906
+epoch: 640  train_loss: 67.0020523071289
+epoch: 650  train_loss: 66.37478637695312
+epoch: 660  train_loss: 65.64961242675781
+epoch: 670  train_loss: 64.96599578857422
+epoch: 680  train_loss: 64.24412536621094
+epoch: 690  train_loss: 63.56648254394531
+epoch: 700  train_loss: 62.88096618652344
+epoch: 710  train_loss: 62.23694610595703
+epoch: 720  train_loss: 61.65789794921875
+epoch: 730  train_loss: 61.15467834472656
+epoch: 740  train_loss: 60.71607208251953
+epoch: 750  train_loss: 60.29498291015625
+epoch: 760  train_loss: 59.94911193847656
+epoch: 770  train_loss: 59.57292938232422
+epoch: 780  train_loss: 59.25277328491211
+epoch: 790  train_loss: 58.99662780761719
+epoch: 800  train_loss: 58.71894454956055
+epoch: 810  train_loss: 58.45366668701172
+epoch: 820  train_loss: 58.21453857421875
+epoch: 830  train_loss: 57.9482536315918
+epoch: 840  train_loss: 57.738006591796875
+epoch: 850  train_loss: 57.497108459472656
+epoch: 860  train_loss: 57.32878112792969
+epoch: 870  train_loss: 57.10997772216797
+epoch: 880  train_loss: 56.91008758544922
+epoch: 890  train_loss: 56.71772003173828
+epoch: 900  train_loss: 56.513912200927734
+epoch: 910  train_loss: 56.46202850341797
+epoch: 920  train_loss: nan
+epoch: 930  train_loss: nan
+epoch: 940  train_loss: nan
+epoch: 950  train_loss: nan
+epoch: 960  train_loss: nan
+epoch: 970  train_loss: nan
+epoch: 980  train_loss: nan
+epoch: 990  train_loss: nan
+Finished run with nsteps=60 at Fri Oct 24 05:08:38 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=80, and M=3
+Training MIDPC policy for N=80 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1783.25390625
+epoch: 10  train_loss: 277.51239013671875
+epoch: 20  train_loss: 128.9893035888672
+epoch: 30  train_loss: 114.4699935913086
+epoch: 40  train_loss: 89.30892944335938
+epoch: 50  train_loss: 84.29595947265625
+epoch: 60  train_loss: 82.27923583984375
+epoch: 70  train_loss: 81.28746032714844
+epoch: 80  train_loss: 80.48165893554688
+epoch: 90  train_loss: 79.75251007080078
+epoch: 100  train_loss: 78.8704833984375
+epoch: 110  train_loss: 78.0682144165039
+epoch: 120  train_loss: 77.36742401123047
+epoch: 130  train_loss: 76.84811401367188
+epoch: 140  train_loss: 76.57876586914062
+epoch: 150  train_loss: 76.8482666015625
+epoch: 160  train_loss: 115.70097351074219
+epoch: 170  train_loss: 84.9408187866211
+epoch: 180  train_loss: 80.8841323852539
+epoch: 190  train_loss: 77.60912322998047
+epoch: 200  train_loss: 76.78269958496094
+epoch: 210  train_loss: 76.28433227539062
+epoch: 220  train_loss: 75.85382843017578
+epoch: 230  train_loss: 75.43852233886719
+epoch: 240  train_loss: 74.96440124511719
+epoch: 250  train_loss: 74.52428436279297
+epoch: 260  train_loss: 74.06466674804688
+epoch: 270  train_loss: 73.6340103149414
+epoch: 280  train_loss: 73.240478515625
+epoch: 290  train_loss: 72.87321472167969
+epoch: 300  train_loss: 72.55429077148438
+epoch: 310  train_loss: 72.27275085449219
+epoch: 320  train_loss: 72.02665710449219
+epoch: 330  train_loss: 71.81636047363281
+epoch: 340  train_loss: 71.60193634033203
+epoch: 350  train_loss: 71.45372009277344
+epoch: 360  train_loss: 71.32490539550781
+epoch: 370  train_loss: 71.22450256347656
+epoch: 380  train_loss: 71.13668823242188
+epoch: 390  train_loss: 71.064453125
+epoch: 400  train_loss: 71.0211181640625
+epoch: 410  train_loss: 71.08555603027344
+epoch: 420  train_loss: 71.17166137695312
+epoch: 430  train_loss: 71.37684631347656
+epoch: 440  train_loss: 71.56668090820312
+epoch: 450  train_loss: 71.81491088867188
+epoch: 460  train_loss: 71.39006042480469
+epoch: 470  train_loss: 71.20631408691406
+epoch: 480  train_loss: 71.01068115234375
+epoch: 490  train_loss: 75.8774185180664
+epoch: 500  train_loss: 72.69383239746094
+epoch: 510  train_loss: 70.65131378173828
+epoch: 520  train_loss: 70.51112365722656
+epoch: 530  train_loss: 70.38792419433594
+epoch: 540  train_loss: 70.3355941772461
+epoch: 550  train_loss: 70.24598693847656
+epoch: 560  train_loss: 70.033203125
+epoch: 570  train_loss: 71.25190734863281
+epoch: 580  train_loss: 69.94091796875
+epoch: 590  train_loss: 69.46275329589844
+epoch: 600  train_loss: 69.03451538085938
+epoch: 610  train_loss: 68.4716567993164
+epoch: 620  train_loss: 68.0621566772461
+epoch: 630  train_loss: 67.49651336669922
+epoch: 640  train_loss: 66.85557556152344
+epoch: 650  train_loss: 64.50588989257812
+epoch: 660  train_loss: 63.70805358886719
+epoch: 670  train_loss: 62.326690673828125
+epoch: 680  train_loss: 61.406227111816406
+epoch: 690  train_loss: 60.344120025634766
+epoch: 700  train_loss: 59.53080749511719
+epoch: 710  train_loss: 58.799957275390625
+epoch: 720  train_loss: 58.604652404785156
+epoch: 730  train_loss: nan
+epoch: 740  train_loss: nan
+epoch: 750  train_loss: nan
+epoch: 760  train_loss: nan
+epoch: 770  train_loss: nan
+epoch: 780  train_loss: nan
+epoch: 790  train_loss: nan
+epoch: 800  train_loss: nan
+epoch: 810  train_loss: nan
+epoch: 820  train_loss: nan
+epoch: 830  train_loss: nan
+epoch: 840  train_loss: nan
+epoch: 850  train_loss: nan
+epoch: 860  train_loss: nan
+epoch: 870  train_loss: nan
+epoch: 880  train_loss: nan
+epoch: 890  train_loss: nan
+epoch: 900  train_loss: nan
+epoch: 910  train_loss: nan
+epoch: 920  train_loss: nan
+Early stopping!!!
+Finished run with nsteps=80 at Fri Oct 24 05:37:32 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=20, and M=4
+Training MIDPC policy for N=20 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 20, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1539.8310546875
+epoch: 10  train_loss: 432.67608642578125
+epoch: 20  train_loss: 199.2059783935547
+epoch: 30  train_loss: 165.34461975097656
+epoch: 40  train_loss: 150.77630615234375
+epoch: 50  train_loss: 145.2938690185547
+epoch: 60  train_loss: 142.60079956054688
+epoch: 70  train_loss: 141.42263793945312
+epoch: 80  train_loss: 164.02255249023438
+epoch: 90  train_loss: 142.398681640625
+epoch: 100  train_loss: 137.90170288085938
+epoch: 110  train_loss: 137.57598876953125
+epoch: 120  train_loss: 132.86325073242188
+epoch: 130  train_loss: 129.24090576171875
+epoch: 140  train_loss: 124.72457885742188
+epoch: 150  train_loss: 126.91828918457031
+epoch: 160  train_loss: 121.85812377929688
+epoch: 170  train_loss: 130.0185089111328
+epoch: 180  train_loss: 112.73159790039062
+epoch: 190  train_loss: 108.30569458007812
+epoch: 200  train_loss: 105.09262084960938
+epoch: 210  train_loss: 96.70620727539062
+epoch: 220  train_loss: 91.07276916503906
+epoch: 230  train_loss: 87.65502166748047
+epoch: 240  train_loss: 85.13331604003906
+epoch: 250  train_loss: 83.04295349121094
+epoch: 260  train_loss: 81.30451202392578
+epoch: 270  train_loss: 79.80743408203125
+epoch: 280  train_loss: 78.54043579101562
+epoch: 290  train_loss: 77.46954345703125
+epoch: 300  train_loss: 78.52230072021484
+epoch: 310  train_loss: 75.35655212402344
+epoch: 320  train_loss: 74.83195495605469
+epoch: 330  train_loss: 73.99392700195312
+epoch: 340  train_loss: 73.350830078125
+epoch: 350  train_loss: 72.88473510742188
+epoch: 360  train_loss: 74.06976318359375
+epoch: 370  train_loss: 73.51057434082031
+epoch: 380  train_loss: 71.31433868408203
+epoch: 390  train_loss: 70.8259048461914
+epoch: 400  train_loss: 70.525390625
+epoch: 410  train_loss: 70.14407348632812
+epoch: 420  train_loss: 69.82733154296875
+epoch: 430  train_loss: 69.62060546875
+epoch: 440  train_loss: 72.40522766113281
+epoch: 450  train_loss: 69.4406509399414
+epoch: 460  train_loss: 68.50252532958984
+epoch: 470  train_loss: 68.51580810546875
+epoch: 480  train_loss: 68.35958862304688
+epoch: 490  train_loss: 69.3233642578125
+epoch: 500  train_loss: 67.81806945800781
+epoch: 510  train_loss: 67.79784393310547
+epoch: 520  train_loss: 67.2728042602539
+epoch: 530  train_loss: 67.37718200683594
+epoch: 540  train_loss: 68.20303344726562
+epoch: 550  train_loss: 66.64923858642578
+epoch: 560  train_loss: 66.80747985839844
+epoch: 570  train_loss: 66.46623229980469
+epoch: 580  train_loss: 66.45930480957031
+epoch: 590  train_loss: 66.37755584716797
+epoch: 600  train_loss: 65.79424285888672
+epoch: 610  train_loss: 65.62998962402344
+epoch: 620  train_loss: 65.93619537353516
+epoch: 630  train_loss: 65.63485717773438
+epoch: 640  train_loss: 64.91222381591797
+epoch: 650  train_loss: 64.80123901367188
+epoch: 660  train_loss: 64.65043640136719
+epoch: 670  train_loss: 64.6278305053711
+epoch: 680  train_loss: 65.87068176269531
+epoch: 690  train_loss: 64.52445983886719
+epoch: 700  train_loss: 64.19530487060547
+epoch: 710  train_loss: 63.867576599121094
+epoch: 720  train_loss: 63.7572021484375
+epoch: 730  train_loss: 63.74498748779297
+epoch: 740  train_loss: 64.41712951660156
+epoch: 750  train_loss: 64.64871978759766
+epoch: 760  train_loss: 63.010215759277344
+epoch: 770  train_loss: 63.07346725463867
+epoch: 780  train_loss: 63.08177947998047
+epoch: 790  train_loss: 63.49943161010742
+epoch: 800  train_loss: 63.144508361816406
+epoch: 810  train_loss: 62.4808349609375
+epoch: 820  train_loss: 62.393760681152344
+epoch: 830  train_loss: 62.29768371582031
+epoch: 840  train_loss: 62.304290771484375
+epoch: 850  train_loss: 62.72602081298828
+epoch: 860  train_loss: 62.97718048095703
+epoch: 870  train_loss: 61.73362731933594
+epoch: 880  train_loss: 61.693260192871094
+epoch: 890  train_loss: 61.59093475341797
+epoch: 900  train_loss: 61.508026123046875
+epoch: 910  train_loss: 61.450439453125
+epoch: 920  train_loss: 61.399078369140625
+epoch: 930  train_loss: 61.3299674987793
+epoch: 940  train_loss: 61.159584045410156
+epoch: 950  train_loss: 60.958587646484375
+epoch: 960  train_loss: 60.87324142456055
+epoch: 970  train_loss: 60.81992721557617
+epoch: 980  train_loss: 60.76080322265625
+epoch: 990  train_loss: 60.697608947753906
+Finished run with nsteps=20 at Fri Oct 24 05:56:58 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=40, and M=4
+Training MIDPC policy for N=40 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 40, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1778.69140625
+epoch: 10  train_loss: 340.1900329589844
+epoch: 20  train_loss: 151.07501220703125
+epoch: 30  train_loss: 122.49819946289062
+epoch: 40  train_loss: 114.74664306640625
+epoch: 50  train_loss: 111.87625122070312
+epoch: 60  train_loss: 109.91326141357422
+epoch: 70  train_loss: 108.50015258789062
+epoch: 80  train_loss: 106.94039154052734
+epoch: 90  train_loss: 105.27151489257812
+epoch: 100  train_loss: 104.13762664794922
+epoch: 110  train_loss: 104.18009948730469
+epoch: 120  train_loss: 104.71696472167969
+epoch: 130  train_loss: 108.76177978515625
+epoch: 140  train_loss: 105.6890869140625
+epoch: 150  train_loss: 103.83895874023438
+epoch: 160  train_loss: 103.64518737792969
+epoch: 170  train_loss: 103.40267944335938
+epoch: 180  train_loss: 103.22695922851562
+epoch: 190  train_loss: 110.27560424804688
+epoch: 200  train_loss: 102.07513427734375
+epoch: 210  train_loss: 103.79644775390625
+epoch: 220  train_loss: 103.86283111572266
+epoch: 230  train_loss: 101.33967590332031
+epoch: 240  train_loss: 100.44917297363281
+epoch: 250  train_loss: 98.15438842773438
+epoch: 260  train_loss: 97.8401870727539
+epoch: 270  train_loss: 96.6607666015625
+epoch: 280  train_loss: 107.49724578857422
+epoch: 290  train_loss: 92.01410675048828
+epoch: 300  train_loss: 92.88577270507812
+epoch: 310  train_loss: 91.15301513671875
+epoch: 320  train_loss: 89.59534454345703
+epoch: 330  train_loss: 89.23252868652344
+epoch: 340  train_loss: 86.25334167480469
+epoch: 350  train_loss: 81.18910217285156
+epoch: 360  train_loss: 81.02281951904297
+epoch: 370  train_loss: 77.23460388183594
+epoch: 380  train_loss: 75.54043579101562
+epoch: 390  train_loss: 74.03001403808594
+epoch: 400  train_loss: 72.69508361816406
+epoch: 410  train_loss: 71.67950439453125
+epoch: 420  train_loss: 70.81295776367188
+epoch: 430  train_loss: 70.11996459960938
+epoch: 440  train_loss: 69.56876373291016
+epoch: 450  train_loss: 69.07814025878906
+epoch: 460  train_loss: 68.60606384277344
+epoch: 470  train_loss: 68.15203857421875
+epoch: 480  train_loss: 67.73426818847656
+epoch: 490  train_loss: 67.36774444580078
+epoch: 500  train_loss: 66.99298095703125
+epoch: 510  train_loss: 66.62934112548828
+epoch: 520  train_loss: 66.27301025390625
+epoch: 530  train_loss: 65.93280792236328
+epoch: 540  train_loss: 65.58528137207031
+epoch: 550  train_loss: 65.24547576904297
+epoch: 560  train_loss: 64.92759704589844
+epoch: 570  train_loss: 64.6199951171875
+epoch: 580  train_loss: 64.29249572753906
+epoch: 590  train_loss: 63.98756408691406
+epoch: 600  train_loss: 63.68817901611328
+epoch: 610  train_loss: 63.435302734375
+epoch: 620  train_loss: 63.148231506347656
+epoch: 630  train_loss: 62.931427001953125
+epoch: 640  train_loss: 63.20867919921875
+epoch: 650  train_loss: 62.431541442871094
+epoch: 660  train_loss: 62.17561340332031
+epoch: 670  train_loss: 63.89933776855469
+epoch: 680  train_loss: 148.73866271972656
+epoch: 690  train_loss: 129.50045776367188
+epoch: 700  train_loss: 94.78495788574219
+epoch: 710  train_loss: 77.07933807373047
+epoch: 720  train_loss: 73.2298583984375
+epoch: 730  train_loss: 68.0622787475586
+epoch: 740  train_loss: 66.03903198242188
+epoch: 750  train_loss: 64.9080810546875
+epoch: 760  train_loss: 63.97486877441406
+epoch: 770  train_loss: 63.22386169433594
+epoch: 780  train_loss: 62.574440002441406
+epoch: 790  train_loss: 62.0128173828125
+epoch: 800  train_loss: 61.507144927978516
+epoch: 810  train_loss: 61.07827377319336
+epoch: 820  train_loss: 60.69797134399414
+epoch: 830  train_loss: 60.384071350097656
+epoch: 840  train_loss: 60.07820510864258
+epoch: 850  train_loss: 59.77928924560547
+epoch: 860  train_loss: 59.492767333984375
+epoch: 870  train_loss: 59.22472381591797
+epoch: 880  train_loss: 58.96393966674805
+epoch: 890  train_loss: 58.69795227050781
+epoch: 900  train_loss: 58.453025817871094
+epoch: 910  train_loss: 58.2198486328125
+epoch: 920  train_loss: 58.021705627441406
+epoch: 930  train_loss: 57.85223388671875
+epoch: 940  train_loss: 58.06170654296875
+epoch: 950  train_loss: 57.62700653076172
+epoch: 960  train_loss: 57.34733200073242
+epoch: 970  train_loss: 57.121986389160156
+epoch: 980  train_loss: 56.96117401123047
+epoch: 990  train_loss: 56.806793212890625
+Finished run with nsteps=40 at Fri Oct 24 06:20:37 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=60, and M=4
+Training MIDPC policy for N=60 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 60, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1915.8455810546875
+epoch: 10  train_loss: 436.3563232421875
+epoch: 20  train_loss: 269.5727233886719
+epoch: 30  train_loss: 127.14756774902344
+epoch: 40  train_loss: 115.03864288330078
+epoch: 50  train_loss: 103.91633605957031
+epoch: 60  train_loss: 100.48838806152344
+epoch: 70  train_loss: 99.63816833496094
+epoch: 80  train_loss: 97.45402526855469
+epoch: 90  train_loss: 95.37051391601562
+epoch: 100  train_loss: 94.25704956054688
+epoch: 110  train_loss: 93.39936828613281
+epoch: 120  train_loss: 92.58964538574219
+epoch: 130  train_loss: 91.98776245117188
+epoch: 140  train_loss: 91.35679626464844
+epoch: 150  train_loss: 95.80199432373047
+epoch: 160  train_loss: 97.25662231445312
+epoch: 170  train_loss: 93.18876647949219
+epoch: 180  train_loss: 92.12675476074219
+epoch: 190  train_loss: 91.80023193359375
+epoch: 200  train_loss: 91.58718872070312
+epoch: 210  train_loss: 91.38890838623047
+epoch: 220  train_loss: 91.14671325683594
+epoch: 230  train_loss: 90.83380126953125
+epoch: 240  train_loss: 92.05987548828125
+epoch: 250  train_loss: 90.90017700195312
+epoch: 260  train_loss: 89.71678161621094
+epoch: 270  train_loss: 90.09498596191406
+epoch: 280  train_loss: 88.96241760253906
+epoch: 290  train_loss: 88.74113464355469
+epoch: 300  train_loss: 88.6313705444336
+epoch: 310  train_loss: 89.146728515625
+epoch: 320  train_loss: 88.55976867675781
+epoch: 330  train_loss: 90.87447357177734
+epoch: 340  train_loss: 87.61338806152344
+epoch: 350  train_loss: 88.15586853027344
+epoch: 360  train_loss: 88.83271789550781
+epoch: 370  train_loss: 89.50342559814453
+epoch: 380  train_loss: 89.67172241210938
+epoch: 390  train_loss: 90.37936401367188
+epoch: 400  train_loss: 91.59992980957031
+epoch: 410  train_loss: 91.57550048828125
+epoch: 420  train_loss: 90.66034698486328
+epoch: 430  train_loss: 89.20362091064453
+epoch: 440  train_loss: 86.90379333496094
+epoch: 450  train_loss: 85.8610610961914
+epoch: 460  train_loss: 83.49285888671875
+epoch: 470  train_loss: 81.84400939941406
+epoch: 480  train_loss: 79.04844665527344
+epoch: 490  train_loss: 84.40985107421875
+epoch: 500  train_loss: 73.98963928222656
+epoch: 510  train_loss: 86.04780578613281
+epoch: 520  train_loss: 72.03971099853516
+epoch: 530  train_loss: 71.49580383300781
+epoch: 540  train_loss: 74.27965545654297
+epoch: 550  train_loss: 73.379638671875
+epoch: 560  train_loss: 73.84625244140625
+epoch: 570  train_loss: 73.16033935546875
+epoch: 580  train_loss: 72.41325378417969
+epoch: 590  train_loss: 68.98538208007812
+epoch: 600  train_loss: 72.08226013183594
+epoch: 610  train_loss: 71.66089630126953
+epoch: 620  train_loss: 70.89258575439453
+epoch: 630  train_loss: 70.69890594482422
+epoch: 640  train_loss: 70.10964965820312
+epoch: 650  train_loss: 71.52384948730469
+epoch: 660  train_loss: 68.55630493164062
+epoch: 670  train_loss: 66.00216674804688
+epoch: 680  train_loss: 67.07403564453125
+epoch: 690  train_loss: 66.74141693115234
+epoch: 700  train_loss: 67.19000244140625
+epoch: 710  train_loss: 67.33992004394531
+epoch: 720  train_loss: 64.39158630371094
+epoch: 730  train_loss: 63.87148666381836
+epoch: 740  train_loss: 64.31315612792969
+epoch: 750  train_loss: 64.42098236083984
+epoch: 760  train_loss: 64.3001480102539
+epoch: 770  train_loss: 63.832542419433594
+epoch: 780  train_loss: 63.388404846191406
+epoch: 790  train_loss: 62.917388916015625
+epoch: 800  train_loss: 62.62964630126953
+epoch: 810  train_loss: 62.55288314819336
+epoch: 820  train_loss: 63.126548767089844
+epoch: 830  train_loss: 62.55863952636719
+epoch: 840  train_loss: 62.586158752441406
+epoch: 850  train_loss: 62.26725387573242
+epoch: 860  train_loss: 62.5272216796875
+epoch: 870  train_loss: 62.113433837890625
+epoch: 880  train_loss: 62.24150085449219
+epoch: 890  train_loss: 62.99602127075195
+epoch: 900  train_loss: 62.378334045410156
+epoch: 910  train_loss: 62.25035858154297
+epoch: 920  train_loss: 61.736610412597656
+epoch: 930  train_loss: 61.104679107666016
+epoch: 940  train_loss: 61.30713653564453
+epoch: 950  train_loss: 60.59419250488281
+epoch: 960  train_loss: 60.45941162109375
+epoch: 970  train_loss: 60.43006896972656
+epoch: 980  train_loss: 61.06510543823242
+epoch: 990  train_loss: 61.830596923828125
+Finished run with nsteps=60 at Fri Oct 24 06:46:06 PM PDT 2025
+-----------------------------------
+Running with Ts=180, nsteps=80, and M=4
+Training MIDPC policy for N=80 at Ts=180
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 4])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/bold914/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([4000, 80, 3])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 2518.001708984375
+epoch: 10  train_loss: 464.83538818359375
+epoch: 20  train_loss: 173.58132934570312
+epoch: 30  train_loss: 116.96153259277344
+epoch: 40  train_loss: 99.95024108886719
+epoch: 50  train_loss: 97.30195617675781
+epoch: 60  train_loss: 94.36410522460938
+epoch: 70  train_loss: 93.25030517578125
+epoch: 80  train_loss: 91.7665023803711
+epoch: 90  train_loss: 90.96952819824219
+epoch: 100  train_loss: 90.1521224975586
+epoch: 110  train_loss: 89.38905334472656
+epoch: 120  train_loss: 88.77445983886719
+epoch: 130  train_loss: 88.10707092285156
+epoch: 140  train_loss: 87.48851013183594
+epoch: 150  train_loss: 86.92318725585938
+epoch: 160  train_loss: 86.36812591552734
+epoch: 170  train_loss: 85.78855895996094
+epoch: 180  train_loss: 85.2509765625
+epoch: 190  train_loss: 89.24968719482422
+epoch: 200  train_loss: 85.56426239013672
+epoch: 210  train_loss: 89.0080337524414
+epoch: 220  train_loss: 106.59886169433594
+epoch: 230  train_loss: 91.02494812011719
+epoch: 240  train_loss: 88.3284912109375
+epoch: 250  train_loss: 87.27886962890625
+epoch: 260  train_loss: 87.0721435546875
+epoch: 270  train_loss: 86.66630554199219
+epoch: 280  train_loss: 86.33019256591797
+epoch: 290  train_loss: 85.99730682373047
+epoch: 300  train_loss: 85.66193389892578
+epoch: 310  train_loss: 85.33155822753906
+epoch: 320  train_loss: 84.96311950683594
+epoch: 330  train_loss: 84.62979125976562
+epoch: 340  train_loss: 84.24678039550781
+epoch: 350  train_loss: 83.84622192382812
+epoch: 360  train_loss: 83.42762756347656
+epoch: 370  train_loss: 82.9824447631836
+epoch: 380  train_loss: 82.4392318725586
+epoch: 390  train_loss: 81.87981414794922
+epoch: 400  train_loss: 81.33604431152344
+epoch: 410  train_loss: 80.73009490966797
+epoch: 420  train_loss: 80.18496704101562
+epoch: 430  train_loss: 79.76815795898438
+epoch: 440  train_loss: 79.48661804199219
+epoch: 450  train_loss: 79.306640625
+epoch: 460  train_loss: 79.47679901123047
+epoch: 470  train_loss: 78.92610168457031
+epoch: 480  train_loss: 79.84500122070312
+epoch: 490  train_loss: 78.38002014160156
+epoch: 500  train_loss: 78.88101959228516
+epoch: 510  train_loss: 79.27174377441406
+epoch: 520  train_loss: 80.22029113769531
+epoch: 530  train_loss: 78.83162689208984
+epoch: 540  train_loss: 83.89053344726562
+epoch: 550  train_loss: 78.36663055419922
+epoch: 560  train_loss: 80.52388763427734
+epoch: 570  train_loss: 83.62525939941406
+epoch: 580  train_loss: 79.49404907226562
+epoch: 590  train_loss: 78.23859405517578
+epoch: 600  train_loss: 80.29525756835938
+epoch: 610  train_loss: 87.45531463623047
+epoch: 620  train_loss: 78.81663513183594
+epoch: 630  train_loss: 77.59069061279297
+epoch: 640  train_loss: 77.74020385742188
+epoch: 650  train_loss: 76.38311767578125
+epoch: 660  train_loss: 72.64398193359375
+epoch: 670  train_loss: 71.69029235839844
+epoch: 680  train_loss: 69.54479217529297
+epoch: 690  train_loss: 68.39295196533203
+epoch: 700  train_loss: 67.546875
+epoch: 710  train_loss: 66.77252197265625
+epoch: 720  train_loss: 66.15335083007812
+epoch: 730  train_loss: 65.56488037109375
+epoch: 740  train_loss: 64.82850646972656
+epoch: 750  train_loss: 64.32484436035156
+epoch: 760  train_loss: 63.728721618652344
+epoch: 770  train_loss: 63.039039611816406
+epoch: 780  train_loss: 62.47819519042969
+epoch: 790  train_loss: 61.89059829711914
+epoch: 800  train_loss: 61.36823272705078
+epoch: 810  train_loss: 60.71879577636719
+epoch: 820  train_loss: 60.26573944091797
+epoch: 830  train_loss: 59.60643005371094
+epoch: 840  train_loss: 59.0499267578125
+epoch: 850  train_loss: 58.652854919433594
+epoch: 860  train_loss: 58.27638244628906
+epoch: 870  train_loss: 57.90366744995117
+epoch: 880  train_loss: 57.526161193847656
+epoch: 890  train_loss: 57.13652038574219
+epoch: 900  train_loss: 56.98157501220703
+epoch: 910  train_loss: 56.68421936035156
+epoch: 920  train_loss: 56.552574157714844
+epoch: 930  train_loss: 56.50749969482422
+epoch: 940  train_loss: 56.27885437011719
+epoch: 950  train_loss: 56.169410705566406
+epoch: 960  train_loss: 56.0853157043457
+epoch: 970  train_loss: 55.984928131103516
+epoch: 980  train_loss: 56.11421203613281
+epoch: 990  train_loss: 56.00373840332031
+Finished run with nsteps=80 at Fri Oct 24 07:17:49 PM PDT 2025
+-----------------------------------
+===== All runs completed at Fri Oct 24 07:17:49 PM PDT 2025 =====

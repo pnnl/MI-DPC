@@ -236,6 +236,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     
     PLR = data['Q_delivered']/(init.Q_delivered_max)
     COP = init.a+init.b*PLR+init.c*PLR**2
+    COP_eff = data['Q_delivered'].sum(-1,keepdim=True)/data['P_chiller'].sum(-1,keepdim=True)
 
     axes[8].plot(time, PLR[0,:,:].sum(-1,keepdim=True)/data['chiller_status'][0,:,:].sum(-1,keepdim=True), 
     # label=[f'Chiller{i+1}' for i in rng]
@@ -244,7 +245,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     # axes[8].legend()
     axes[8].grid(True)
     
-    axes[9].plot(time, COP[0,:,:].mean(-1,keepdim=True), label=[f'Chiller{i+1}' for i in rng])
+    axes[9].plot(time, COP_eff[0,:,:].mean(-1,keepdim=True), label=[f'Chiller{i+1}' for i in rng])
     axes[9].set_ylabel("COP [-]"); axes[9].set_xlabel("Timestep")
     axes[9].legend()
     axes[9].grid(True)

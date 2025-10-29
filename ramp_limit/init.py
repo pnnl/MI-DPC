@@ -1,6 +1,7 @@
 #%%
 import torch; import torch.nn as nn
 from chiller_system import ChillerSystem
+import random
 class SystemParameters():
     def __init__(self, exponent=3, Ts=180, M=2):
         self.seed = 209
@@ -8,12 +9,12 @@ class SystemParameters():
 
         self.M = M # Number of chillers
 
-        self.Q_delivered_max = 500 # rated chiller cooling [kW] - This value is provided by the manufacturer
-
+        self.Q_delivered_max = 1000 # rated chiller cooling [kW] - This value is provided by the manufacturer
+        self.load_max = self.Q_delivered_max*self.M*0.75
         # # # Load signal parameters
-        self.night_baseline=lambda: torch.rand(1).uniform_(50,300)
-        self.day_baseline=lambda: torch.rand(1).uniform_(300,(self.M*self.Q_delivered_max)*0.75)
-        self.ramp_hours = 4
+        self.night_baseline=lambda: torch.rand(1).uniform_(100,self.Q_delivered_max/2)
+        self.day_baseline=lambda: torch.rand(1).uniform_(self.Q_delivered_max/2,self.load_max)
+        self.ramp_hours=lambda: torch.randint(low=2, high=8, size=(1,1)).item()
         self.tolerance = 5 # tolerance for cooling bound [kW]
         self.chiller_on_cost = 10.
         # SYSTEM PARAMETERS

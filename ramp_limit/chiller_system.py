@@ -26,12 +26,13 @@ class ChillerSystem(torch.nn.Module):
         self.eta_return = init.eta_return
         self.register_buffer("h_filter", torch.tensor(init.load_filter, dtype=torch.float32))  # e.g. [0.8, 0.1, ...]
         self.L = len(init.load_filter)
-        self.ramp_rate_ub = 0.025
-        self.ramp_rate_lb = 0.025
+        self.ramp_rate_ub = 0.05
+        self.ramp_rate_lb = 0.05
 
         # Initialize zero buffer for load history
         self.register_buffer("load_buffer", torch.zeros((1, self.L)))  # shape (1, L), expanded later per batch
-        self.register_buffer("previous_cooling", torch.zeros((1, self.M)))
+        self.register_buffer("previous_cooling", torch.zeros((1, self.M)), persistent=False)
+
 
     def apply_load_filter(self, load: torch.Tensor) -> torch.Tensor:
         batch_size = load.shape[0]
@@ -42,15 +43,20 @@ class ChillerSystem(torch.nn.Module):
         if (self.load_buffer is None or
             self.load_buffer.shape[0] != batch_size or
             self.load_buffer.device != device):
-            self.load_buffer = torch.zeros((batch_size, self.L), device=device)
+            # self.load_buffer = torch.zeros((batch_size, self.L), device=device)
+            self.load_buffer = load_flat.unsqueeze(1).repeat(1, self.L).to(device)
+            filtered_flat = load_flat.unsqueeze(1)
+            return filtered_flat
+
+
+        # ---- SAFE IN-PLACE UPDATE ----
+        self.load_buffer[:, 1:] = self.load_buffer[:, :-1].clone()
+        self.load_buffer[:, 0] = load_flat
 
         # Ensure h_filter on same device
         if self.h_filter.device != device:
             self.h_filter = self.h_filter.to(device)
 
-        # ---- SAFE IN-PLACE UPDATE ----
-        self.load_buffer[:, 1:] = self.load_buffer[:, :-1].clone()
-        self.load_buffer[:, 0] = load_flat
 
         # Compute filtered output
         filtered_flat = torch.sum(self.load_buffer * self.h_filter, dim=1, keepdim=True)
@@ -133,7 +139,7 @@ class ChillerSystem(torch.nn.Module):
 
 
     # def forward(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor: 
-    def forward(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, Ts=None) -> torch.Tensor: 
+    def forward(self, T_supply_and_return, integer_status, mass_flow, T_evap, load, cooling_delivered, Ts=None) -> torch.Tensor: 
         """
         Inputs:
             T_return: (batch,1)        1D
@@ -154,7 +160,7 @@ class ChillerSystem(torch.nn.Module):
         elif T_supply_and_return.ndim == 3: 
             T_supply = T_supply_and_return[:,:,:self.M]
             T_return = T_supply_and_return[:,:,self.M:]
-
+        
 
         # dT_supply_next = (1/self.C_i) * (-integer_status * mass_flow * self.c_p * (T_supply - T_evap))
         # temp_diff = T_return - T_supply
@@ -167,16 +173,18 @@ class ChillerSystem(torch.nn.Module):
 
         dT_supply_next = self.inv_C_i * (-mass_effect * delta_supply_evap) * self.eta_supply
         
-        cooling_delivered = torch.sum(
-            self.get_cooling_delivered_per_chiller(integer_status, mass_flow, T_return, T_supply, ramp_bounds=True), 
-                dim=-1, keepdim=True)
+        # cooling_delivered = torch.sum(
+        #     self.get_cooling_delivered_per_chiller(integer_status, mass_flow, T_return, T_supply, 
+        #     ramp_bounds=True, update_memory=True),
+        #         dim=-1, keepdim=True)
         
-        dT_return_next = self.inv_C_r * (load - cooling_delivered)
+
+        dT_return_next = self.inv_C_r * (load - torch.sum(cooling_delivered, -1,keepdim=True))
 
         return torch.cat([dT_supply_next, dT_return_next], dim=-1)
     
     def get_chiller_power_PLR(self,*, integer_status, mass_flow, T_return, T_supply) -> torch.Tensor:
-        cooling = self.get_cooling_delivered_per_chiller(integer_status, mass_flow, T_return, T_supply)
+        cooling = self.get_cooling_delivered_per_chiller(integer_status, mass_flow, T_return, T_supply, ramp_bounds=True, update_memory=False)
         PLR = torch.clip(cooling / self.Q_rated, min=0., max=1.) 
         COP = self.a+self.b*PLR+self.c*torch.square(PLR) 
         COP = torch.relu(COP)
@@ -187,7 +195,7 @@ class ChillerSystem(torch.nn.Module):
     def get_chiller_power_PLR_(self,*, cooling, integer_status) -> torch.Tensor:
         PLR = torch.clip(cooling / self.Q_rated, min=0., max=1.) 
         COP = self.a+self.b*PLR+self.c*torch.square(PLR) 
-        COP = torch.relu(COP)
+        COP = torch.clip(COP, min=1., max=10.)
         power = cooling / (COP)
         power = torch.clip(power, min=0., max=self.Q_rated) # gives stable training
         return power + integer_status*self.chiller_on_cost
@@ -201,32 +209,26 @@ class ChillerSystem(torch.nn.Module):
 
     def get_cooling_delivered(self, integer_status, mass_flow, T_return, T_supply) -> torch.Tensor:
         cooling_power = self.get_cooling_delivered_per_chiller(integer_status=integer_status,mass_flow=mass_flow,
-                                                               T_return=T_return, T_supply=T_supply)
+                                                               T_return=T_return, T_supply=T_supply, ramp_bounds=True)
         cooling_power_total =  torch.sum(cooling_power, dim=-1, keepdim=True) 
         return cooling_power_total
     
-    # def get_cooling_delivered_per_chiller(self, integer_status, mass_flow, T_return, T_supply, ramp_bounds=False) -> torch.Tensor:
-    #     cooling_power = integer_status*self.c_p*mass_flow*(T_return - T_supply)
-    #     cooling_power = torch.clip(cooling_power*self.eta_return, min=0., max=self.Q_rated)
-        
-    #     if ramp_bounds: 
-    #         max_ramp_up = self.previous_cooling + self.ramp_rate_ub * self.Q_rated
-    #         max_ramp_down = self.previous_cooling - self.ramp_rate_lb * self.Q_rated
-           
-    #         max_ramp_down = max_ramp_down_raw.view(1, -1).expand_as(cooling_power)
-    #         max_ramp_up   = max_ramp_up_raw.view(1, -1).expand_as(cooling_power)
-
-    #         cooling_power = torch.clip(cooling_power, min=max_ramp_down, max=max_ramp_up)
-
-
-    #         self.previous_cooling = cooling_power.detach()
-    #     return cooling_power
     def get_cooling_delivered_per_chiller(self,
                                       integer_status,
                                       mass_flow,
-                                      T_return,
-                                      T_supply,
-                                      ramp_bounds: bool = False):
+                                      T_supply_and_return,
+                                    #   T_return,
+                                    #   T_supply,
+                                      ramp_bounds: bool = True,
+                                      update_memory: bool = True):
+        
+        if T_supply_and_return.ndim == 2:
+            T_supply = T_supply_and_return[:,:self.M]
+            T_return = T_supply_and_return[:,self.M:]
+        elif T_supply_and_return.ndim == 3: 
+            T_supply = T_supply_and_return[:,:,:self.M]
+            T_return = T_supply_and_return[:,:,self.M:]
+
         cooling_power = integer_status * self.c_p * mass_flow * (T_return - T_supply)
         cooling_power = torch.clamp(cooling_power * self.eta_return,
                                     min=0., max=self.Q_rated)
@@ -253,13 +255,24 @@ class ChillerSystem(torch.nn.Module):
         if (getattr(self, "previous_cooling", None) is None or
             self.previous_cooling.shape != (B, nch) or
             self.previous_cooling.device != device):
-            self.previous_cooling = torch.zeros((B, nch), device=device)
+            self.previous_cooling = cp_2d.to(device)
 
         max_up = self.previous_cooling + ub * Q
         max_dn = self.previous_cooling - lb * Q
 
         cp_2d = torch.max(torch.min(cp_2d, max_up), max_dn)
-        self.previous_cooling = cp_2d.detach()
+
+        if not update_memory:
+            self.previous_cooling = self.previous_cooling
+        elif update_memory:
+            # print("MEMORY UPDATED")
+            # self.previous_cooling = cp_2d.detach()
+            self.previous_cooling = cp_2d.detach()
+        
+        # print("Previous cooling", self.previous_cooling)
+        # print("Current cooling", cp_2d.view_as(cooling_power))
+        
+
         return cp_2d.view_as(cooling_power)
 
 
@@ -314,3 +327,4 @@ def kelvin2celsius(*tensors) -> torch.Tensor:
 
 def celsius2kelvin(*tensors) -> torch.Tensor:
     return [tensor + 273.15 for tensor in tensors]
+# %%

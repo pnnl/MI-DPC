@@ -13,7 +13,7 @@ class SystemParameters():
         # # # Load signal parameters
         self.night_baseline=lambda: torch.rand(1).uniform_(50,300)
         self.day_baseline=lambda: torch.rand(1).uniform_(300,(self.M*self.Q_delivered_max)*0.75)
-        self.ramp_hours = 4
+        self.ramp_hours = 3
         self.tolerance = 5 # tolerance for cooling bound [kW]
         self.chiller_on_cost = 10.
         # SYSTEM PARAMETERS

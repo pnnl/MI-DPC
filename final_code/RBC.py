@@ -22,7 +22,7 @@ class RBC_policy():
     self.M = M
     self.T_evap_const = T_evap_const
     self.T_evap = torch.ones(1,1,self.M)*self.T_evap_const
-    
+    self.system = system
     self.mass_flow_const = mass_flow_const
     self.mass_flow = torch.ones(1,1,self.M)*self.mass_flow_const
   
@@ -30,14 +30,13 @@ class RBC_policy():
     del load, filtered_load
     integer = torch.zeros(1,1,self.M) # initialize
     integer[:,:,:self.n_active_chillers] = 1. # overwrite number of active integer
-    PLR = system.get_cooling_delivered_per_chiller(integer, self.mass_flow,
+    PLR = self.system.get_cooling_delivered_per_chiller(integer, self.mass_flow,
                                         T_return, T_supply).sum(-1, keepdim=True) \
             /(self.Q_delivered_max*self.n_active_chillers)
     if PLR > self.PLR_on:
       self.n_active_chillers += 1
     if PLR < self.PLR_off:
       self.n_active_chillers -= 1
-    
     self.n_active_chillers = max(1, min(self.n_active_chillers, self.M)) # at least one on
     
     output={'integer': integer, 'flow': self.mass_flow, 'T_evap': self.T_evap}

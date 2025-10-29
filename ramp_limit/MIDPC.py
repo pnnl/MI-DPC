@@ -38,14 +38,14 @@ class MIDPC_policy():
                 
                 with torch.no_grad():
                         if not self.measure_inference_time:
-                                # filtered_load = self.load_filter_node(input_dict)
+                                filtered_load = self.load_filter_node(input_dict)
                                 relaxed_integer = self.integer_relaxed_node(input_dict | filtered_load) # dict - key: 'relaxed_integer'
                                 integer = self.integer_node(relaxed_integer) # dict - key: 'integer'
                                 T_evap = self.T_evap_node(input_dict | relaxed_integer | filtered_load) # dict - key: 'T_evap'
                                 mass_flow = self.flow_node(input_dict | relaxed_integer | filtered_load) # dict - key: 'flow'
                      
                         elif self.measure_inference_time:
-                                # filtered_load = self.load_filter_node(input_dict)
+                                filtered_load = self.load_filter_node(input_dict)
                                 # [self.integer_relaxed_node(input_dict | filtered_load) for warmup in range(3)] # Warmup
                                 start_time = time.perf_counter()
                                 relaxed_integer = self.integer_relaxed_node(input_dict | filtered_load) # dict - key: 'relaxed_integer'
@@ -64,7 +64,7 @@ class MIDPC_policy():
                 output['filtered_load'] = filtered_load['filtered_load'].unsqueeze(0)
                 return output
 
-def relaxed_binary(x, slope=5.0, threshold=0.5):
+def relaxed_binary(x, slope=10.0, threshold=0.5):
         logits = slope * (x - threshold)
         sig = torch.sigmoid(logits)
         return (x > threshold).float() + (sig - sig.detach())
@@ -75,12 +75,14 @@ def round_fn(x):
 system_filter = ChillerSystem(init = init)
 
 def load_filter(x):
+        # print(x)
+        # print(system_filter.apply_load_filter(x[:,[0]]))
         return system_filter.apply_load_filter(x[:,[0]])
 
 if __name__=='__main__':
         torch.manual_seed(202)
         parser = ArgumentParser()
-        parser.add_argument('-nsteps', default=100, type=int)
+        parser.add_argument('-nsteps', default=60, type=int)
         parser.add_argument('-Ts', default=180, type=int)
         parser.add_argument('-M', default=2, type=int)
         args, unknown = parser.parse_known_args()
@@ -90,8 +92,8 @@ if __name__=='__main__':
         layer_norm = False; affine_norm = False; spectral_norm = False
         # exponent = 2
         load_min = 0; load_max = (init.Q_delivered_max*init.M)*0.75
-        mins = [init.T_supply_min] * init.M + [init.T_return_min] * 1 + [load_min] * (nsteps+1) 
-        maxs = [init.T_supply_max] * init.M + [init.T_return_max] * 1 + [load_max] * (nsteps+1) 
+        mins = [init.T_supply_min] * init.M + [init.T_return_min] * 1 + [load_min] * (nsteps) 
+        maxs = [init.T_supply_max] * init.M + [init.T_return_max] * 1 + [load_max] * (nsteps) 
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         torch.set_default_device(device=device)
 
@@ -102,22 +104,22 @@ if __name__=='__main__':
                         # In Size: T_supply + T_return + load + filtered_load+ relaxed_integer
         net_flow = utils.customMPL(
                                         # insize=1*init.M+1+1*(nsteps)+1+(init.M-1), outsize=init.M, hsizes=[120, 120, 120],
-                                        insize=1*init.M+1+1*(nsteps)+1, outsize=init.M, hsizes=[120, 120, 120, 120],
-                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                        insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[240, 240, 120],
+                                        nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                         # mins=mins+([0.]*(init.M-1)), maxs=maxs+([1.]*(init.M-1)), u_min=init.flow_min, u_max=init.flow_max, 
                                         mins=mins, maxs=maxs, u_min=init.flow_min, u_max=init.flow_max, 
                                         clipping=False, spectral_norm=spectral_norm)
 
         net_evap = utils.customMPL(
                                 # insize=1*init.M+1+1*(nsteps)+1+(init.M-1), outsize=init.M, hsizes=[120, 120, 120], 
-                                insize=1*init.M+1+1*(nsteps)+1, outsize=init.M, hsizes=[120, 120, 120, 120], 
-                                nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
+                                insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[240, 240, 120], 
+                                nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
                                 # mins=mins+([0.]*(init.M-1)), maxs=maxs+([1.]*(init.M-1)), u_min=init.T_evap_min, u_max=init.T_evap_max, 
                                 mins=mins, maxs=maxs, u_min=init.T_evap_min, u_max=init.T_evap_max, 
                                 clipping=False, spectral_norm=spectral_norm)
 
-        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+1+0, outsize=init.M-1, hsizes=[120, 120, 120, 120],
-                                        nonlin=torch.nn.SELU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
+        net_integer = utils.customMPL(insize=1*init.M+1+1*(nsteps)+0+0, outsize=init.M-1, hsizes=[240, 240, 120],
+                                        nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.,
                                         mins=mins, maxs=maxs, u_min=0., u_max=1., 
                                         clipping=False, spectral_norm=spectral_norm)
 
@@ -125,14 +127,18 @@ if __name__=='__main__':
         load_filter_node = Node(load_filter, input_keys=['load'], output_keys=['filtered_load'])
         load_filter_node({'load': torch.zeros(1,1, device=device)})
 
+        cooling_node = Node(system.get_cooling_delivered_per_chiller,
+                                input_keys=['integer', 'flow', 'T_supply_and_return'],
+                                output_keys=['Q_delivered'])
+
         dynamics_node = Node(integrator,
-                                input_keys=['T_supply_and_return', 'integer', 'flow', 'T_evap', 'filtered_load'],
+                                input_keys=['T_supply_and_return', 'integer', 'flow', 'T_evap', 'filtered_load', 'Q_delivered'],
                                 output_keys=['T_supply_and_return'],
                                 name='system_dynamics')
         
 
         policy_integer_node = Node(net_integer,
-                        input_keys=['T_supply_and_return','load', 'filtered_load'],
+                        input_keys=['T_supply_and_return','load'],
                         output_keys=['relaxed_integer'],
                         name='policy_integer')
         
@@ -141,17 +147,17 @@ if __name__=='__main__':
         rounding_node = Node(round_fn, input_keys=['relaxed_integer'], output_keys=['integer'], name='soft_rounding')
 
         policy_flow_node = Node(net_flow,
-                        input_keys=['T_supply_and_return','load', 'filtered_load'],
+                        input_keys=['T_supply_and_return','load'],
                         output_keys=['flow'],
                         name='policy_flow')
 
         policy_evap_node = Node(net_evap,
-                        input_keys=['T_supply_and_return','load', 'filtered_load'],
+                        input_keys=['T_supply_and_return','load'],
                         output_keys=['T_evap'],
                         name='policy_evap')
 
         # NEUROMANCER SYSTEM
-        cl_system = SystemPreview([load_filter_node, policy_integer_node, rounding_node, policy_evap_node, policy_flow_node , dynamics_node],
+        cl_system = SystemPreview([load_filter_node, policy_integer_node, rounding_node, policy_evap_node, policy_flow_node , cooling_node, dynamics_node],
                                         nsteps=nsteps, name='cl_system', pad_mode='reflect', pad_constant = 300,
                                         preview_keys_map={'load': ['policy_flow', 'policy_integer', 'policy_evap']},
                                         preview_length={'load': nsteps-1})
@@ -176,29 +182,28 @@ if __name__=='__main__':
         T_return_variable = variable('T_supply_and_return')[:,:nsteps,init.M:] # No terminal state
         T_supply_variable = variable('T_supply_and_return')[:,:nsteps,:init.M] # No terminal state
 
-        T_out_variable = system.get_outlet_temperature(integer_status=integer_variable, 
-                                                        mass_flow=flow_variable,
-                                                        T_supply=T_supply_variable) # State
+        # T_out_variable = system.get_outlet_temperature(integer_status=integer_variable, 
+        #                                                 mass_flow=flow_variable,
+        #                                                 T_supply=T_supply_variable) # State
 
-        cooling_delivered_variable = system.get_cooling_delivered_per_chiller(integer_status=integer_variable,
-                                                                        mass_flow=flow_variable,
-                                                                        T_return=T_return_variable,
-                                                                        T_supply=T_supply_variable) # Decisions
+        cooling_delivered_variable = variable('Q_delivered')
+        # cooling_delivered_variable = system.get_cooling_delivered_per_chiller(integer_status=integer_variable,
+        #                                                                 mass_flow=flow_variable,
+        #                                                                 T_return=T_return_variable,
+        #                                                                 T_supply=T_supply_variable) # Decisions
         
         #%% CONTROL OBJECTIVES
-        chiller_loss =  ((system.get_chiller_power_PLR(integer_status=integer_variable, 
-                                                        mass_flow=flow_variable,
-                                                        T_return=T_return_variable,
-                                                        T_supply=T_supply_variable) == 0.))
+        chiller_loss =  1.*((system.get_chiller_power_PLR_(cooling=cooling_delivered_variable,
+                                                        integer_status=integer_variable) == 0.))
         
         pump_loss =  ((system.get_pump_consumption(mass_flow=flow_variable, 
                                 integer_status=integer_variable) == 0.))
         
-        cooling_loss = 0.003*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
+        cooling_loss = 0.001*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
         # c = init.delta_penalty # Switching cost coefficient
-        c = 10.
-        switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
-        binary_regularization = 500.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
+        c = 20.
+        switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2.)
+        binary_regularization = 400.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2.)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
         # switching_loss = c*(integer_variable == 0)
         # polar_loss = c*((relaxed_integer_variable[:,:,[0]] == integer_variable[:,:,[0]])^2)
@@ -239,6 +244,7 @@ if __name__=='__main__':
                 T_supply_lb, T_supply_ub,
                 flow_lb, flow_ub,
                 T_evap_lb, T_evap_ub,
+
                 # relaxed_integer_variable_lb, relaxed_integer_variable_ub,
                 # cooling_bound,
                 ]
@@ -247,7 +253,7 @@ if __name__=='__main__':
         loss = PenaltyLoss(loss_list, constraints)
         problem = Problem([cl_system], loss)
         #%% Dataloaders
-        num_data = 24000; num_train_data = 20000; batch_size = 10000
+        num_data = 40000; num_train_data = 30000; batch_size = 10000
         T_supply_t = torch.rand(num_data, 1, init.M).uniform_(init.T_supply_min, init.T_supply_max)
         T_return_t = T_supply_t.mean(-1, keepdim=True).uniform_(init.T_supply_max, init.T_return_max)
 
@@ -279,19 +285,19 @@ if __name__=='__main__':
         # logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps} at Ts={Ts}')
-        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.0003, weight_decay=0.00)
+        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.001, weight_decay=0.00)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,
                 optimizer=optimizer,
-                epochs=1000,
+                epochs=500,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
                 eval_metric='dev_loss',
                 warmup=20,
-                patience=200,
+                patience=250,
                 clip=torch.inf, 
-                lr_scheduler=False,
+                lr_scheduler=True,
                 device=device,
                 epoch_verbose=10
                 # logger=logger,
@@ -304,7 +310,7 @@ if __name__=='__main__':
         def count_parameters(model):
             return sum(p.numel() for p in model.parameters() if p.requires_grad)
         n_parameters = count_parameters(cl_system)
-        
+        print("Saving the trained control policy...")
         training_data = {'eltime': training_time, 'n_epochs': trainer.current_epoch, 'n_parameters': n_parameters}
         torch.save(cl_system, f'results/MIDPC/policies/N_{nsteps}_Ts_{Ts}_M_{init.M}.pt')
         torch.save(training_data, f'results/MIDPC/policies/training_data_N_{nsteps}_Ts_{Ts}_M_{init.M}.pt')

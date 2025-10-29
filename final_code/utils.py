@@ -47,7 +47,7 @@ class customMPL(nn.Module):
         if spectral_norm:
             linear = nn.utils.spectral_norm(linear)
         layers.append(linear)
-        layers.append(nn.SELU())
+        layers.append(nonlin)
         if dropout_prob > 0:
             layers.append(nn.Dropout(dropout_prob))
         prev_size = hsizes[0]
@@ -235,8 +235,8 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
     axes[7].legend(); axes[7].grid(True)
     
     PLR = data['Q_delivered']/(init.Q_delivered_max)
-    COP = init.a+init.b*PLR+init.c*PLR**2
-
+    # COP = init.a+init.b*PLR+init.c*PLR**2
+    COP = data['Q_delivered'].sum(-1,keepdim=True)/data['P_chiller'].sum(-1,keepdim=True) 
     axes[8].plot(time, PLR[0,:,:].sum(-1,keepdim=True)/data['chiller_status'][0,:,:].sum(-1,keepdim=True), 
     # label=[f'Chiller{i+1}' for i in rng]
     )

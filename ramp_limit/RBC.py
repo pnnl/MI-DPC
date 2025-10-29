@@ -25,14 +25,17 @@ class RBC_policy():
     
     self.mass_flow_const = mass_flow_const
     self.mass_flow = torch.ones(1,1,self.M)*self.mass_flow_const
-  
+    self.system=system
   def __call__(self, *, T_supply=None, T_return=None, load=None, filtered_load=None):
     del load, filtered_load
     integer = torch.zeros(1,1,self.M) # initialize
     integer[:,:,:self.n_active_chillers] = 1. # overwrite number of active integer
-    PLR = system.get_cooling_delivered_per_chiller(integer, self.mass_flow,
-                                        T_return, T_supply).sum(-1, keepdim=True) \
+    PLR = self.system.get_cooling_delivered_per_chiller(integer, self.mass_flow,
+                                        torch.cat((T_supply,T_return), dim=-1),
+                                        ramp_bounds=True, update_memory=False
+                                        ).sum(-1, keepdim=True) \
             /(self.Q_delivered_max*self.n_active_chillers)
+    # print(PLR)
     if PLR > self.PLR_on:
       self.n_active_chillers += 1
     if PLR < self.PLR_off:

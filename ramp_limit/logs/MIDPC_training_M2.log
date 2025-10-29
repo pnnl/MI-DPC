@@ -1,0 +1,256 @@
+===== Starting runs at Mon Oct 27 06:25:56 PM CET 2025 =====
+Running with Ts=180, nsteps=20, and M=2
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+Training MIDPC policy for N=20 at Ts=180
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 20, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 888.567138671875
+epoch: 10  train_loss: 168.65200805664062
+epoch: 20  train_loss: 142.5078582763672
+epoch: 30  train_loss: 131.11660766601562
+epoch: 40  train_loss: 127.3202133178711
+epoch: 50  train_loss: 125.99996185302734
+epoch: 60  train_loss: 125.45146179199219
+epoch: 70  train_loss: 125.37852478027344
+epoch: 80  train_loss: 131.64358520507812
+epoch: 90  train_loss: 127.317138671875
+epoch: 100  train_loss: 126.80055236816406
+epoch: 110  train_loss: 126.43510437011719
+epoch: 120  train_loss: 125.90754699707031
+epoch: 130  train_loss: 125.49495697021484
+epoch: 140  train_loss: 126.41863250732422
+epoch: 150  train_loss: 144.3148193359375
+epoch: 160  train_loss: 128.4371795654297
+epoch: 170  train_loss: 126.67648315429688
+epoch: 180  train_loss: 126.95783996582031
+epoch: 190  train_loss: 126.23775482177734
+epoch: 200  train_loss: 132.80076599121094
+epoch: 210  train_loss: 125.75639343261719
+epoch: 220  train_loss: 396.6754150390625
+epoch: 230  train_loss: 195.4851531982422
+epoch: 240  train_loss: 143.24400329589844
+epoch: 250  train_loss: 136.20797729492188
+epoch: 260  train_loss: 132.7212371826172
+epoch: 270  train_loss: 130.9579315185547
+epoch: 280  train_loss: 130.197998046875
+epoch: 290  train_loss: 129.705078125
+epoch: 300  train_loss: 129.28038024902344
+epoch: 310  train_loss: 128.92108154296875
+epoch: 320  train_loss: 128.57139587402344
+epoch: 330  train_loss: 128.32785034179688
+epoch: 340  train_loss: 128.08340454101562
+epoch: 350  train_loss: 127.86314392089844
+epoch: 360  train_loss: 127.69108581542969
+epoch: 370  train_loss: 127.5643310546875
+epoch: 380  train_loss: 127.521484375
+Early stopping!!!
+Saving the trained control policy...
+Finished run with nsteps=20 at Mon Oct 27 06:29:57 PM CET 2025
+-----------------------------------
+Running with Ts=180, nsteps=40, and M=2
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+Training MIDPC policy for N=40 at Ts=180
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 40, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1242.275390625
+epoch: 10  train_loss: 129.8388671875
+epoch: 20  train_loss: 108.54037475585938
+epoch: 30  train_loss: 112.86641693115234
+epoch: 40  train_loss: 103.84049987792969
+epoch: 50  train_loss: 101.8149642944336
+epoch: 60  train_loss: 100.98997497558594
+epoch: 70  train_loss: 100.4937744140625
+epoch: 80  train_loss: 101.11988830566406
+epoch: 90  train_loss: 100.49765014648438
+epoch: 100  train_loss: 100.19236755371094
+epoch: 110  train_loss: 100.07817077636719
+epoch: 120  train_loss: 99.9937744140625
+epoch: 130  train_loss: 101.35851287841797
+epoch: 140  train_loss: 100.3928451538086
+epoch: 150  train_loss: 99.8336181640625
+epoch: 160  train_loss: 99.68074798583984
+epoch: 170  train_loss: 100.48287200927734
+epoch: 180  train_loss: 99.76619720458984
+epoch: 190  train_loss: 99.48543548583984
+epoch: 200  train_loss: 99.43486022949219
+epoch: 210  train_loss: 99.83222961425781
+epoch: 220  train_loss: 99.86091613769531
+epoch: 230  train_loss: 99.2658920288086
+epoch: 240  train_loss: 99.08799743652344
+epoch: 250  train_loss: 99.16307067871094
+epoch: 260  train_loss: 99.01774597167969
+epoch: 270  train_loss: 98.94356536865234
+epoch: 280  train_loss: 99.39117431640625
+epoch: 290  train_loss: 99.59166717529297
+epoch: 300  train_loss: 99.8251953125
+epoch: 310  train_loss: 99.2149887084961
+epoch: 320  train_loss: 99.35420989990234
+epoch: 330  train_loss: 99.01839447021484
+epoch: 340  train_loss: 98.8460922241211
+epoch: 350  train_loss: 98.8614730834961
+epoch: 360  train_loss: 98.81211853027344
+epoch: 370  train_loss: 99.1109619140625
+epoch: 380  train_loss: 99.01818084716797
+epoch: 390  train_loss: 98.9400863647461
+epoch: 400  train_loss: 100.79576110839844
+epoch: 410  train_loss: 99.16651916503906
+epoch: 420  train_loss: 98.84671020507812
+epoch: 430  train_loss: 98.7872543334961
+epoch: 440  train_loss: 99.02205657958984
+epoch: 450  train_loss: 98.80516052246094
+epoch: 460  train_loss: 99.18565368652344
+epoch: 470  train_loss: 98.76658630371094
+epoch: 480  train_loss: 98.78379821777344
+epoch: 490  train_loss: 98.72911071777344
+Saving the trained control policy...
+Finished run with nsteps=40 at Mon Oct 27 06:38:27 PM CET 2025
+-----------------------------------
+Running with Ts=180, nsteps=60, and M=2
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+Training MIDPC policy for N=60 at Ts=180
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 60, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1483.4296875
+epoch: 10  train_loss: 114.25090026855469
+epoch: 20  train_loss: 96.03472900390625
+epoch: 30  train_loss: 93.12089538574219
+epoch: 40  train_loss: 90.48161315917969
+epoch: 50  train_loss: 89.37850952148438
+epoch: 60  train_loss: 88.65182495117188
+epoch: 70  train_loss: 88.21349334716797
+epoch: 80  train_loss: 87.9068832397461
+epoch: 90  train_loss: 87.83202362060547
+epoch: 100  train_loss: 92.32815551757812
+epoch: 110  train_loss: 87.8946762084961
+epoch: 120  train_loss: 87.48372650146484
+epoch: 130  train_loss: 87.22826385498047
+epoch: 140  train_loss: 87.13109588623047
+epoch: 150  train_loss: 88.87394714355469
+epoch: 160  train_loss: 87.9630355834961
+epoch: 170  train_loss: 87.40605163574219
+epoch: 180  train_loss: 87.18238830566406
+epoch: 190  train_loss: 88.00887298583984
+epoch: 200  train_loss: 87.34791564941406
+epoch: 210  train_loss: 87.20407104492188
+epoch: 220  train_loss: 87.09443664550781
+epoch: 230  train_loss: 86.98863983154297
+epoch: 240  train_loss: 86.86253356933594
+epoch: 250  train_loss: 89.46279907226562
+epoch: 260  train_loss: 88.02003479003906
+epoch: 270  train_loss: 87.53804779052734
+epoch: 280  train_loss: 87.41679382324219
+epoch: 290  train_loss: 87.27245330810547
+epoch: 300  train_loss: 87.07135009765625
+epoch: 310  train_loss: 86.73219299316406
+epoch: 320  train_loss: 86.5638427734375
+epoch: 330  train_loss: 88.78816223144531
+epoch: 340  train_loss: 87.76140594482422
+epoch: 350  train_loss: 87.53585052490234
+epoch: 360  train_loss: 87.38518524169922
+epoch: 370  train_loss: 87.21797943115234
+epoch: 380  train_loss: 87.05722045898438
+epoch: 390  train_loss: 86.91410827636719
+epoch: 400  train_loss: 86.77513122558594
+epoch: 410  train_loss: 86.68709564208984
+epoch: 420  train_loss: 87.56971740722656
+epoch: 430  train_loss: 87.018310546875
+epoch: 440  train_loss: 86.75016784667969
+epoch: 450  train_loss: 86.63813781738281
+epoch: 460  train_loss: 86.56861877441406
+epoch: 470  train_loss: 86.52224731445312
+epoch: 480  train_loss: 86.47967529296875
+epoch: 490  train_loss: 86.44606018066406
+Saving the trained control policy...
+Finished run with nsteps=60 at Mon Oct 27 06:51:02 PM CET 2025
+-----------------------------------
+Running with Ts=180, nsteps=80, and M=2
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+Training MIDPC policy for N=80 at Ts=180
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 2])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Using a target size (torch.Size([])) that is different to the input size (torch.Size([10000, 80, 1])). This will likely lead to incorrect results due to broadcasting. Please ensure they have the same size.
+  return func(*args, **kwargs)
+/home/desktop309/miniconda3/envs/neuromancer/lib/python3.10/site-packages/torch/utils/_device.py:103: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  return func(*args, **kwargs)
+epoch: 0  train_loss: 1755.868408203125
+epoch: 10  train_loss: 127.66484832763672
+epoch: 20  train_loss: 107.81441497802734
+epoch: 30  train_loss: 105.53556823730469
+epoch: 40  train_loss: 101.96925354003906
+epoch: 50  train_loss: 100.03057861328125
+epoch: 60  train_loss: 99.14910888671875
+epoch: 70  train_loss: 99.01628875732422
+epoch: 80  train_loss: 98.61638641357422
+epoch: 90  train_loss: 98.44481658935547
+epoch: 100  train_loss: 98.252685546875
+epoch: 110  train_loss: 98.15359497070312
+epoch: 120  train_loss: 98.05882263183594
+epoch: 130  train_loss: 98.03143310546875
+epoch: 140  train_loss: 97.84334564208984
+epoch: 150  train_loss: 97.99544525146484
+epoch: 160  train_loss: 97.67884826660156
+epoch: 170  train_loss: 97.82601165771484
+epoch: 180  train_loss: 98.40963745117188
+epoch: 190  train_loss: 97.64431762695312
+epoch: 200  train_loss: 97.49110412597656
+epoch: 210  train_loss: 97.57272338867188
+epoch: 220  train_loss: 102.18206787109375
+epoch: 230  train_loss: 98.38751220703125
+epoch: 240  train_loss: 97.91574096679688
+epoch: 250  train_loss: 97.8078842163086
+epoch: 260  train_loss: 97.72599792480469
+epoch: 270  train_loss: 97.76766967773438
+epoch: 280  train_loss: 97.5333251953125
+epoch: 290  train_loss: 97.46952819824219
+epoch: 300  train_loss: 97.55378723144531
+epoch: 310  train_loss: 98.03205871582031
+epoch: 320  train_loss: 97.96395111083984
+epoch: 330  train_loss: 97.55760192871094
+epoch: 340  train_loss: 97.42765808105469
+epoch: 350  train_loss: 97.3249740600586
+epoch: 360  train_loss: 97.22682189941406
+epoch: 370  train_loss: 97.37384033203125
+epoch: 380  train_loss: 101.9540023803711
+epoch: 390  train_loss: 112.14132690429688
+epoch: 400  train_loss: 97.87264251708984
+epoch: 410  train_loss: 97.4493637084961
+epoch: 420  train_loss: 97.33977508544922
+epoch: 430  train_loss: 97.2475814819336
+epoch: 440  train_loss: 97.16989135742188
+epoch: 450  train_loss: 97.09671020507812
+epoch: 460  train_loss: 97.09099578857422
+epoch: 470  train_loss: 97.03875732421875
+epoch: 480  train_loss: 99.40554809570312
+epoch: 490  train_loss: 97.57122802734375
+Saving the trained control policy...
+Finished run with nsteps=80 at Mon Oct 27 07:06:28 PM CET 2025
+-----------------------------------
+===== All runs completed at Mon Oct 27 07:06:28 PM CET 2025 =====

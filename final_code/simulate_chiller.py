@@ -9,7 +9,7 @@ torch.set_default_device('cpu')
 def simulate(
         T_supply_0, T_return_0, load_signal, 
         dynamics_forward, policy, nsteps=10, 
-        verbose=False, system=None, n_days=1, Ts=180):
+        verbose=False, system=None, n_days=1, Ts=180, s_length=None):
     # # # History Lists
     T_supply_hist, T_return_hist, T_evap_hist, mass_flow_hist, chiller_status_hist, \
     relaxed_integer_hist, inference_time_hist = \
@@ -17,7 +17,7 @@ def simulate(
  
     T_supply, T_return = T_supply_0, T_return_0 # Initial conditions
     T_supply_hist.append(T_supply_0); T_return_hist.append(T_return_0) # Save initial condition
-    s_length = int((n_days*24*60*60)/(Ts)) # Simulation length
+    s_length = int((n_days*24*60*60)/(Ts)) if s_length is None else s_length # Simulation length
     filtered = []
     for k in range(load_test.size(1)):
         filtered.append(chiller_system.apply_load_filter(load_test[0,k]))
@@ -72,29 +72,31 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIMPC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=2, type=int, help='Prediction horizon length')
-    parser.add_argument('-Ts', default=180, type=int, help='Sampling time')
-    parser.add_argument('-M', default=2, type=int, help='Number of chillers')
-    parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation')
-    parser.add_argument('-plotting', default=True, type=bool, help='Plot or not')
+    parser.add_argument('-nsteps', default=20, type=int, help='Prediction horizon length.')
+    parser.add_argument('-Ts', default=180, type=int, help='Sampling time.')
+    parser.add_argument('-M', default=3, type=int, help='Number of chillers.')
+    parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation.')
+    parser.add_argument('-plotting', default=True, type=bool, help='Plot or not.')
+    parser.add_argument('-s_length', default=None, type=int, help='Overrides n_days if defined.')
+    
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
     init = SystemParameters(Ts=args.Ts, M=args.M)
     chiller_system = ChillerSystem(init=init)
-
+    s_length = args.s_length
     # # # Initialize the policy
     if args.policy == 'RBC':
         from RBC import RBC_policy
         policy = RBC_policy(
-            PLR_on=0.7,
-            PLR_off=0.2,
+            PLR_on=0.6,
+            PLR_off=0.15,
             n_active_chillers=init.M,
             M = init.M,
             Q_delivered_max=init.Q_delivered_max,
             T_evap_const=10., 
-            mass_flow_const=15.,
+            mass_flow_const=10.,
             system = chiller_system
             )
    
@@ -108,6 +110,7 @@ if __name__=='__main__':
         
     elif args.policy == 'MIMPC':
         from MIMPC import MIMPC_policy
+        s_length = 12
         policy = MIMPC_policy(
             nsteps=args.nsteps,
             M = args.M,
@@ -117,27 +120,10 @@ if __name__=='__main__':
             exponent=init.exponent,
             solver='gurobi',
             verbose=True,
-            max_solver_time=15,
-            McCormick=False,
+            max_solver_time=900,
+            McCormick=True,
             warmstart=False
-
         )
-
-    # # # System init
-    # chiller_system = ChillerSystem(init=init)
-        
-                                    # a=init.a, b=init.b, c=init.c,
-                                    # C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
-                                    # gamma=init.gamma, exponent=init.exponent, M=init.M, 
-                                    # Ts=args.Ts, Q_rated=init.Q_delivered_max,
-                                    # eta_supply=init.eta_supply,
-                                    # eta_return=init.eta_return,
-                                    # h_filter=init.load_filter,
-                                    # eta_return=1.,
-                                    # h_filter=[0.2,]
-                                    # h_filter=[0.1]*10,
-                                    # h_filter=[1.]
-                                    # )
     
     integrator = integrators.RK4(chiller_system, h=torch.tensor(args.Ts))
     
@@ -163,13 +149,12 @@ if __name__=='__main__':
                         T_return_0=T_return_0, # IC
                         load_signal=load_test, # Disturbance
                         dynamics_forward=integrator, # Dynamics model [integrator or chiller_system.forward]
-                        # dynamics_forward=chiller_system.exact_discretization,
-                        # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
-                        verbose=False, # Print current timestep
+                        verbose=True, # Print current timestep
                         system=chiller_system, # For computing score variables
-                        n_days=args.n_days
+                        n_days=args.n_days,
+                        s_length=s_length
                        ) # Returns dictionary
     # # # Save outputs for analysis
     torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pt')

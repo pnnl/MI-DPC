@@ -24,23 +24,30 @@ def simulate(
     filtered_load = torch.vstack(filtered).view(1,-1,1)
     for k in range(s_length): # Simulation Loop
         print("Timestep: ", k) if verbose else None
-        decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps,:], filtered_load=filtered_load[:,k:k+nsteps,:]) # Compute decisions
+        decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps,:], 
+                            filtered_load=filtered_load[:,k:k+nsteps,:]) # Compute decisions
         # # # Read data
         relaxed_integer, inference_time = decisions.get('relaxed_integer'), decisions.get('inference_time')
         integer, mass_flow, T_evap = decisions['integer'], decisions['flow'], decisions['T_evap']
+        
+        # print("Previous delivered sim: ",system.previous_cooling)
+        Q_delivered = system.get_cooling_delivered_per_chiller(
+        integer_status=integer, mass_flow=mass_flow,
+        T_supply_and_return=torch.cat((T_supply,T_return), dim=-1),
+         ramp_bounds=True, update_memory=True)
+        
+        P_chiller = system.get_chiller_power_PLR_(
+        cooling=Q_delivered, integer_status=integer)
+        # print("Q_delivered sim: ",Q_delivered)
+        # print(k)
         # # # Dynamics
         x = dynamics_forward(torch.cat((T_supply,T_return), dim=-1),
-                            integer, mass_flow, T_evap, filtered_load[:,[k],:]) # Forward dynamics
+                            integer, mass_flow, T_evap, filtered_load[:,[k],:],
+                            Q_delivered) # Forward dynamics
         # # # Decouple
         T_supply = x[:,:,:-1]
         T_return = x[:,:,[-1]] # Last state is T_return
         # # # Chiller variables
-        Q_delivered = system.get_cooling_delivered_per_chiller(
-        integer_status=integer, mass_flow=mass_flow,
-        T_return=T_return, T_supply=T_supply, ramp_bounds=True)
-        
-        P_chiller = system.get_chiller_power_PLR_(
-        cooling=Q_delivered, integer_status=integer)
         
         # # # Histroy
         T_supply_hist.append(T_supply); T_return_hist.append(T_return); # Save states
@@ -87,27 +94,25 @@ if __name__=='__main__':
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
     parser.add_argument('-nsteps', default=20, type=int, help='Prediction horizon length')
     parser.add_argument('-Ts', default=180, type=int, help='Sampling time')
-    parser.add_argument('-M', default=2, type=int, help='Number of chillers')
-    parser.add_argument('-n_days', default=1, type=int, help='Number of days of simulation')
+    parser.add_argument('-M', default=3, type=int, help='Number of chillers')
+    parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation')
     parser.add_argument('-plotting', default=True, type=bool, help='Plot or not')
     # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
     init = SystemParameters(Ts=args.Ts, M=args.M)
     chiller_system = ChillerSystem(init=init)
-    chiller_system.ramp_rate_ub = 0.025
-    chiller_system.ramp_rate_lb = 0.025
-    # chiller_system.ramp_rate_ub = 1
-    # chiller_system.ramp_rate_lb = 1
+    # chiller_system.ramp_rate_ub = 0.05
+    # chiller_system.ramp_rate_lb = 0.05
     # # # Initialize the policy
     if args.policy == 'RBC':
         from RBC import RBC_policy
         policy = RBC_policy(
-            PLR_on=0.7,
-            PLR_off=0.25,
-            n_active_chillers=init.M,
+            PLR_on=0.6,
+            PLR_off=0.2,
+            n_active_chillers=init.M-1,
             M = init.M,
             Q_delivered_max=init.Q_delivered_max,
-            T_evap_const=10., 
+            T_evap_const=8., 
             mass_flow_const=15.,
             system = chiller_system
             )
@@ -159,7 +164,7 @@ if __name__=='__main__':
     seed = init.seed
     load_time, load_test = generate_datacenter_load(number_of_days=args.n_days+1,
                                                     sampling_time=args.Ts, 
-                                                    signal_seed=seed,
+                                                    signal_seed=seed+1,
                                                     ramp_hours=init.ramp_hours,
                                                     f_day=5, f_night=6, 
                                                     day_baseline=init.day_baseline, 

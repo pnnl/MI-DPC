@@ -43,8 +43,8 @@ class MIMPC_policy():
         self.warmstart = warmstart
         # Choose solver
         self.solver = SolverFactory(solver)
-
-        self.solver.options['TimeLimit'] = self.max_solver_time
+        if self.max_solver_time is not None:
+            self.solver.options['TimeLimit'] = self.max_solver_time
         # Tight gap can be expensive; tune as needed
         self.solver.options['MIPGap'] = 1e-5
 

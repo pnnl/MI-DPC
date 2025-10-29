@@ -123,6 +123,8 @@ signal_seed=303,
                            (d+1) * n_samples // number_of_days)
         td = t[day_offset]  # hours for this day
 
+        ramp_hour = ramp_hours() if callable(ramp_hours) else ramp_hours
+
         # stochastic day baselines & oscillations
         db_var = day_baseline() if callable(day_baseline) else day_baseline
         db = db_var * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
@@ -132,8 +134,8 @@ signal_seed=303,
         ona = osc_night_amp * (1 + daily_variation * torch.rand(1).uniform_(-1,1).item())
 
         # day/night factor
-        day_factor = smooth_transition(td % 24, 12 - ramp_hours, 12) \
-                   * (1 - smooth_transition(td % 24, 20, 20 + ramp_hours))
+        day_factor = smooth_transition(td % 24, 12 - ramp_hour, 12) \
+                   * (1 - smooth_transition(td % 24, 20, 20 + ramp_hour))
         baseline = nb + (db - nb) * day_factor
 
         # daily sinusoidal drift with random phase
@@ -151,8 +153,8 @@ signal_seed=303,
         noise = torch.randn(len(td)) * noise_scale
 
         # extra jitter around ramp hours
-        ramp_mask = ((td % 24 >= 8 - ramp_hours) & (td % 24 <= 8 + ramp_hours)) | \
-                    ((td % 24 >= 20 - ramp_hours) & (td % 24 <= 20 + ramp_hours))
+        ramp_mask = ((td % 24 >= 8 - ramp_hour) & (td % 24 <= 8 + ramp_hour)) | \
+                    ((td % 24 >= 20 - ramp_hour) & (td % 24 <= 20 + ramp_hour))
         transition_noise = ramp_mask.float() * torch.randn(len(td)) * ramp_jitter
 
         # random walk for slow drift
@@ -262,7 +264,7 @@ def plot_chiller_data(data, save_path=None, Ts=init.Ts, time_unit=None):
 
     axes[1].set_title(f'Total cost of operation:  {cost.item():.1f} [kWh] \n  \
                         Tracking RMSE: {control_RMSE.item():.1f} [kW] \n \
-                        Number of violations {n_violations} [-], mean COP {COP.mean():.2f}') 
+                        Number of violations {n_violations} [-], mean COP {COP_eff.mean():.2f}') 
     # print('Total cost of operation: ', cost.item(), 'kWh')
     if save_path is not None:
         plt.savefig(save_path)

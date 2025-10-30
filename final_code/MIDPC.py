@@ -29,6 +29,8 @@ class MIDPC_policy():
                 self.T_evap_node.callable.clipping = True
                 self.flow_node.callable.clipping = True
                 self.measure_inference_time = measure_inference_time
+                torch.set_grad_enabled(False)
+                torch.set_num_threads(1)
         def __call__(self, T_supply=None, T_return=None, load=None, filtered_load=None):
                 input_dict = {
                         'T_supply_and_return': torch.cat((T_supply,T_return), dim=-1).reshape(1,-1),
@@ -36,7 +38,7 @@ class MIDPC_policy():
                         'filtered_load': filtered_load[:,[0],:].reshape(1,-1),
                                 }
                 
-                with torch.no_grad():
+                with torch.inference_mode():
                         if not self.measure_inference_time:
                                 # filtered_load = self.load_filter_node(input_dict)
                                 relaxed_integer = self.integer_relaxed_node(input_dict ) # dict - key: 'relaxed_integer'
@@ -46,12 +48,16 @@ class MIDPC_policy():
                      
                         elif self.measure_inference_time:
                                 # filtered_load = self.load_filter_node(input_dict)
-                                # [self.integer_relaxed_node(input_dict | filtered_load) for warmup in range(3)] # Warmup
+                                # [self.integer_relaxed_node(input_dict ) for warmup in range(10)] # Warmup
+                                for warmup in range(10):
+                                        _ = self.integer_relaxed_node(input_dict )
+                                        _ = self.T_evap_node(input_dict )
+                                        _ = self.flow_node(input_dict )
                                 start_time = time.perf_counter()
-                                relaxed_integer = self.integer_relaxed_node(input_dict ) # dict - key: 'relaxed_integer'
+                                relaxed_integer = self.integer_relaxed_node(input_dict) # dict - key: 'relaxed_integer'
                                 integer = self.integer_node(relaxed_integer) # dict - key: 'integer'
-                                T_evap = self.T_evap_node(input_dict | relaxed_integer ) # dict - key: 'T_evap'
-                                mass_flow = self.flow_node(input_dict | relaxed_integer) # dict - key: 'flow'
+                                T_evap = self.T_evap_node(input_dict) # dict - key: 'T_evap'
+                                mass_flow = self.flow_node(input_dict) # dict - key: 'flow'
                                 inference_time = (time.perf_counter() - start_time)  # unit [seconds]
                 output = {}
 
@@ -85,6 +91,7 @@ if __name__=='__main__':
         parser.add_argument('-M', default=2, type=int)
         args, unknown = parser.parse_known_args()
         nsteps = args.nsteps
+        nsteps_list = [[5, 10, 15], [20, 40 ,60]]
         Ts = args.Ts
         init = SystemParameters(M=args.M)
         layer_norm = False; affine_norm = False; spectral_norm = False
@@ -195,8 +202,8 @@ if __name__=='__main__':
                                 integer_status=integer_variable) == 0.))
         
         cooling_loss = 0.001*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
-        # c = init.delta_penalty # Switching cost coefficient
-        c = 20. # 10 for long horizons!
+        # 10 for long horizons!
+        c = 20. if nsteps in nsteps_list[0] else 10.# 10 for long horizons!
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
         binary_regularization = 200.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
@@ -279,7 +286,8 @@ if __name__=='__main__':
         logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=10)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps}, M={init.M} at Ts={Ts}') 
-        optimizer = torch.optim.Adam(cl_system.parameters(), lr=0.006, #0.004 for long horizons!
+        learning_rate = 0.006 if nsteps in nsteps_list[0] else 0.004 #0.004 for long horizons!
+        optimizer = torch.optim.Adam(cl_system.parameters(), lr=learning_rate, 
         weight_decay=0.00)
         trainer = Trainer(
                 problem.to(device),

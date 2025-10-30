@@ -150,3 +150,11 @@ Finished run with nsteps=5 at Thu Oct 30 09:02:45 AM CET 2025
 Running MIMPC with Ts=180, nsteps=10, and M=2
 Finished run with nsteps=40 at Thu Oct 30 09:35:00 AM CET 2025
 Running MIMPC with Ts=180, nsteps=40, and M=3
+Finished run with nsteps=40 at Thu Oct 30 08:39:32 PM CET 2025
+./run_simulation.sh: line 34: ===== All runs completed at Thu Oct 30 08:39:32 PM CET 2025 =====: command not found
+Terminated
+Finished run with nsteps=10 at Fri Oct 31 12:16:57 AM CET 2025
+Running MIMPC with Ts=180, nsteps=15, and M=2
+Terminated
+Finished run with nsteps=15 at Fri Oct 31 12:17:09 AM CET 2025
+./run_simulation.sh: line 37: unexpected EOF while looking for matching `"'

@@ -441,7 +441,7 @@ def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_uni
 
     plt.show()
 
-def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_unit=None):
+def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_unit=None, plot_w = 7.16, plot_h=3.5):
     """
     Plot chiller data for one or more datasets on shared axes.
     Supports multiple datasets and LaTeX/PGF export.
@@ -479,7 +479,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
         x_label = "Timestep [-]"
 
     # --- Create figure ---
-    fig, axes = plt.subplots(3, 2, figsize=(7.16, 3.5), sharex=True)
+    fig, axes = plt.subplots(3, 2, figsize=(plot_w, plot_h), sharex=True)
     axes = axes.flatten()
 
     # --- Main plotting loop ---
@@ -496,8 +496,8 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             linestyle=style, color='crimson',
             label=fr"$T_\mathrm{{r}}$"
         )
-        axes[2].plot(time, torch.ones(s_length)*init.T_return_min, 'k--')
-        axes[2].plot(time, torch.ones(s_length)*init.T_return_max, 'k--')
+        axes[2].plot(time, torch.ones(s_length)*init.T_return_min, 'k:')
+        axes[2].plot(time, torch.ones(s_length)*init.T_return_max, 'k:')
 
         # 1) T_evap vs T_supply
         for i in range(data["T_evap"].size(-1)):
@@ -511,7 +511,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             #     linestyle=style, color=color, alpha=0.5,
             #     label=fr"$T_{{\mathrm{{evap,{i+1}}}}}\ \mathrm{{{label_tag}}}$"
             # )
-        axes[2].plot(time, torch.ones(s_length)*init.T_min, 'k--')
+        axes[2].plot(time, torch.ones(s_length)*init.T_min, 'k:')
         # axes[2].plot(time, torch.ones(s_length)*init.T_max, 'k--')
         # 2) Load vs Q_delivered
         axes[0].plot(
@@ -549,8 +549,8 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
                 linestyle=style, color=base_colors[i],
                 label=fr"${{i\!=\!{i+1}}}$"
             )
-        axes[4].plot(time, torch.ones(s_length)*0., 'k--')
-        axes[4].plot(time, torch.ones(s_length)*init.flow_max, 'k--')
+        axes[4].plot(time, torch.ones(s_length)*0., 'k:')
+        axes[4].plot(time, torch.ones(s_length)*init.flow_max, 'k:')
 
         # 8) status
 

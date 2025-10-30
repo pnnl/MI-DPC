@@ -13,9 +13,9 @@ LOGFILE="logs/MIDPC_training.log"
 echo "===== Starting runs at $(date) =====" > "$LOGFILE"
 
 # Loop over different nsteps values
-for M in 2 3; do
-# for nsteps in 20 40 60; do
-for nsteps in 5 10 15; do
+for M in 2 3 4 5; do
+for nsteps in 5 10 15 20 30 40 50 60 70 80 90 100; do
+# for nsteps in 5 10 15; do
     echo "Running with Ts=$Ts, nsteps=$nsteps, and M=$M" | tee -a "$LOGFILE"
     $env -u MIDPC.py -Ts $Ts -nsteps $nsteps -M $M >> "$LOGFILE" 2>&1
     echo "Finished run with nsteps=$nsteps at $(date)" | tee -a "$LOGFILE"

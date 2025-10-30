@@ -19,11 +19,24 @@ def get_mean_COP(cooling, chiller_power):
 def get_control_rmse(load, cooling):
     return torch.sqrt(torch.mean((load[:,:cooling.size(1),:] - cooling.sum(dim=-1, keepdim=True))**2))
 
+def get_mean_RCE(load, cooling): # Mean Relative Control Error
+    return torch.mean(
+        (load[:,:cooling.size(1),:] - cooling.sum(dim=-1, keepdim=True)).abs()/load[:,:cooling.size(1),:].abs()
+        )*100.
+
+def get_median_RCE(load, cooling): # Mean Relative Control Error
+    return torch.median(
+        (load[:,:cooling.size(1),:] - cooling.sum(dim=-1, keepdim=True)).abs()/load[:,:cooling.size(1),:].abs()
+        )*100.
+        
+
+
 if __name__=='__main__':
     Ts = 180
     M_list = [2, 3]
-    N_list = [20, 40, 60]
-    # N_list = [5, 10, 15]
+    # N_list = [20, 40, 60]
+    N_list = [5, 10, 15, 20, 40, 60]
+    N_list_tab = [5, 10, 15]
     RBC_data = {}
     for M in M_list:
         RBC_data[f'M={M}'] = torch.load(f'results/RBC/data_N20_Ts_180_M_{M}.pt')
@@ -33,13 +46,16 @@ if __name__=='__main__':
                                 )
         energy_cons = get_kilowatthours(pump_power=RBC_data[f'M={M}']['P_pump'],
                                         chiller_power=RBC_data[f'M={M}']['P_chiller'],)
-        cooling_rmse = get_control_rmse(load=RBC_data[f'M={M}']['load'],
+        mean_RCE = get_mean_RCE(load=RBC_data[f'M={M}']['load'],
+                                        cooling=RBC_data[f'M={M}']['Q_delivered'])
+        median_RCE = get_median_RCE(load=RBC_data[f'M={M}']['load'],
                                         cooling=RBC_data[f'M={M}']['Q_delivered'])
         RBC_data[f'M={M}']['Mean_COP']=mean_cop
         RBC_data[f'M={M}']['Savings']=0.
         RBC_data[f'M={M}']['Energy']=energy_cons/1000
-        RBC_data[f'M={M}']['Cooling_RMSE']=cooling_rmse
-        print(f"RBC policy, M={M} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, RMSE: {cooling_rmse:.2f}")
+        RBC_data[f'M={M}']['Mean_RCE']=mean_RCE
+        RBC_data[f'M={M}']['Median_RCE']=median_RCE
+        print(f"RBC policy, M={M} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, Mean_RCE: {mean_RCE:.2f}")
 
     print('='*80)
     print('='*80)
@@ -54,36 +70,41 @@ if __name__=='__main__':
                                     )
             energy_cons = get_kilowatthours(pump_power=DPC_data[f'M={M}, N={nsteps}']['P_pump'],
                                             chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller'],)
-            cooling_rmse = get_control_rmse(load=DPC_data[f'M={M}, N={nsteps}']['load'],
+            mean_RCE = get_mean_RCE(load=DPC_data[f'M={M}, N={nsteps}']['load'],
+                                            cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'])
+            median_RCE = get_median_RCE(load=DPC_data[f'M={M}, N={nsteps}']['load'],
                                             cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'])
             DPC_data[f'M={M}, N={nsteps}']['Mean_COP']=mean_cop
             DPC_data[f'M={M}, N={nsteps}']['Energy']=energy_cons/1000
             DPC_data[f'M={M}, N={nsteps}']['Savings']=((RBC_data[f'M={M}']['Energy']-energy_cons/1000)/RBC_data[f'M={M}']['Energy'])*100
-            DPC_data[f'M={M}, N={nsteps}']['Cooling_RMSE']=cooling_rmse
+            DPC_data[f'M={M}, N={nsteps}']['Mean_RCE']=mean_RCE
+            DPC_data[f'M={M}, N={nsteps}']['Median_RCE']=median_RCE
             DPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = DPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
             DPC_data[f'M={M}, N={nsteps}']['Training_Time'] = training_data[f'M={M}, N={nsteps}']['eltime']
             DPC_data[f'M={M}, N={nsteps}']['N_Parameters'] = training_data[f'M={M}, N={nsteps}']['n_parameters']
             
-            print(f"DPC policy, M={M}, N={nsteps} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, RMSE: {cooling_rmse:.2f}")
+            print(f"DPC policy, M={M}, N={nsteps} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, Mean RCE: {mean_RCE:.2f}")
         print('-'*80)
     
-    MIMPC_data = {}
-    for M in [M_list[0]]:
-        for nsteps in N_list:
-            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
-            MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
+    # MIMPC_data = {}
+    # for M in [M_list[0]]:
+    #     for nsteps in N_list:
+    #         MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
+    #         MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
    
     import pandas as pd
     metrics_rbc = [
-        ("Energy [MWh]", "Energy"),
+        ("EC [MWh]", "Energy"),
         ("COP [-]", "Mean_COP"),
-        ("RMSE [kW]", "Cooling_RMSE")
+        ("Mean RCE [\%]", "Mean_RCE"),
+        ("Median RCE [\%]", "Median_RCE")
     ]
 
     metrics_midpc = [
-        ("Energy [MWh]", "Energy"),
+        ("EC [MWh]", "Energy"),
         ("COP [-]", "Mean_COP"),
-        ("RMSE [kW]", "Cooling_RMSE"),
+        ("Mean RCE [\%]", "Mean_RCE"),
+        ("Median RCE [\%]", "Median_RCE"),
         ("Savings [\\%]", "Savings"),
         ("MIT [s]", "Inference_Time"),
         ("TT [s]", "Training_Time"),
@@ -91,7 +112,7 @@ if __name__=='__main__':
     ]
 
     metrics_mimpc = [
-        ("Inference Time", "Inference_Time")
+        # ("Inference Time", "Inference_Time")
     ]
 
     rows = []
@@ -102,7 +123,7 @@ if __name__=='__main__':
             "\\multirow{3}{*}{RBC}" if i == 0 else "",
             label
         ] + [f"{RBC_data[f'M={M}'][key]:.2f}" if N == N_list[0] else "-"
-        for M in M_list for N in N_list])
+        for M in M_list for N in N_list_tab])
 
     # MIDPC block
     for i, (label, key) in enumerate(metrics_midpc):
@@ -113,7 +134,7 @@ if __name__=='__main__':
            f"{int(DPC_data[f'M={M}, N={N}'][key])}" if key == "N_Parameters"
         else f"{DPC_data[f'M={M}, N={N}'][key]:.1e}" if key == "Inference_Time"
         else f"{DPC_data[f'M={M}, N={N}'][key]:.2f}"
-        for M in M_list for N in N_list
+        for M in M_list for N in N_list_tab
         ])
 
     # MIMPC block
@@ -124,25 +145,25 @@ if __name__=='__main__':
         ] + [
             f"{MIMPC_data[f'M={M}, N={N}'][key]:.2f}" if M == 2
             else '-'
-            for M in M_list for N in N_list
+            for M in M_list for N in N_list_tab
         ])
 
         # Build DataFrame
     df = pd.DataFrame(rows, columns=["Method", "Metric"] +
-                    ["" for _ in range(len(M_list) * len(N_list))])
+                    ["" for _ in range(len(M_list) * len(N_list_tab))])
 
     # Create dynamic header row for N values
-    n_headers = " & ".join([f"$N\\!=\\!{N}$" for _ in M_list for N in N_list])
+    n_headers = " & ".join([f"$N\\!=\\!{N}$" for _ in M_list for N in N_list_tab])
 
     # Top-level M headers
     m_headers = " & ".join([
-        f"\\multicolumn{{{len(N_list)}}}{{c}}{{$M\\!=\\!{M}$}}"
+        f"\\multicolumn{{{len(N_list_tab)}}}{{c}}{{$M\\!=\\!{M}$}}"
         for M in M_list
     ])
 
     # CMIDRULES for each M block
     cmidrules = " ".join([
-        f"\\cmidrule(lr){{{3 + i*len(N_list)}-{2 + (i+1)*len(N_list)}}}"
+        f"\\cmidrule(lr){{{3 + i*len(N_list_tab)}-{2 + (i+1)*len(N_list_tab)}}}"
         for i in range(len(M_list))
     ])
 
@@ -160,7 +181,7 @@ if __name__=='__main__':
         index=False,
         header=False,
         escape=False,
-        column_format=f"@{{}}ll{ 'c'*len(M_list)*len(N_list) }@{{}}"
+        column_format=f"@{{}}ll{ 'c'*len(M_list)*len(N_list_tab) }@{{}}"
     )
 
     # Merge header + body
@@ -171,20 +192,67 @@ if __name__=='__main__':
         latex_code += "\\bottomrule\n"
 
     print(latex_code)
-    df.columns = ["Method", "Metric"] + [f"M={M}, N={N}" for M in M_list for N in N_list]
+
+    df.columns = ["Method", "Metric"] + [f"M={M}, N={N}" for M in M_list for N in N_list_tab]
     print(df.to_markdown(index=False))
 
 
 # %%
-    nsteps_plot = 20
+    nsteps_plot = 15
     M_plot = 2
-    # plot_chiller_data(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
-    #                         time_unit='h', save_path='control_plot.pdf')
-
-    # plot_chiller_data(RBC_data[f'M={M_plot}'],
-                            # time_unit='h',)
-    plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
-                            # RBC_data[f'M={M_plot}'],
+    # # # Control Plot
+    plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'], plot_h=4.,
                             time_unit='h', save_path=f'control_plot_N{nsteps_plot}')
 
+
+
 # %%
+    import matplotlib
+    matplotlib.use("pgf")
+    plt.rcParams.update({
+            "pgf.texsystem": "pdflatex",
+            "text.usetex": True,
+            "font.family": "serif",
+            "font.size": 10,
+            "pgf.rcfonts": False,
+            "legend.fontsize": 8,
+            "xtick.labelsize": 8,
+            "ytick.labelsize": 8
+        })
+    
+    TT2_list = []
+    TT3_list = []
+    MIT_list = []
+    inference_N_list = [5, 10, 15, 20, 40, 60]
+    for N in inference_N_list:
+        TT2_list.append(DPC_data[f'M={2}, N={N}']['Training_Time'])
+        TT3_list.append(DPC_data[f'M={3}, N={N}']['Training_Time'])
+        MIT_list.append(DPC_data[f'M={2}, N={N}']['inference_time'].median())
+    TT2 = torch.tensor(TT2_list).unsqueeze(1)
+    TT3 = torch.tensor(TT3_list).unsqueeze(1)
+    MIT = torch.tensor(MIT_list).unsqueeze(1)
+    
+    fig1, ax = plt.subplots(1,1, figsize=(3.5,2.),sharex=False)
+    
+    x =torch.vstack([torch.tensor([n]) for n in inference_N_list])
+    ax.plot(
+                x,
+                TT2[:,0],
+                 alpha=.9,
+        label="M\!=\!2")
+    
+    ax.plot(
+                x,
+                TT3[:,0],
+                 alpha=.9,
+        label="$M\!=\!3$")
+    
+    fig1.tight_layout(pad=0.0)
+    ax.set_xticks(inference_N_list)
+    ax.legend(framealpha=1.0, edgecolor='gray',fancybox=False)
+    ax.set_xlabel('$N$ [-]')
+    ax.set_ylabel('Training time [s]')
+    ax.grid()
+    fig1.show()
+    fig1.savefig(f'MIT_plot.pdf', bbox_inches='tight',pad_inches=0.05,transparent=True)
+    fig1.savefig(f'MIT_plot.pgf', bbox_inches='tight', pad_inches=0.05,transparent=True)

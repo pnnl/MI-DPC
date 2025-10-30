@@ -248,15 +248,14 @@ plt.rcParams.update({
         "xtick.labelsize": 8,
         "ytick.labelsize": 8
     })
-x = torch.empty(100)
-x[:x.size(0)//2] = 200
-x[x.size(0)//2:] = 400
-
+x = torch.empty(40)
+x[:x.size(0)//2] = 150
+x[x.size(0)//2:] = 500
+until = 25
 test_data = {'T_supply_and_return': torch.ones(1,1,init.M+1)* 8.,
              'load': x.view(1,-1,1)}
 
 fig1, ax = plt.subplots(1,1, figsize=(3.5,2.),sharex=False)
-ax.plot(0.5*torch.ones_like(x).cpu(), 'k--')
 
 for LAMBDA in LAMBDAS:
     cl_systems[f'{LAMBDA}'].eval()
@@ -265,12 +264,16 @@ for LAMBDA in LAMBDAS:
     with torch.no_grad():
         trajectories = cl_systems[f'{LAMBDA}'].forward(test_data)
     print(trajectories['relaxed_integer'].shape)
-    ax.plot(trajectories['relaxed_integer'][0,:,:].cpu(), label=f"$\Lambda = {LAMBDA}$")
+    ax.plot(trajectories['relaxed_integer'][0,:until,:].cpu(), alpha=.9,
+     label=f"$\Lambda = {LAMBDA}$")
 
+ax.plot(0.5*torch.ones_like(x)[:until].cpu(), 'k:')
 
 fig1.tight_layout(pad=0.0)
 ax.set_yticks([0, 0.5, 1])
-ax.legend(framealpha=1.0,edgecolor='gray',fancybox=False)
+ax.set_xlim([0, until-1])
+ax.set_ylim([0, 1])
+ax.legend(framealpha=1.0, edgecolor='gray',fancybox=False)
 ax.set_xlabel('Time step --- $k$')
 ax.set_ylabel('$\\tilde\delta(k)$')
 ax.grid()

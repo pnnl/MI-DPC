@@ -110,8 +110,8 @@ if __name__=='__main__':
         
     elif args.policy == 'MIMPC':
         from MIMPC import MIMPC_policy
-        if args.s_length is None:
-            s_length = 20
+        # if args.s_length is None:
+        #     s_length = 20
         policy = MIMPC_policy(
             nsteps=args.nsteps,
             M = args.M,

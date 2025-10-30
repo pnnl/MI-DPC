@@ -196,7 +196,7 @@ if __name__=='__main__':
         
         cooling_loss = 0.001*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
         # c = init.delta_penalty # Switching cost coefficient
-        c = 10.
+        c = 20. # 10 for long horizons!
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
         binary_regularization = 200.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
         # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
@@ -278,8 +278,9 @@ if __name__=='__main__':
         dev_loader = torch.utils.data.DataLoader(dev_data, batch_size=batch_size, collate_fn=dev_data.collate_fn)
         logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=10)
         #%% Optimizer
-        print(f'Training MIDPC policy for N={nsteps}, M={init.M} at Ts={Ts}')
-        optimizer = torch.optim.Adam(cl_system.parameters(), lr=0.004, weight_decay=0.00)
+        print(f'Training MIDPC policy for N={nsteps}, M={init.M} at Ts={Ts}') 
+        optimizer = torch.optim.Adam(cl_system.parameters(), lr=0.006, #0.004 for long horizons!
+        weight_decay=0.00)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,

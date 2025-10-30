@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from utils import plot_chiller_data_nice, plot_chiller_data, plot_chiller_data_paper
 import re
 from tabulate import tabulate
+from IPython.display import display, Latex
+
 init = SystemParameters()
 
 def get_kilowatthours(pump_power,chiller_power, Ts=180):
@@ -20,7 +22,8 @@ def get_control_rmse(load, cooling):
 if __name__=='__main__':
     Ts = 180
     M_list = [2, 3]
-    N_list = [20, 40, 60]
+    # N_list = [20, 40, 60]
+    N_list = [5, 10, 15]
     RBC_data = {}
     for M in M_list:
         RBC_data[f'M={M}'] = torch.load(f'results/RBC/data_N20_Ts_180_M_{M}.pt')
@@ -64,11 +67,11 @@ if __name__=='__main__':
             print(f"DPC policy, M={M}, N={nsteps} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, RMSE: {cooling_rmse:.2f}")
         print('-'*80)
     
-    # MIMPC_data = {}
-    # for M in M_list:
-    #     for nsteps in N_list:
-    #         MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
-    #         MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
+    MIMPC_data = {}
+    for M in [M_list[0]]:
+        for nsteps in N_list:
+            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
+            MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
    
     import pandas as pd
     metrics_rbc = [
@@ -98,7 +101,8 @@ if __name__=='__main__':
         rows.append([
             "\\multirow{3}{*}{RBC}" if i == 0 else "",
             label
-        ] + [f"{RBC_data[f'M={M}'][key]:.2f}" for M in M_list for _ in N_list])
+        ] + [f"{RBC_data[f'M={M}'][key]:.2f}" if N == N_list[0] else "-"
+        for M in M_list for N in N_list])
 
     # MIDPC block
     for i, (label, key) in enumerate(metrics_midpc):
@@ -106,8 +110,10 @@ if __name__=='__main__':
             "\\midrule\\multirow{5}{*}{MIDPC}" if i == 0 else "",
             label
         ] + [
-            f"{DPC_data[f'M={M}, N={N}'][key]:.2f}"
-            for M in M_list for N in N_list
+           f"{int(DPC_data[f'M={M}, N={N}'][key])}" if key == "N_Parameters"
+        else f"{DPC_data[f'M={M}, N={N}'][key]:.1e}" if key == "Inference_Time"
+        else f"{DPC_data[f'M={M}, N={N}'][key]:.2f}"
+        for M in M_list for N in N_list
         ])
 
     # MIMPC block
@@ -164,8 +170,11 @@ if __name__=='__main__':
         latex_code += "\\bottomrule\n"
 
     print(latex_code)
+    df.columns = ["Method", "Metric"] + [f"M={M}, N={N}" for M in M_list for N in N_list]
+    print(df.to_markdown(index=False))
 
 
+# %%
     nsteps_plot = 20
     M_plot = 2
     # plot_chiller_data(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
@@ -175,6 +184,6 @@ if __name__=='__main__':
                             # time_unit='h',)
     plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
                             # RBC_data[f'M={M_plot}'],
-                            time_unit='h', save_path='control_plot')
+                            time_unit='h', save_path=f'control_plot_N{nsteps_plot}')
 
 # %%

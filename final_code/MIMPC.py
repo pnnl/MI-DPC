@@ -206,7 +206,7 @@ class MIMPC_policy():
         def _obj_expr(m):
             # Sum over time and units
             return quicksum(
-                0.01 * (quicksum(m.Q_delivered[t, i] for i in m.i) - m.load_demand[t]) ** 2
+                0.001 * (quicksum(m.Q_delivered[t, i] for i in m.i) - m.load_demand[t]) ** 2
                 + quicksum(m.P_chiller[t, i] + m.P_pump[t, i] + 20.0 * m.integer_smooth[t, i] + 20.0 * m.flow_smooth[t, i] for i in m.i)
                 for t in m.t
             )

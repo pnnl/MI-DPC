@@ -1,5 +1,5 @@
-===== Starting runs at Thu Oct 30 02:32:57 AM CET 2025 =====
-Running MIMPC with Ts=180, nsteps=20, and M=2
+===== Starting runs at Thu Oct 30 08:12:50 AM CET 2025 =====
+Running MIMPC with Ts=180, nsteps=5, and M=2
 
 A module that was compiled using NumPy 1.x cannot be run in
 NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
@@ -50,7 +50,7 @@ Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/M
   File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
     import pyarrow.lib as _lib
 AttributeError: _ARRAY_API not found
-Simulating chiller with MIMPC, N=20, M=2
+Simulating chiller with MIMPC, N=5, M=2
 Timestep:  0
 WARNING (W1001): Setting Var 'integer[0,2]' to a value `0.5` (float) not in
 domain Binary.
@@ -67,76 +67,101 @@ domain Binary.
 WARNING (W1001): Setting Var 'integer[4,2]' to a value `0.5` (float) not in
 domain Binary.
     See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[5,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[6,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[7,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[8,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[9,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[10,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[11,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[12,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[13,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[14,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[15,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[16,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[17,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[18,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING (W1001): Setting Var 'integer[19,2]' to a value `0.5` (float) not in
-domain Binary.
-    See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 305.5521810054779 — status: maxTimeLimit
+Solution time: 3.360278844833374 — status: optimal
 Timestep:  1
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 300.7148959636688 — status: maxTimeLimit
+Solution time: 4.564317941665649 — status: optimal
 Timestep:  2
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 304.75118112564087 — status: maxTimeLimit
+Solution time: 4.4874348640441895 — status: optimal
 Timestep:  3
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 304.8729829788208 — status: maxTimeLimit
+Solution time: 4.229383945465088 — status: optimal
 Timestep:  4
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 303.407840013504 — status: maxTimeLimit
+Solution time: 4.067863941192627 — status: optimal
 Timestep:  5
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 304.5116140842438 — status: maxTimeLimit
+Solution time: 3.377204179763794 — status: optimal
 Timestep:  6
+Solution time: 3.3419458866119385 — status: optimal
+Timestep:  7
+Solution time: 2.9727768898010254 — status: optimal
+Timestep:  8
+Solution time: 2.598860025405884 — status: optimal
+Timestep:  9
+Solution time: 2.9499499797821045 — status: optimal
+Timestep:  10
+Solution time: 3.2772281169891357 — status: optimal
+Timestep:  11
+Solution time: 2.734184980392456 — status: optimal
+Timestep:  12
+Solution time: 2.907660961151123 — status: optimal
+Timestep:  13
+Solution time: 2.4845080375671387 — status: optimal
+Timestep:  14
+Solution time: 3.10953688621521 — status: optimal
+Timestep:  15
+Solution time: 2.7045159339904785 — status: optimal
+Timestep:  16
+Solution time: 2.8154051303863525 — status: optimal
+Timestep:  17
+Solution time: 2.5594401359558105 — status: optimal
+Timestep:  18
+Solution time: 2.684460163116455 — status: optimal
+Timestep:  19
+Solution time: 3.231938123703003 — status: optimal
+Timestep:  20
+Solution time: 3.067215919494629 — status: optimal
+Timestep:  21
+Solution time: 3.4246349334716797 — status: optimal
+Timestep:  22
+Solution time: 4.584418058395386 — status: optimal
+Timestep:  23
+Solution time: 2.868659019470215 — status: optimal
+Timestep:  24
+Solution time: 2.4245309829711914 — status: optimal
+Timestep:  25
+Solution time: 2.2344651222229004 — status: optimal
+Timestep:  26
+Solution time: 2.460318088531494 — status: optimal
+Timestep:  27
+Solution time: 2.3984620571136475 — status: optimal
+Timestep:  28
+Solution time: 2.981382131576538 — status: optimal
+Timestep:  29
+Solution time: 3.1565768718719482 — status: optimal
+Timestep:  30
+Solution time: 2.492839813232422 — status: optimal
+Timestep:  31
+Solution time: 3.6314139366149902 — status: optimal
+Timestep:  32
+Solution time: 5.033630132675171 — status: optimal
+Timestep:  33
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 304.54576897621155 — status: maxTimeLimit
-Timestep:  7
+Solution time: 302.06818079948425 — status: maxTimeLimit
+Timestep:  4
+Solution time: 2.1729841232299805 — status: optimal
+Timestep:  34
+Solution time: 1.778275966644287 — status: optimal
+Timestep:  35
+Solution time: 2.1408779621124268 — status: optimal
+Timestep:  36
+Solution time: 2.436429977416992 — status: optimal
+Timestep:  37
+Solution time: 1.8809499740600586 — status: optimal
+Timestep:  38
+Solution time: 1.5047729015350342 — status: optimal
+Timestep:  39
+Solution time: 1.287398099899292 — status: optimal
+Timestep:  40
+Solution time: 1.379166841506958 — status: optimal
+Timestep:  41
+Solution time: 1.141798973083496 — status: optimal
+Timestep:  42
+Solution time: 1.1957261562347412 — status: optimal
+Timestep:  43
+Solution time: 1.3292999267578125 — status: optimal
+Timestep:  44
+Solution time: 0.9099130630493164 — status: optimal
+Timestep:  45
+Solution time: 2.470953941345215 — status: optimal
+Timestep:  46
+Solution time: 2.2893869876861572 — status: optimal
+Timestep:  47

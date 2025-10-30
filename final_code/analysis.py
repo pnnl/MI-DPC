@@ -2,7 +2,7 @@
 from init import SystemParameters;
 import torch
 import matplotlib.pyplot as plt
-from utils import plot_chiller_data_nice, plot_chiller_data
+from utils import plot_chiller_data_nice, plot_chiller_data, plot_chiller_data_paper
 import re
 from tabulate import tabulate
 init = SystemParameters()
@@ -34,7 +34,7 @@ if __name__=='__main__':
                                         cooling=RBC_data[f'M={M}']['Q_delivered'])
         RBC_data[f'M={M}']['Mean_COP']=mean_cop
         RBC_data[f'M={M}']['Savings']=0.
-        RBC_data[f'M={M}']['Energy']=energy_cons
+        RBC_data[f'M={M}']['Energy']=energy_cons/1000
         RBC_data[f'M={M}']['Cooling_RMSE']=cooling_rmse
         print(f"RBC policy, M={M} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, RMSE: {cooling_rmse:.2f}")
 
@@ -54,8 +54,8 @@ if __name__=='__main__':
             cooling_rmse = get_control_rmse(load=DPC_data[f'M={M}, N={nsteps}']['load'],
                                             cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'])
             DPC_data[f'M={M}, N={nsteps}']['Mean_COP']=mean_cop
-            DPC_data[f'M={M}, N={nsteps}']['Energy']=energy_cons
-            DPC_data[f'M={M}, N={nsteps}']['Savings']=((RBC_data[f'M={M}']['Energy']-energy_cons)/RBC_data[f'M={M}']['Energy'])*100
+            DPC_data[f'M={M}, N={nsteps}']['Energy']=energy_cons/1000
+            DPC_data[f'M={M}, N={nsteps}']['Savings']=((RBC_data[f'M={M}']['Energy']-energy_cons/1000)/RBC_data[f'M={M}']['Energy'])*100
             DPC_data[f'M={M}, N={nsteps}']['Cooling_RMSE']=cooling_rmse
             DPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = DPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
             DPC_data[f'M={M}, N={nsteps}']['Training_Time'] = training_data[f'M={M}, N={nsteps}']['eltime']
@@ -64,11 +64,11 @@ if __name__=='__main__':
             print(f"DPC policy, M={M}, N={nsteps} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, RMSE: {cooling_rmse:.2f}")
         print('-'*80)
     
-    MIMPC_data = {}
-    for M in M_list:
-        for nsteps in N_list:
-            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
-            MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
+    # MIMPC_data = {}
+    # for M in M_list:
+    #     for nsteps in N_list:
+    #         MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
+    #         MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
    
     import pandas as pd
     metrics_rbc = [
@@ -88,7 +88,7 @@ if __name__=='__main__':
     ]
 
     metrics_mimpc = [
-        ("Inference Time", "Inference_Time")
+        # ("Inference Time", "Inference_Time")
     ]
 
     rows = []
@@ -166,16 +166,14 @@ if __name__=='__main__':
     print(latex_code)
 
 
-#%%
-
-#%%
     nsteps_plot = 20
     M_plot = 2
-    plot_chiller_data(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
-                            time_unit='h', save_path='control_plot.pdf')
-    plot_chiller_data(RBC_data[f'M={M_plot}'],
-                            time_unit='h',)
-    plot_chiller_data_nice(DPC_data[f'M={M_plot}, N={nsteps_plot}'], labels=[''],
+    # plot_chiller_data(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
+    #                         time_unit='h', save_path='control_plot.pdf')
+
+    # plot_chiller_data(RBC_data[f'M={M_plot}'],
+                            # time_unit='h',)
+    plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'],
                             # RBC_data[f'M={M_plot}'],
                             time_unit='h', save_path='control_plot')
 

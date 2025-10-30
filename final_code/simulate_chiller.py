@@ -72,11 +72,11 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIMPC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=20, type=int, help='Prediction horizon length.')
+    parser.add_argument('-nsteps', default=2, type=int, help='Prediction horizon length.')
     parser.add_argument('-Ts', default=180, type=int, help='Sampling time.')
-    parser.add_argument('-M', default=3, type=int, help='Number of chillers.')
+    parser.add_argument('-M', default=2, type=int, help='Number of chillers.')
     parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation.')
     parser.add_argument('-plotting', default=True, type=bool, help='Plot or not.')
     parser.add_argument('-s_length', default=None, type=int, help='Overrides n_days if defined.')
@@ -95,9 +95,9 @@ if __name__=='__main__':
             n_active_chillers=init.M,
             M = init.M,
             Q_delivered_max=init.Q_delivered_max,
-            T_evap_const=10., 
+            T_evap_const=10.,
             mass_flow_const=10.,
-            system = chiller_system
+        system = chiller_system
             )
    
     elif args.policy == 'MIDPC':
@@ -110,7 +110,8 @@ if __name__=='__main__':
         
     elif args.policy == 'MIMPC':
         from MIMPC import MIMPC_policy
-        s_length = 12
+        if args.s_length is None:
+            s_length = 20
         policy = MIMPC_policy(
             nsteps=args.nsteps,
             M = args.M,
@@ -120,7 +121,7 @@ if __name__=='__main__':
             exponent=init.exponent,
             solver='gurobi',
             verbose=True,
-            max_solver_time=900,
+            max_solver_time=300,
             McCormick=True,
             warmstart=False
         )

@@ -342,6 +342,8 @@ class MIMPC_policy():
             'flow': flow[0].view(1, 1, -1),
             'T_evap': T_evap[0].view(1, 1, -1),
         }
+        if self.measure_inference_time:
+            out['inference_time'] = torch.tensor([results.solver.wall_time]).view(1,1,1)
         return out
 
 

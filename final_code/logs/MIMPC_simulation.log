@@ -1,4 +1,4 @@
-===== Starting runs at Tue Oct 28 11:46:00 PM CET 2025 =====
+===== Starting runs at Thu Oct 30 02:32:57 AM CET 2025 =====
 Running MIMPC with Ts=180, nsteps=20, and M=2
 
 A module that was compiled using NumPy 1.x cannot be run in
@@ -114,57 +114,29 @@ domain Binary.
     See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1204.632239818573 — status: maxTimeLimit
+Solution time: 305.5521810054779 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1207.2324290275574 — status: maxTimeLimit
+Solution time: 300.7148959636688 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1202.8466801643372 — status: maxTimeLimit
+Solution time: 304.75118112564087 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1201.0249218940735 — status: maxTimeLimit
+Solution time: 304.8729829788208 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1204.9731290340424 — status: maxTimeLimit
+Solution time: 303.407840013504 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1204.4077589511871 — status: maxTimeLimit
+Solution time: 304.5116140842438 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 1205.7768890857697 — status: maxTimeLimit
+Solution time: 304.54576897621155 — status: maxTimeLimit
 Timestep:  7
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1200.6221251487732 — status: maxTimeLimit
-Timestep:  8
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1203.7620329856873 — status: maxTimeLimit
-Timestep:  9
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1202.8327839374542 — status: maxTimeLimit
-Timestep:  10
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1201.01353597641 — status: maxTimeLimit
-Timestep:  11
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1203.2860698699951 — status: maxTimeLimit
-Timestep:  12
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1204.8246340751648 — status: maxTimeLimit
-Timestep:  13
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 1205.3983249664307 — status: maxTimeLimit
-Timestep:  14

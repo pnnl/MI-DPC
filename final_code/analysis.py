@@ -22,8 +22,8 @@ def get_control_rmse(load, cooling):
 if __name__=='__main__':
     Ts = 180
     M_list = [2, 3]
-    # N_list = [20, 40, 60]
-    N_list = [5, 10, 15]
+    N_list = [20, 40, 60]
+    # N_list = [5, 10, 15]
     RBC_data = {}
     for M in M_list:
         RBC_data[f'M={M}'] = torch.load(f'results/RBC/data_N20_Ts_180_M_{M}.pt')
@@ -91,7 +91,7 @@ if __name__=='__main__':
     ]
 
     metrics_mimpc = [
-        # ("Inference Time", "Inference_Time")
+        ("Inference Time", "Inference_Time")
     ]
 
     rows = []
@@ -122,7 +122,8 @@ if __name__=='__main__':
             "\\midrule MIMPC",
             label
         ] + [
-            f"{MIMPC_data[f'M={M}, N={N}'][key]:.2f}"
+            f"{MIMPC_data[f'M={M}, N={N}'][key]:.2f}" if M == 2
+            else '-'
             for M in M_list for N in N_list
         ])
 

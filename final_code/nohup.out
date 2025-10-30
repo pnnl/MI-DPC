@@ -146,3 +146,7 @@ Finished run with nsteps=20 at Thu Oct 30 07:52:21 AM CET 2025
 Running MIMPC with Ts=180, nsteps=30, and M=3
 Running MIMPC with Ts=180, nsteps=40, and M=2
 Running MIMPC with Ts=180, nsteps=5, and M=2
+Finished run with nsteps=5 at Thu Oct 30 09:02:45 AM CET 2025
+Running MIMPC with Ts=180, nsteps=10, and M=2
+Finished run with nsteps=40 at Thu Oct 30 09:35:00 AM CET 2025
+Running MIMPC with Ts=180, nsteps=40, and M=3

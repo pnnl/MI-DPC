@@ -504,7 +504,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             axes[2].plot(
                 time, data["T_supply"][0, :-1, i],
                 linestyle=style, color=base_colors[i], alpha=1,
-                label=fr"${{i\!=\!{i}}}$"
+                label=fr"${{i\!=\!{i+1}}}$"
             )
             # axes[0].plot(
             #     time, data["T_evap"][0, :, i],
@@ -530,7 +530,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             axes[1].plot(
                 time, data["P_chiller"][0, :, i].cpu(),
                 linestyle=style, color=base_colors[i],
-                label=fr"${{i\!=\!{i}}}$"
+                label=fr"${{i\!=\!{i+1}}}$"
             )
 
      
@@ -547,7 +547,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             axes[4].plot(
                 time, data["mass_flow"][0, :, i].cpu()*data['chiller_status'][0,:,i],
                 linestyle=style, color=base_colors[i],
-                label=fr"${{i\!=\!{i}}}$"
+                label=fr"${{i\!=\!{i+1}}}$"
             )
         axes[4].plot(time, torch.ones(s_length)*0., 'k--')
         axes[4].plot(time, torch.ones(s_length)*init.flow_max, 'k--')
@@ -558,7 +558,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             axes[3].plot(
                 time, data["chiller_status"][0, :, i].cpu(),
                 linestyle=style, color=base_colors[i],
-                label=fr"${{i\!=\!{i}}}$"
+                label=fr"${{i\!=\!{i+1}}}$"
             )
         for i in range(data["relaxed_integer"].size(-1)):
             axes[3].plot(

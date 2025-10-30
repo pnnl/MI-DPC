@@ -121,7 +121,7 @@ if __name__=='__main__':
             exponent=init.exponent,
             solver='gurobi',
             verbose=True,
-            max_solver_time=300,
+            max_solver_time=180,
             McCormick=True,
             warmstart=False
         )

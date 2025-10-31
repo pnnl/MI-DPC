@@ -148,7 +148,7 @@ if __name__=='__main__':
     time = torch.arange(0, inference_data_DPC["load"].size(1)) * (Ts / 3600)
     time = time[:t_1_day]
     
-    fig1, ax = plt.subplots(3,1, figsize=(3.5,2.5),sharex=True)
+    fig1, ax = plt.subplots(3,1, figsize=(3.5,3),sharex=True)
     ax = ax.flatten()
     ax[0].plot(time,
                inference_data_DPC["load"][0,:int(t_1_day),0], 'k--',

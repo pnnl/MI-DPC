@@ -222,7 +222,7 @@ if __name__=='__main__':
             "font.family": "serif",
             "font.size": 10,
             "pgf.rcfonts": False,
-            "legend.fontsize": 8,
+            "legend.fontsize": 6,
             "xtick.labelsize": 8,
             "ytick.labelsize": 8
         })
@@ -253,7 +253,7 @@ if __name__=='__main__':
     MIT4 = torch.tensor(MIT4_list).unsqueeze(1); MIT5 = torch.tensor(MIT5_list).unsqueeze(1)
     # MIT = torch.tensor(MIT_list).unsqueeze(1)
     
-    fig1, ax = plt.subplots(2,1, figsize=(3.5,2.5),sharex=True)
+    fig1, ax = plt.subplots(2,1, figsize=(3.5,2.),sharex=True)
     ax = ax.flatten()
     x =torch.vstack([torch.tensor([n]) for n in inference_N_list])
     ax[0].plot(
@@ -282,7 +282,7 @@ if __name__=='__main__':
     ax[0].set_xticks(inference_N_list)
     ax[0].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
     # ax[0].set_xlabel('$N$ [-]')
-    ax[0].set_ylabel('Training time [s]')
+    ax[0].set_ylabel('TT [s]')
     ax[0].grid()
     
     ax[1].plot(
@@ -312,7 +312,7 @@ if __name__=='__main__':
     # ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
     ax[1].set_xlabel('$N$ [-]')
     ax[1].ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-    ax[1].set_ylabel('Inference Time [s]')
+    ax[1].set_ylabel('MIT [s]')
     ax[1].set_yticks([0.00018,0.00019, 0.00020])
     ax[1].grid()
     fig1.show()

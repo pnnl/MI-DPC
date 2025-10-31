@@ -290,7 +290,7 @@ if __name__=='__main__':
                 problem.to(device),
                 train_loader, dev_loader,
                 optimizer=optimizer,
-                epochs=500,
+                epochs=120,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
                 eval_metric='dev_loss',

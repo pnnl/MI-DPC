@@ -107,13 +107,13 @@ if __name__=='__main__':
     if args.policy == 'RBC':
         from RBC import RBC_policy
         policy = RBC_policy(
-            PLR_on=0.6,
+            PLR_on=0.7,
             PLR_off=0.2,
             n_active_chillers=init.M-1,
             M = init.M,
             Q_delivered_max=init.Q_delivered_max,
-            T_evap_const=8., 
-            mass_flow_const=15.,
+            T_evap_const=9., 
+            mass_flow_const=13.,
             system = chiller_system
             )
    

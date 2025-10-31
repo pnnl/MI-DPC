@@ -1,4 +1,4 @@
-===== Starting runs at Thu Oct 23 12:39:36 AM CEST 2025 =====
+===== Starting runs at Fri Oct 31 08:27:32 PM CET 2025 =====
 Running RBC with Ts=180, nsteps=20, and M=2
 
 A module that was compiled using NumPy 1.x cannot be run in
@@ -10,7 +10,7 @@ If you are a user of the module, the easiest solution will be to
 downgrade to 'numpy<2' or try to upgrade the affected module.
 We expect that some modules will need time to support NumPy 2.
 
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/ramp_limit/simulate_chiller.py", line 4, in <module>
     from neuromancer.dynamics import integrators
   File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
     from neuromancer import dataset
@@ -35,7 +35,7 @@ If you are a user of the module, the easiest solution will be to
 downgrade to 'numpy<2' or try to upgrade the affected module.
 We expect that some modules will need time to support NumPy 2.
 
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/ramp_limit/simulate_chiller.py", line 4, in <module>
     from neuromancer.dynamics import integrators
   File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
     from neuromancer import dataset
@@ -51,7 +51,7 @@ Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/M
     import pyarrow.lib as _lib
 AttributeError: _ARRAY_API not found
 Simulating chiller with RBC, N=20, M=2
-Finished run with nsteps=20 at Thu Oct 23 12:39:40 AM CEST 2025
+Finished run with nsteps=20 at Fri Oct 31 08:27:36 PM CET 2025
 -----------------------------------
 Running RBC with Ts=180, nsteps=20, and M=3
 
@@ -64,7 +64,7 @@ If you are a user of the module, the easiest solution will be to
 downgrade to 'numpy<2' or try to upgrade the affected module.
 We expect that some modules will need time to support NumPy 2.
 
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/ramp_limit/simulate_chiller.py", line 4, in <module>
     from neuromancer.dynamics import integrators
   File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
     from neuromancer import dataset
@@ -89,7 +89,7 @@ If you are a user of the module, the easiest solution will be to
 downgrade to 'numpy<2' or try to upgrade the affected module.
 We expect that some modules will need time to support NumPy 2.
 
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
+Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/ramp_limit/simulate_chiller.py", line 4, in <module>
     from neuromancer.dynamics import integrators
   File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
     from neuromancer import dataset
@@ -105,124 +105,6 @@ Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/M
     import pyarrow.lib as _lib
 AttributeError: _ARRAY_API not found
 Simulating chiller with RBC, N=20, M=3
-Finished run with nsteps=20 at Thu Oct 23 12:39:44 AM CEST 2025
+Finished run with nsteps=20 at Fri Oct 31 08:27:41 PM CET 2025
 -----------------------------------
-Running RBC with Ts=180, nsteps=20, and M=4
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
-    from neuromancer.dynamics import integrators
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
-    from pandas.compat import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
-    from pandas.compat.pyarrow import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
-    import pyarrow as pa
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
-    from neuromancer.dynamics import integrators
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
-    from pandas.core.api import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
-    from pandas.core.dtypes.dtypes import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
-    from pandas._libs import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-Simulating chiller with RBC, N=20, M=4
-Finished run with nsteps=20 at Thu Oct 23 12:39:48 AM CEST 2025
------------------------------------
-Running RBC with Ts=180, nsteps=20, and M=5
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
-    from neuromancer.dynamics import integrators
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 26, in <module>
-    from pandas.compat import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/__init__.py", line 27, in <module>
-    from pandas.compat.pyarrow import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/compat/pyarrow.py", line 8, in <module>
-    import pyarrow as pa
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-
-A module that was compiled using NumPy 1.x cannot be run in
-NumPy 2.2.0 as it may crash. To support both 1.x and 2.x
-versions of NumPy, modules must be compiled with NumPy 2.0.
-Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
-
-If you are a user of the module, the easiest solution will be to
-downgrade to 'numpy<2' or try to upgrade the affected module.
-We expect that some modules will need time to support NumPy 2.
-
-Traceback (most recent call last):  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 4, in <module>
-    from neuromancer.dynamics import integrators
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/__init__.py", line 10, in <module>
-    from neuromancer import dataset
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/neuromancer/dataset.py", line 7, in <module>
-    import pandas as pd
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/__init__.py", line 49, in <module>
-    from pandas.core.api import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/api.py", line 9, in <module>
-    from pandas.core.dtypes.dtypes import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pandas/core/dtypes/dtypes.py", line 24, in <module>
-    from pandas._libs import (
-  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/pyarrow/__init__.py", line 65, in <module>
-    import pyarrow.lib as _lib
-AttributeError: _ARRAY_API not found
-Simulating chiller with RBC, N=20, M=5
-Traceback (most recent call last):
-  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 179, in <module>
-    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
-  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 182, in plot_chiller_data
-    [axes[0].plot(time, 
-    ^^^^^^^^^^^^^^^^^^^
-  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 185, in <listcomp>
-    linestyle=ls[i//2],
-              ~~^^^^^^
-IndexError: list index out of range
-Finished run with nsteps=20 at Thu Oct 23 12:39:51 AM CEST 2025
------------------------------------
-===== All runs completed at Thu Oct 23 12:39:51 AM CEST 2025 =====
+===== All runs completed at Fri Oct 31 08:27:41 PM CET 2025 =====

@@ -1,4 +1,4 @@
-===== Starting runs at Fri Oct 31 05:20:45 PM CET 2025 =====
+===== Starting runs at Fri Oct 31 07:28:54 PM CET 2025 =====
 Running MIMPC with Ts=180, nsteps=15, and M=3
 
 A module that was compiled using NumPy 1.x cannot be run in
@@ -142,603 +142,585 @@ domain Binary.
 WARNING (W1001): Setting Var 'integer[14,3]' to a value `0.5` (float) not in
 domain Binary.
     See also https://pyomo.readthedocs.io/en/stable/errors.html#w1001
-Solution time: 48.14546298980713 — status: optimal
+Solution time: 46.6726291179657 — status: optimal
 Timestep:  3
-Solution time: 106.3853988647461 — status: optimal
+Solution time: 108.44494295120239 — status: optimal
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.67293310165405 — status: maxTimeLimit
+Solution time: 181.36398315429688 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.38144493103027 — status: maxTimeLimit
+Solution time: 180.63343715667725 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.7213740348816 — status: maxTimeLimit
+Solution time: 181.70604991912842 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.41210103034973 — status: maxTimeLimit
+Solution time: 182.31882905960083 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.46474480628967 — status: maxTimeLimit
+Solution time: 180.30348801612854 — status: maxTimeLimit
 Timestep:  1
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.36036896705627 — status: maxTimeLimit
+Solution time: 180.46525382995605 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.76001596450806 — status: maxTimeLimit
+Solution time: 181.3713140487671 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.2844889163971 — status: maxTimeLimit
+Solution time: 181.1935842037201 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.47752809524536 — status: maxTimeLimit
+Solution time: 182.15764498710632 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.58500599861145 — status: maxTimeLimit
+Solution time: 182.26618909835815 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.20865988731384 — status: maxTimeLimit
+Solution time: 181.12532210350037 — status: maxTimeLimit
 Timestep:  2
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.52246189117432 — status: maxTimeLimit
+Solution time: 180.35251593589783 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.64301896095276 — status: maxTimeLimit
+Solution time: 182.03761386871338 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.15311002731323 — status: maxTimeLimit
+Solution time: 182.11518096923828 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.88363909721375 — status: maxTimeLimit
+Solution time: 182.65006303787231 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 183.11426281929016 — status: maxTimeLimit
+Solution time: 181.53948187828064 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.63759899139404 — status: maxTimeLimit
+Solution time: 180.35252213478088 — status: maxTimeLimit
 Timestep:  3
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.4067041873932 — status: maxTimeLimit
+Solution time: 181.2565619945526 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.06248211860657 — status: maxTimeLimit
+Solution time: 182.74000811576843 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.65303206443787 — status: maxTimeLimit
+Solution time: 180.68007612228394 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 187.89356899261475 — status: maxTimeLimit
+Solution time: 188.7754089832306 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.39187717437744 — status: maxTimeLimit
+Solution time: 180.59245991706848 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.79675698280334 — status: maxTimeLimit
+Solution time: 180.6830770969391 — status: maxTimeLimit
 Timestep:  4
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.68981313705444 — status: maxTimeLimit
+Solution time: 180.34562587738037 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.36283802986145 — status: maxTimeLimit
+Solution time: 181.07639288902283 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.93274307250977 — status: maxTimeLimit
+Solution time: 180.36171197891235 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.01804304122925 — status: maxTimeLimit
+Solution time: 181.88020014762878 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.97892999649048 — status: maxTimeLimit
+Solution time: 181.48091197013855 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 194.85986590385437 — status: maxTimeLimit
+Solution time: 194.20976996421814 — status: maxTimeLimit
 Timestep:  5
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.32539701461792 — status: maxTimeLimit
+Solution time: 180.5218689441681 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.16082406044006 — status: maxTimeLimit
+Solution time: 182.76339507102966 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.41693902015686 — status: maxTimeLimit
+Solution time: 181.6612548828125 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.3356430530548 — status: maxTimeLimit
+Solution time: 182.25495195388794 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.7769320011139 — status: maxTimeLimit
+Solution time: 181.84544587135315 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.17434191703796 — status: maxTimeLimit
+Solution time: 180.12776708602905 — status: maxTimeLimit
 Timestep:  6
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.3677670955658 — status: maxTimeLimit
+Solution time: 180.80912613868713 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.4181752204895 — status: maxTimeLimit
+Solution time: 182.4944519996643 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.59997415542603 — status: maxTimeLimit
+Solution time: 182.63150191307068 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.95835399627686 — status: maxTimeLimit
+Solution time: 182.30917096138 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.30661606788635 — status: maxTimeLimit
+Solution time: 181.4876000881195 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.5364499092102 — status: maxTimeLimit
+Solution time: 181.66331505775452 — status: maxTimeLimit
 Timestep:  7
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.82161903381348 — status: maxTimeLimit
+Solution time: 180.8596489429474 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.90778708457947 — status: maxTimeLimit
+Solution time: 180.77217411994934 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.1633288860321 — status: maxTimeLimit
+Solution time: 182.63926196098328 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.63148498535156 — status: maxTimeLimit
+Solution time: 181.40537190437317 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.41012620925903 — status: maxTimeLimit
+Solution time: 180.57505178451538 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.15860891342163 — status: maxTimeLimit
+Solution time: 180.60891008377075 — status: maxTimeLimit
 Timestep:  8
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.4409990310669 — status: maxTimeLimit
+Solution time: 180.76595783233643 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.34085607528687 — status: maxTimeLimit
+Solution time: 180.29232001304626 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.70905900001526 — status: maxTimeLimit
+Solution time: 180.87517189979553 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.72225904464722 — status: maxTimeLimit
+Solution time: 182.16696906089783 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.7576241493225 — status: maxTimeLimit
+Solution time: 182.08596301078796 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.09986782073975 — status: maxTimeLimit
+Solution time: 189.8040030002594 — status: maxTimeLimit
 Timestep:  9
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.72774410247803 — status: maxTimeLimit
+Solution time: 180.5714180469513 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.77424907684326 — status: maxTimeLimit
+Solution time: 180.71828889846802 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.3578760623932 — status: maxTimeLimit
+Solution time: 181.7428548336029 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.9062521457672 — status: maxTimeLimit
+Solution time: 180.88429808616638 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.82500576972961 — status: maxTimeLimit
+Solution time: 182.43696999549866 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.14337182044983 — status: maxTimeLimit
+Solution time: 181.66299200057983 — status: maxTimeLimit
 Timestep:  10
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.2282428741455 — status: maxTimeLimit
+Solution time: 181.12371706962585 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.9586639404297 — status: maxTimeLimit
+Solution time: 181.90551590919495 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.30971813201904 — status: maxTimeLimit
+Solution time: 180.36641788482666 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.42675709724426 — status: maxTimeLimit
+Solution time: 181.55030608177185 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 183.08098006248474 — status: maxTimeLimit
+Solution time: 180.39358401298523 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 193.61744785308838 — status: maxTimeLimit
+Solution time: 180.37018013000488 — status: maxTimeLimit
 Timestep:  11
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.392893075943 — status: maxTimeLimit
+Solution time: 180.23583602905273 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.57387495040894 — status: maxTimeLimit
+Solution time: 182.7735149860382 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.84359312057495 — status: maxTimeLimit
+Solution time: 182.24105501174927 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.87413215637207 — status: maxTimeLimit
+Solution time: 182.2974820137024 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.78581190109253 — status: maxTimeLimit
+Solution time: 180.6163558959961 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.16116404533386 — status: maxTimeLimit
+Solution time: 180.40437984466553 — status: maxTimeLimit
 Timestep:  12
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.9917540550232 — status: maxTimeLimit
+Solution time: 180.6818950176239 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.50331115722656 — status: maxTimeLimit
+Solution time: 180.19497108459473 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.37924098968506 — status: maxTimeLimit
+Solution time: 181.5729911327362 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.62633204460144 — status: maxTimeLimit
+Solution time: 181.08827686309814 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.216148853302 — status: maxTimeLimit
+Solution time: 182.86550498008728 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.46751594543457 — status: maxTimeLimit
+Solution time: 182.44521594047546 — status: maxTimeLimit
 Timestep:  13
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.6560161113739 — status: maxTimeLimit
+Solution time: 181.46014499664307 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.9799678325653 — status: maxTimeLimit
+Solution time: 180.88929510116577 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.61358380317688 — status: maxTimeLimit
+Solution time: 182.2386429309845 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.87305688858032 — status: maxTimeLimit
+Solution time: 180.496591091156 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.83170199394226 — status: maxTimeLimit
+Solution time: 180.46562314033508 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.27140998840332 — status: maxTimeLimit
+Solution time: 181.5197560787201 — status: maxTimeLimit
 Timestep:  14
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.7766239643097 — status: maxTimeLimit
+Solution time: 181.71483707427979 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.45352602005005 — status: maxTimeLimit
+Solution time: 181.61543321609497 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.588782787323 — status: maxTimeLimit
+Solution time: 180.60674619674683 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 183.3398449420929 — status: maxTimeLimit
+Solution time: 180.56653809547424 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.3604278564453 — status: maxTimeLimit
+Solution time: 180.90378403663635 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.8060121536255 — status: maxTimeLimit
+Solution time: 180.61527299880981 — status: maxTimeLimit
 Timestep:  15
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.9464819431305 — status: maxTimeLimit
+Solution time: 180.94383692741394 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.64780497550964 — status: maxTimeLimit
+Solution time: 181.5460741519928 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.11379384994507 — status: maxTimeLimit
+Solution time: 182.64798712730408 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 183.06221413612366 — status: maxTimeLimit
+Solution time: 181.7592658996582 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.04026818275452 — status: maxTimeLimit
+Solution time: 181.65784287452698 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.88061213493347 — status: maxTimeLimit
+Solution time: 181.67126893997192 — status: maxTimeLimit
 Timestep:  16
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.29286193847656 — status: maxTimeLimit
+Solution time: 181.33311700820923 — status: maxTimeLimit
 Timestep:  20
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.43986701965332 — status: maxTimeLimit
+Solution time: 180.3961160182953 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.60655117034912 — status: maxTimeLimit
+Solution time: 181.78098106384277 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.01310086250305 — status: maxTimeLimit
+Solution time: 180.5215609073639 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.50509786605835 — status: maxTimeLimit
+Solution time: 181.09943389892578 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.92790985107422 — status: maxTimeLimit
+Solution time: 180.83474802970886 — status: maxTimeLimit
 Timestep:  17
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.36705112457275 — status: maxTimeLimit
+Solution time: 180.51675701141357 — status: maxTimeLimit
 Timestep:  21
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.56234502792358 — status: maxTimeLimit
+Solution time: 180.34079790115356 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.42300391197205 — status: maxTimeLimit
+Solution time: 182.07464408874512 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.21659398078918 — status: maxTimeLimit
+Solution time: 180.81113386154175 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.25796008110046 — status: maxTimeLimit
+Solution time: 182.37706208229065 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.01121282577515 — status: maxTimeLimit
+Solution time: 182.82780814170837 — status: maxTimeLimit
 Timestep:  18
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.30352187156677 — status: maxTimeLimit
+Solution time: 181.38903093338013 — status: maxTimeLimit
 Timestep:  22
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.8827440738678 — status: maxTimeLimit
+Solution time: 180.83041501045227 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 182.6502959728241 — status: maxTimeLimit
+Solution time: 182.70512700080872 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.85244798660278 — status: maxTimeLimit
+Solution time: 180.37650799751282 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.43026494979858 — status: maxTimeLimit
+Solution time: 181.90074396133423 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.4848608970642 — status: maxTimeLimit
+Solution time: 180.33331513404846 — status: maxTimeLimit
 Timestep:  19
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.743793964386 — status: maxTimeLimit
-Timestep:  23
+Solution time: 180.55523490905762 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (23,)
+Finished run with nsteps=5 at Fri Oct 31 08:28:27 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:28:27 PM CET 2025 =====
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.90482020378113 — status: maxTimeLimit
-Timestep:  20
+Solution time: 180.4389989376068 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (20,)
+Finished run with nsteps=10 at Fri Oct 31 08:28:46 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:28:46 PM CET 2025 =====
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.3540961742401 — status: maxTimeLimit
-Timestep:  20
+Solution time: 183.23301601409912 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (20,)
+Finished run with nsteps=15 at Fri Oct 31 08:29:02 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:29:02 PM CET 2025 =====
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.29902696609497 — status: maxTimeLimit
-Timestep:  20
+Solution time: 180.63772797584534 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (20,)
+Finished run with nsteps=15 at Fri Oct 31 08:29:20 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:29:20 PM CET 2025 =====
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 180.72525691986084 — status: maxTimeLimit
-Timestep:  20
+Solution time: 182.0210452079773 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (20,)
+Finished run with nsteps=10 at Fri Oct 31 08:29:26 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:29:26 PM CET 2025 =====
 WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
-Solution time: 181.11006999015808 — status: maxTimeLimit
-Timestep:  20
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.29449701309204 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.76515007019043 — status: maxTimeLimit
-Timestep:  21
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.38116598129272 — status: maxTimeLimit
-Timestep:  21
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.5927379131317 — status: maxTimeLimit
-Timestep:  21
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.18481492996216 — status: maxTimeLimit
-Timestep:  21
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.3646719455719 — status: maxTimeLimit
-Timestep:  21
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 183.11211395263672 — status: maxTimeLimit
-Timestep:  25
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.9747941493988 — status: maxTimeLimit
-Timestep:  22
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 183.06963109970093 — status: maxTimeLimit
-Timestep:  22
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.69671392440796 — status: maxTimeLimit
-Timestep:  22
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.88477897644043 — status: maxTimeLimit
-Timestep:  22
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.815034866333 — status: maxTimeLimit
-Timestep:  22
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.3471508026123 — status: maxTimeLimit
-Timestep:  26
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.2092649936676 — status: maxTimeLimit
-Timestep:  23
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 184.31172895431519 — status: maxTimeLimit
-Timestep:  23
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.321848154068 — status: maxTimeLimit
-Timestep:  23
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.11626601219177 — status: maxTimeLimit
-Timestep:  23
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.68446588516235 — status: maxTimeLimit
-Timestep:  23
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.33557987213135 — status: maxTimeLimit
-Timestep:  27
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.22329592704773 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.80411314964294 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.2795238494873 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.95222306251526 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.71379590034485 — status: maxTimeLimit
-Timestep:  24
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.89842891693115 — status: maxTimeLimit
-Timestep:  28
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 183.134526014328 — status: maxTimeLimit
-Timestep:  25
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 183.63489413261414 — status: maxTimeLimit
-Timestep:  25
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 181.42753982543945 — status: maxTimeLimit
-Timestep:  25
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 182.03088808059692 — status: maxTimeLimit
-Timestep:  25
-WARNING: Loading a SolverResults object with an 'aborted' status, but
-containing a solution
-Solution time: 180.35254883766174 — status: maxTimeLimit
-Timestep:  25
+Solution time: 181.03338599205017 — status: maxTimeLimit
+Time limit exceeded
+Traceback (most recent call last):
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/simulate_chiller.py", line 169, in <module>
+    plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
+  File "/home/desktop309/git/chiller_staging/MI-DPC/final_code/utils.py", line 180, in plot_chiller_data
+    axes[0].plot(time, torch.ones(s_length)*init.T_supply_max, 'k--', label='Bounds')
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/home/desktop309/git/.venv/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (3360,) and (20,)
+Finished run with nsteps=5 at Fri Oct 31 08:29:38 PM CET 2025
+-----------------------------------
+===== All runs completed at Fri Oct 31 08:29:38 PM CET 2025 =====

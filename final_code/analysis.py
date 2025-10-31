@@ -310,7 +310,7 @@ if __name__=='__main__':
     fig1.tight_layout(pad=0.0, h_pad=1.0)
     ax[1].set_xticks(inference_N_list)
     # ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
-    ax[1].set_xlabel('$N$ [-]')
+    ax[1].set_xlabel('Prediction horizon length --- $N$')
     ax[1].ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
     ax[1].set_ylabel('MIT [s]')
     ax[1].set_yticks([0.00018,0.00019, 0.00020])

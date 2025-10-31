@@ -23,8 +23,8 @@ def simulate(
     for k in range(load_test.size(1)):
         filtered.append(chiller_system.apply_load_filter(load_test[0,k]))
     filtered_load = torch.vstack(filtered).view(1,-1,1)
+    start_time = time.time()
     for k in range(s_length): # Simulation Loop
-        start_time = time.time()
         print("Timestep: ", k) if verbose else None
         decisions = policy(T_supply=T_supply, T_return=T_return, load=load_signal[:,k:k+nsteps,:], filtered_load=filtered_load[:,k:k+nsteps,:]) # Compute decisions
         # # # Read data

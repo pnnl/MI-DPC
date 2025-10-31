@@ -124,8 +124,8 @@ if __name__=='__main__':
     import matplotlib.ticker as mticker
     import torch
 
-    colors = cm.get_cmap('Set2', 8).colors
-    plt.rcParams['axes.prop_cycle'] = cycler(color=colors)
+    # colors = cm.get_cmap('Set2', 8).colors
+    # plt.rcParams['axes.prop_cycle'] = cycler(color=colors)
     matplotlib.use("pgf")
     plt.rcParams.update({
             "pgf.texsystem": "pdflatex",
@@ -153,14 +153,14 @@ if __name__=='__main__':
     ax[0].plot(time,
                inference_data_DPC["load"][0,:int(t_1_day),0], 'k--',
                 alpha=.95, 
-        label="$Q_\mathrm{load}$")
+        label="$Q_\mathrm{load}$") 
     ax[0].plot(time,
                inference_data_RBC["Q_delivered"][0,:int(t_1_day),:].sum(-1),
                 alpha=.95, 
         label="RBC")
     ax[0].plot(time,
                inference_data_DPC["Q_delivered"][0,:int(t_1_day),:].sum(-1), '--',
-                alpha=.95, 
+                alpha=.95, color='crimson',
         label="DPC")
     
     ax[1].plot(time,
@@ -169,7 +169,7 @@ if __name__=='__main__':
         label="RBC")
     ax[1].plot(time,
                inference_data_DPC["T_return"][0,:int(t_1_day),:].sum(-1), '--',
-                alpha=.95, 
+                alpha=.95, color='crimson',
         label="DPC")
     
     ax[1].plot(time,
@@ -184,7 +184,7 @@ if __name__=='__main__':
         label="RBC")
     ax[2].plot(time,
                inference_data_DPC["chiller_status"][0,:int(t_1_day),:].sum(-1), '--',
-                alpha=.95, 
+                alpha=.95, color='crimson',
         label="DPC")
 
 

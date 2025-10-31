@@ -208,6 +208,13 @@ if __name__=='__main__':
 
 # %%
     import matplotlib
+    from cycler import cycler
+    import matplotlib.cm as cm
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as mticker
+
+    colors = cm.get_cmap('Set2', 8).colors
+    plt.rcParams['axes.prop_cycle'] = cycler(color=colors)
     matplotlib.use("pgf")
     plt.rcParams.update({
             "pgf.texsystem": "pdflatex",
@@ -220,39 +227,96 @@ if __name__=='__main__':
             "ytick.labelsize": 8
         })
     
-    TT2_list = []
-    TT3_list = []
-    MIT_list = []
-    inference_N_list = [5, 10, 15, 20, 40, 60]
+    TT2_list, TT3_list, TT4_list, TT5_list = [], [], [], []
+    MIT2_list, MIT3_list, MIT4_list, MIT5_list = [], [], [], []
+    # inference_N_list = [5, 10, 15, 20, 40, 60]
+    inference_N_list = [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     for N in inference_N_list:
-        TT2_list.append(DPC_data[f'M={2}, N={N}']['Training_Time'])
-        TT3_list.append(DPC_data[f'M={3}, N={N}']['Training_Time'])
-        MIT_list.append(DPC_data[f'M={2}, N={N}']['inference_time'].median())
-    TT2 = torch.tensor(TT2_list).unsqueeze(1)
-    TT3 = torch.tensor(TT3_list).unsqueeze(1)
-    MIT = torch.tensor(MIT_list).unsqueeze(1)
+        training_data_M2 = torch.load(f'results/MIDPC/policies/training_data_N_{N}_Ts_{Ts}_M_{2}.pt')
+        training_data_M3 = torch.load(f'results/MIDPC/policies/training_data_N_{N}_Ts_{Ts}_M_{3}.pt')
+        training_data_M4 = torch.load(f'results/MIDPC/policies/training_data_N_{N}_Ts_{Ts}_M_{4}.pt')
+        training_data_M5 = torch.load(f'results/MIDPC/policies/training_data_N_{N}_Ts_{Ts}_M_{5}.pt')
+        inference_data_M2 =  torch.load(f'results/MIDPC/data_N{N}_Ts_180_M_{2}.pt')
+        inference_data_M3 =  torch.load(f'results/MIDPC/data_N{N}_Ts_180_M_{3}.pt')
+        inference_data_M4 =  torch.load(f'results/MIDPC/data_N{N}_Ts_180_M_{4}.pt')
+        inference_data_M5 =  torch.load(f'results/MIDPC/data_N{N}_Ts_180_M_{5}.pt')
+        
+        TT2_list.append(training_data_M2['eltime']);TT3_list.append(training_data_M3['eltime'])
+        TT4_list.append(training_data_M4['eltime']);TT5_list.append(training_data_M5['eltime'])
+        MIT2_list.append(inference_data_M2['inference_time'].mean());MIT3_list.append(inference_data_M3['inference_time'].mean())
+        MIT4_list.append(inference_data_M4['inference_time'].mean());MIT5_list.append(inference_data_M5['inference_time'].mean())
+
+
+    TT2 = torch.tensor(TT2_list).unsqueeze(1); TT3 = torch.tensor(TT3_list).unsqueeze(1)
+    TT4 = torch.tensor(TT4_list).unsqueeze(1); TT5 = torch.tensor(TT5_list).unsqueeze(1)
+    MIT2 = torch.tensor(MIT2_list).unsqueeze(1); MIT3 = torch.tensor(MIT3_list).unsqueeze(1)
+    MIT4 = torch.tensor(MIT4_list).unsqueeze(1); MIT5 = torch.tensor(MIT5_list).unsqueeze(1)
+    # MIT = torch.tensor(MIT_list).unsqueeze(1)
     
-    fig1, ax = plt.subplots(1,1, figsize=(3.5,2.),sharex=False)
-    
+    fig1, ax = plt.subplots(2,1, figsize=(3.5,2.5),sharex=True)
+    ax = ax.flatten()
     x =torch.vstack([torch.tensor([n]) for n in inference_N_list])
-    ax.plot(
+    ax[0].plot(
                 x,
                 TT2[:,0],
-                 alpha=.9,
-        label="M\!=\!2")
+                 alpha=.95,
+        label="$M\!=\!2$")
     
-    ax.plot(
+    ax[0].plot(
                 x,
                 TT3[:,0],
-                 alpha=.9,
+                 alpha=.95,
         label="$M\!=\!3$")
+    ax[0].plot(
+                x,
+                TT4[:,0],
+                 alpha=.95,
+        label="$M\!=\!4$")
+    ax[0].plot(
+                x,
+                TT5[:,0],
+                 alpha=.95,
+        label="$M\!=\!5$")
     
     fig1.tight_layout(pad=0.0)
-    ax.set_xticks(inference_N_list)
-    ax.legend(framealpha=1.0, edgecolor='gray',fancybox=False)
-    ax.set_xlabel('$N$ [-]')
-    ax.set_ylabel('Training time [s]')
-    ax.grid()
+    ax[0].set_xticks(inference_N_list)
+    ax[0].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
+    # ax[0].set_xlabel('$N$ [-]')
+    ax[0].set_ylabel('Training time [s]')
+    ax[0].grid()
+    
+    ax[1].plot(
+                x,
+                MIT2[:,0],
+                 alpha=.95,
+        label="$M\!=\!2$")
+    
+    ax[1].plot(
+                x,
+                MIT3[:,0],
+                 alpha=.95,
+        label="$M\!=\!3$")
+    ax[1].plot(
+                x,
+                MIT4[:,0],
+                 alpha=.95,
+        label="$M\!=\!4$")
+    ax[1].plot(
+                x,
+                MIT5[:,0],
+                 alpha=.95,
+        label="$M\!=\!5$")
+    
+    fig1.tight_layout(pad=0.0, h_pad=1.0)
+    ax[1].set_xticks(inference_N_list)
+    # ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
+    ax[1].set_xlabel('$N$ [-]')
+    ax[1].ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
+    ax[1].set_ylabel('Inference Time [s]')
+    ax[1].set_yticks([0.00018,0.00019, 0.00020])
+    ax[1].grid()
     fig1.show()
     fig1.savefig(f'MIT_plot.pdf', bbox_inches='tight',pad_inches=0.05,transparent=True)
     fig1.savefig(f'MIT_plot.pgf', bbox_inches='tight', pad_inches=0.05,transparent=True)
+
+# %%

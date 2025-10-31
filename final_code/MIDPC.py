@@ -49,7 +49,7 @@ class MIDPC_policy():
                         elif self.measure_inference_time:
                                 # filtered_load = self.load_filter_node(input_dict)
                                 # [self.integer_relaxed_node(input_dict ) for warmup in range(10)] # Warmup
-                                for warmup in range(10):
+                                for warmup in range(5):
                                         _ = self.integer_relaxed_node(input_dict )
                                         _ = self.T_evap_node(input_dict )
                                         _ = self.flow_node(input_dict )

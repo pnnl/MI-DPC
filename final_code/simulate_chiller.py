@@ -9,7 +9,7 @@ import time
 torch.set_default_device('cpu')
 def simulate(
         T_supply_0, T_return_0, load_signal, 
-        dynamics_forward, policy, nsteps=10, 
+        dynamics_forward, policy, nsteps=10, #time_limit=3600
         verbose=False, system=None, n_days=1, Ts=180, s_length=None, time_limit=3600):
     # # # History Lists
     T_supply_hist, T_return_hist, T_evap_hist, mass_flow_hist, chiller_status_hist, \
@@ -42,6 +42,7 @@ def simulate(
         relaxed_integer_hist.append(relaxed_integer) if relaxed_integer is not None else None # Optional argument
         inference_time_hist.append(inference_time) if inference_time is not None else None # Optional argument
         if time.time() - start_time > time_limit: # Exceeding time limit
+            print("Time limit exceeded")
             break
 
     # # # Output Dictionary

@@ -646,3 +646,7 @@ WARNING: Loading a SolverResults object with an 'aborted' status, but
 containing a solution
 Solution time: 181.3646719455719 — status: maxTimeLimit
 Timestep:  21
+WARNING: Loading a SolverResults object with an 'aborted' status, but
+containing a solution
+Solution time: 183.11211395263672 — status: maxTimeLimit
+Timestep:  25

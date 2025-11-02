@@ -86,11 +86,11 @@ if __name__=='__main__':
             print(f"DPC policy, M={M}, N={nsteps} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, Mean RCE: {mean_RCE:.2f}")
         print('-'*80)
     
-    # MIMPC_data = {}
-    # for M in [M_list[0]]:
-    #     for nsteps in N_list:
-    #         MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
-    #         MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
+    MIMPC_data = {}
+    for M in M_list:
+        for nsteps in N_list_tab:
+            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
+            MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
    
     import pandas as pd
     metrics_rbc = [
@@ -112,7 +112,7 @@ if __name__=='__main__':
     ]
 
     metrics_mimpc = [
-        # ("Inference Time", "Inference_Time")
+        ("Inference Time", "Inference_Time")
     ]
 
     rows = []
@@ -143,7 +143,7 @@ if __name__=='__main__':
             "\\midrule MIMPC",
             label
         ] + [
-            f"{MIMPC_data[f'M={M}, N={N}'][key]:.2f}" if M == 2
+            f"{MIMPC_data[f'M={M}, N={N}'][key]:.2f}" if M in M_list
             else '-'
             for M in M_list for N in N_list_tab
         ])

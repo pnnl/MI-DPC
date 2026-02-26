@@ -1193,8 +1193,8 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.619448in}{2.825849in}}%
-\pgfpathlineto{\pgfqpoint{1.181510in}{2.825849in}}%
-\pgfpathlineto{\pgfqpoint{1.181510in}{3.202778in}}%
+\pgfpathlineto{\pgfqpoint{1.298995in}{2.825849in}}%
+\pgfpathlineto{\pgfqpoint{1.298995in}{3.202778in}}%
 \pgfpathlineto{\pgfqpoint{0.619448in}{3.202778in}}%
 \pgfpathlineto{\pgfqpoint{0.619448in}{2.825849in}}%
 \pgfpathclose%
@@ -1255,7 +1255,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=0.886114in,y=2.875386in,left,base]{\color{textcolor}{\rmfamily\fontsize{6.000000}{7.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}DPC}}%
+\pgftext[x=0.886114in,y=2.875386in,left,base]{\color{textcolor}{\rmfamily\fontsize{6.000000}{7.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}MI-DPC}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%

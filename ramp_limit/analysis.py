@@ -164,7 +164,7 @@ if __name__=='__main__':
     ax[0].plot(time,
                inference_data_DPC["Q_delivered"][0,:int(t_1_day),:].sum(-1), '--',
                 alpha=.95, color='crimson',
-        label="DPC")
+        label="MI-DPC")
     
     ax[1].plot(time,
                inference_data_RBC["T_return"][0,:int(t_1_day),:].sum(-1),
@@ -188,7 +188,7 @@ if __name__=='__main__':
     ax[2].plot(time,
                inference_data_DPC["chiller_status"][0,:int(t_1_day),:].sum(-1), '--',
                 alpha=.95, color='crimson',
-        label="DPC")
+        label="MI-DPC")
 
 
 

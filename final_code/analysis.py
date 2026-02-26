@@ -132,18 +132,18 @@ if __name__=='__main__':
         ("COP [-]", "Mean_COP"),
         ("Num. of switches [-]", "Num_Switches"),
         ("Mean RCE [\%]", "Mean_RCE"),
-        ("Median RCE [\%]", "Median_RCE")
+        # ("Median RCE [\%]", "Median_RCE")
     ]
 
     metrics_midpc = [
         ("EC [MWh]", "Energy"),
+        ("Savings [\\%]", "Savings"),
         ("EC Chillers [MWh]", "Energy_Chiller"),
         ("EC Pumps [MWh]", "Energy_Pump"),
         ("COP [-]", "Mean_COP"),
         ("Num. of switches [-]", "Num_Switches"),
         ("Mean RCE [\%]", "Mean_RCE"),
-        ("Median RCE [\%]", "Median_RCE"),
-        ("Savings [\\%]", "Savings"),
+        # ("Median RCE [\%]", "Median_RCE"),
         ("MIT [s]", "Inference_Time"),
         ("TT [s]", "Training_Time"),
         ("NTP [-]", "N_Parameters"),
@@ -158,7 +158,7 @@ if __name__=='__main__':
     # RBC block
     for i, (label, key) in enumerate(metrics_rbc):
         rows.append([
-            "\\multirow{3}{*}{RBC}" if i == 0 else "",
+            f"\\multirow{{{len(metrics_rbc)}}}{{*}}{{RBC}}" if i == 0 else "",
             label
         ] + [f"{RBC_data[f'M={M}'][key]:.2f}" if N == N_list[0] else "-"
         for M in M_list for N in N_list_tab])
@@ -166,7 +166,7 @@ if __name__=='__main__':
     # MIDPC block
     for i, (label, key) in enumerate(metrics_midpc):
         rows.append([
-            "\\midrule\\multirow{5}{*}{MIDPC}" if i == 0 else "",
+            f"\\midrule\\multirow{{{len(metrics_midpc)}}}{{*}}{{MIDPC}}" if i == 0 else "",
             label
         ] + [
            f"{int(DPC_data[f'M={M}, N={N}'][key])}" if key == "N_Parameters"

@@ -123,6 +123,9 @@ if __name__=='__main__':
     import matplotlib.pyplot as plt
     import matplotlib.ticker as mticker
     import torch
+    from init import SystemParameters;
+    init = SystemParameters()
+
 
     # colors = cm.get_cmap('Set2', 8).colors
     # plt.rcParams['axes.prop_cycle'] = cycler(color=colors)
@@ -166,15 +169,15 @@ if __name__=='__main__':
     ax[1].plot(time,
                inference_data_RBC["T_return"][0,:int(t_1_day),:].sum(-1),
                 alpha=.95, 
-        label="RBC")
+        label="_nolegend_")
     ax[1].plot(time,
                inference_data_DPC["T_return"][0,:int(t_1_day),:].sum(-1), '--',
                 alpha=.95, color='crimson',
-        label="DPC")
+        label="_nolegend_")
     
     ax[1].plot(time,
                torch.ones_like(time)*init.T_return_max, 'k:',
-                alpha=.95)
+                alpha=.95, label='$T_\mathrm{r}^{\mathrm{min}}, T_\mathrm{r}^{\mathrm{min}}$')
     ax[1].plot(time,
                torch.ones_like(time)*init.T_return_min, 'k:',
                 alpha=.95)
@@ -193,14 +196,17 @@ if __name__=='__main__':
     fig1.tight_layout(pad=0.0)
     fig1.show()
     ax[0].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
+    ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
     # ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
     ax[0].set_ylabel("$Q,Q_\mathrm{load}$ [kW]")
     ax[1].set_ylabel('$T_\mathrm{r}$ [°C]')
     ax[2].set_ylabel('$s$ [-]')
     ax[-1].set_xlabel('Time [h]')
-    ax[1].set_yticks([init.T_return_min, (init.T_return_max+init.T_return_min)/2, init.T_return_max])
+    # ax[1].set_yticks([init.T_return_min, (init.T_return_max+init.T_return_min)/2, init.T_return_max])
     ax[0].grid()
     ax[1].grid()
     ax[2].grid()
     fig1.savefig(f'violation_plot.pdf', bbox_inches='tight',pad_inches=0.05,transparent=True)
     fig1.savefig(f'violation_plot.pgf', bbox_inches='tight', pad_inches=0.05,transparent=True)
+
+# %%

@@ -26,8 +26,8 @@ class ChillerSystem(torch.nn.Module):
         self.eta_return = init.eta_return
         self.register_buffer("h_filter", torch.tensor(init.load_filter, dtype=torch.float32))  # e.g. [0.8, 0.1, ...]
         self.L = len(init.load_filter)
-        self.ramp_rate_ub = 0.05
-        self.ramp_rate_lb = 0.05
+        self.ramp_rate_ub = 0.032
+        self.ramp_rate_lb = 0.032
 
         # Initialize zero buffer for load history
         self.register_buffer("load_buffer", torch.zeros((1, self.L)))  # shape (1, L), expanded later per batch

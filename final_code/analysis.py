@@ -9,8 +9,23 @@ from IPython.display import display, Latex
 
 init = SystemParameters()
 
-def get_kilowatthours(pump_power,chiller_power, Ts=180):
-    return torch.sum(pump_power.sum(dim=-1,keepdim=True) + chiller_power.sum(dim=-1, keepdim=True)) *(Ts/3600)
+def get_kilowatthours(pump_power,chiller_power, Ts=180, megawatt=False):
+    if megawatt:
+        return torch.sum(pump_power.sum(dim=-1,keepdim=True) + chiller_power.sum(dim=-1, keepdim=True)) *(Ts/3600) /1000
+    else:
+        return torch.sum(pump_power.sum(dim=-1,keepdim=True) + chiller_power.sum(dim=-1, keepdim=True)) *(Ts/3600)
+
+def get_kilowatthours_pump(pump_power, Ts=180, megawatt=False):
+    if megawatt:
+        return torch.sum(pump_power.sum(dim=-1,keepdim=True)) *(Ts/3600) /1000
+    else:
+        return torch.sum(pump_power.sum(dim=-1,keepdim=True)) *(Ts/3600)
+
+def get_kilowatthours_chiller(chiller_power, Ts=180, megawatt=False):
+    if megawatt:
+        return torch.sum(chiller_power.sum(dim=-1,keepdim=True)) *(Ts/3600) /1000
+    else:
+        return torch.sum(chiller_power.sum(dim=-1,keepdim=True)) *(Ts/3600)
 
 def get_mean_COP(cooling, chiller_power):
     COP = cooling.sum(-1,keepdim=True)/chiller_power.sum(-1, keepdim=True)
@@ -45,16 +60,24 @@ if __name__=='__main__':
                                 chiller_power=RBC_data[f'M={M}']['P_chiller']
                                 )
         energy_cons = get_kilowatthours(pump_power=RBC_data[f'M={M}']['P_pump'],
-                                        chiller_power=RBC_data[f'M={M}']['P_chiller'],)
+                                        chiller_power=RBC_data[f'M={M}']['P_chiller'], megawatt=True)
+        energy_cons_chiller = get_kilowatthours_chiller(chiller_power=RBC_data[f'M={M}']['P_chiller'], megawatt=True)
+        energy_cons_pump = get_kilowatthours_pump(pump_power=RBC_data[f'M={M}']['P_pump'], megawatt=True)
         mean_RCE = get_mean_RCE(load=RBC_data[f'M={M}']['load'],
                                         cooling=RBC_data[f'M={M}']['Q_delivered'])
         median_RCE = get_median_RCE(load=RBC_data[f'M={M}']['load'],
                                         cooling=RBC_data[f'M={M}']['Q_delivered'])
+        num_switches = torch.sum(RBC_data[f'M={M}']['chiller_status'][:,1:,:] != \
+                                RBC_data[f'M={M}']['chiller_status'][:,:-1,:])
+
         RBC_data[f'M={M}']['Mean_COP']=mean_cop
         RBC_data[f'M={M}']['Savings']=0.
-        RBC_data[f'M={M}']['Energy']=energy_cons/1000
+        RBC_data[f'M={M}']['Energy']=energy_cons 
+        RBC_data[f'M={M}']['Energy_Pump']=energy_cons_pump 
+        RBC_data[f'M={M}']['Energy_Chiller']=energy_cons_chiller 
         RBC_data[f'M={M}']['Mean_RCE']=mean_RCE
         RBC_data[f'M={M}']['Median_RCE']=median_RCE
+        RBC_data[f'M={M}']['Num_Switches']=int(num_switches)
         print(f"RBC policy, M={M} Mean_COP: {mean_cop:.2f}, Energy_cons: {energy_cons:.2f} kWh, Mean_RCE: {mean_RCE:.2f}")
 
     print('='*80)
@@ -69,17 +92,26 @@ if __name__=='__main__':
                                     chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller']
                                     )
             energy_cons = get_kilowatthours(pump_power=DPC_data[f'M={M}, N={nsteps}']['P_pump'],
-                                            chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller'],)
+                                            chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller'], megawatt=True)
+            energy_cons_chiller = get_kilowatthours_chiller(chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller'], megawatt=True)
+            energy_cons_pump = get_kilowatthours_pump(pump_power=DPC_data[f'M={M}, N={nsteps}']['P_pump'], megawatt=True)
             mean_RCE = get_mean_RCE(load=DPC_data[f'M={M}, N={nsteps}']['load'],
                                             cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'])
             median_RCE = get_median_RCE(load=DPC_data[f'M={M}, N={nsteps}']['load'],
                                             cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'])
+            num_switches = torch.sum(DPC_data[f'M={M}, N={nsteps}']['chiller_status'][:,1:,:] != \
+                                DPC_data[f'M={M}, N={nsteps}']['chiller_status'][:,:-1,:])
+            
             DPC_data[f'M={M}, N={nsteps}']['Mean_COP']=mean_cop
-            DPC_data[f'M={M}, N={nsteps}']['Energy']=energy_cons/1000
-            DPC_data[f'M={M}, N={nsteps}']['Savings']=((RBC_data[f'M={M}']['Energy']-energy_cons/1000)/RBC_data[f'M={M}']['Energy'])*100
+            DPC_data[f'M={M}, N={nsteps}']['Energy']=energy_cons
+            DPC_data[f'M={M}, N={nsteps}']['Energy_Pump']=energy_cons_pump
+            DPC_data[f'M={M}, N={nsteps}']['Energy_Chiller']=energy_cons_chiller
+            DPC_data[f'M={M}, N={nsteps}']['Savings']=((RBC_data[f'M={M}']['Energy']-energy_cons)/RBC_data[f'M={M}']['Energy'])*100
             DPC_data[f'M={M}, N={nsteps}']['Mean_RCE']=mean_RCE
             DPC_data[f'M={M}, N={nsteps}']['Median_RCE']=median_RCE
             DPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = DPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
+            DPC_data[f'M={M}, N={nsteps}']['Num_Switches'] = int(num_switches)
+            
             DPC_data[f'M={M}, N={nsteps}']['Training_Time'] = training_data[f'M={M}, N={nsteps}']['eltime']
             DPC_data[f'M={M}, N={nsteps}']['N_Parameters'] = training_data[f'M={M}, N={nsteps}']['n_parameters']
             
@@ -95,14 +127,20 @@ if __name__=='__main__':
     import pandas as pd
     metrics_rbc = [
         ("EC [MWh]", "Energy"),
+        ("EC Chillers [MWh]", "Energy_Chiller"),
+        ("EC Pumps [MWh]", "Energy_Pump"),
         ("COP [-]", "Mean_COP"),
+        ("Num. of switches [-]", "Num_Switches"),
         ("Mean RCE [\%]", "Mean_RCE"),
         ("Median RCE [\%]", "Median_RCE")
     ]
 
     metrics_midpc = [
         ("EC [MWh]", "Energy"),
+        ("EC Chillers [MWh]", "Energy_Chiller"),
+        ("EC Pumps [MWh]", "Energy_Pump"),
         ("COP [-]", "Mean_COP"),
+        ("Num. of switches [-]", "Num_Switches"),
         ("Mean RCE [\%]", "Mean_RCE"),
         ("Median RCE [\%]", "Median_RCE"),
         ("Savings [\\%]", "Savings"),
@@ -201,7 +239,7 @@ if __name__=='__main__':
     nsteps_plot = 15
     M_plot = 2
     # # # Control Plot
-    plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'], plot_h=4.,
+    plot_chiller_data_paper(DPC_data[f'M={M_plot}, N={nsteps_plot}'], plot_h=3.5,
                             time_unit='h', save_path=f'control_plot_N{nsteps_plot}')
 
 

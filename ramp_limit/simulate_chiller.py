@@ -90,9 +90,9 @@ def simulate(
 
 if __name__=='__main__':
     parser = ArgumentParser()
-    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='RBC',
+    parser.add_argument('-policy', choices=['MIDPC', 'MIMPC', 'RBC'], default='MIDPC',
         help='Choice of control strategy can be MI-DPC, implicit MI-MPC or Rule-based controller.')
-    parser.add_argument('-nsteps', default=20, type=int, help='Prediction horizon length')
+    parser.add_argument('-nsteps', default=15, type=int, help='Prediction horizon length')
     parser.add_argument('-Ts', default=180, type=int, help='Sampling time')
     parser.add_argument('-M', default=3, type=int, help='Number of chillers')
     parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation')
@@ -172,7 +172,24 @@ if __name__=='__main__':
                                                     osc_night_amp=20, osc_day_amp=20,
                                                     noise_scale=5,
                                                     )
+    t_1_day = int(24*60*60/args.Ts)+args.nsteps
+
     load_test = load_test.reshape(1,-1,1)
+    load_test = load_test[:,:t_1_day,:]
+    # Injecting abrupt changes and irregularities
+    start, end = 70, 120
+
+    split = 95
+    level2 = torch.empty(1).uniform_(1200, 1500).item()
+    level1 = torch.empty(1).uniform_(800, 950).item()
+    load_test[:, start:split, :] = level1
+    load_test[:, split:end, :] = level2
+    load_test[:, end:end+20,:] = 600
+    # Add white noise
+    noise_std = 50.0
+    noise = torch.randn(1, (end+20) - start, 1) * noise_std
+    load_test[:, start:end+20, :] += noise
+
     # # # Initial conditions
     T_supply_0 = torch.ones(1,1,init.M) * 8.
     T_return_0 = torch.ones(1,1,1) * 8.
@@ -188,7 +205,7 @@ if __name__=='__main__':
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
                         verbose=False, # Print current timestep
                         system=chiller_system, # For computing score variables
-                        n_days=args.n_days
+                        # n_days=args.n_days
                        ) # Returns dictionary
     # # # Save outputs for analysis
     torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pt')
@@ -213,3 +230,4 @@ if __name__=='__main__':
     #     filtered.append(chiller_system.apply_load_filter(load_test[0,k]))
     # filtered_tensor = torch.vstack(filtered)
     # plt.plot(filtered_tensor[:50])
+# %%

@@ -356,5 +356,7 @@ if __name__=='__main__':
     fig1.show()
     fig1.savefig(f'MIT_plot.pdf', bbox_inches='tight',pad_inches=0.05,transparent=True)
     fig1.savefig(f'MIT_plot.pgf', bbox_inches='tight', pad_inches=0.05,transparent=True)
+    fig1.savefig(f'MIT_plot.svg', bbox_inches='tight', pad_inches=0.05,transparent=True)
+    fig1.savefig(f'MIT_plot.eps', bbox_inches='tight', pad_inches=0.05,transparent=True)
 
 # %%

@@ -177,7 +177,7 @@ if __name__=='__main__':
     
     ax[1].plot(time,
                torch.ones_like(time)*init.T_return_max, 'k:',
-                alpha=.95, label='$T_\mathrm{r}^{\mathrm{min}}, T_\mathrm{r}^{\mathrm{min}}$')
+                alpha=.95, label='$T_\mathrm{r}^{\mathrm{min}}, T_\mathrm{r}^{\mathrm{max}}$ bounds')
     ax[1].plot(time,
                torch.ones_like(time)*init.T_return_min, 'k:',
                 alpha=.95)
@@ -193,7 +193,7 @@ if __name__=='__main__':
 
 
 
-    fig1.tight_layout(pad=0.0)
+    fig1.tight_layout(pad=0.1)
     fig1.show()
     ax[0].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
     ax[1].legend(framealpha=1.0, edgecolor='gray',fancybox=False)
@@ -206,7 +206,9 @@ if __name__=='__main__':
     ax[0].grid()
     ax[1].grid()
     ax[2].grid()
-    fig1.savefig(f'violation_plot.pdf', bbox_inches='tight',pad_inches=0.05,transparent=True)
-    fig1.savefig(f'violation_plot.pgf', bbox_inches='tight', pad_inches=0.05,transparent=True)
+    fig1.savefig(f'violation_plot.pdf', bbox_inches='tight',pad_inches=0.01,transparent=True)
+    fig1.savefig(f'violation_plot.pgf', bbox_inches='tight', pad_inches=0.01,transparent=True)
+    fig1.savefig(f'violation_plot.svg',bbox_inches='tight', pad_inches=0.01, transparent=True)
+    fig1.savefig(f'violation_plot.eps', bbox_inches='tight', pad_inches=0.01,transparent=True)
 
 # %%

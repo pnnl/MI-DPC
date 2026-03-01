@@ -614,6 +614,8 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
     if save_path is not None:
         fig.savefig(f"{save_path}.pdf", bbox_inches="tight", transparent=True, pad_inches=0.01)
         fig.savefig(f"{save_path}.pgf", bbox_inches="tight", transparent=True, pad_inches=0.01)
+        fig.savefig(f"{save_path}.svg", bbox_inches="tight", transparent=True, pad_inches=0.01)
+        fig.savefig(f"{save_path}.eps", bbox_inches="tight", transparent=True, pad_inches=0.01)
 
     plt.show()
 

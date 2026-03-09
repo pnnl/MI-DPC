@@ -4,12 +4,21 @@ This repository contains the implementation and experimental results for the pap
 
 ## Overview
 
-This repository implements **Mixed-Integer Differentiable Predictive Control (MIDPC)** for optimal control of multi-chiller plants. MIDPC embeds mixed-integers model predictive control principles within a deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MIMPC)** in terms of computational time and **Rule-Based Control (RBC)** in terms of control performance.
+This repository implements **Mixed-Integer Differentiable Predictive Control (MIDPC)** for optimal control of multi-chiller plants. MIDPC embeds mixed-integers model predictive control principles within a deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MIMPC)** in terms of computational time and a **Rule-Based Control (RBC)** in terms of control performance.
 
 The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Morever, the optimal control problem at hand also features a bilinear dynamics and nonlinear performance scores; implemented as equality constraints.
 
 ## Graphical abstract
 ![Graphical Abstract](graphical_abstract.png)
+
+## Mixed-Integer Differentiable Predictive Control
+The methodology that enables the DPC to handle mixed-integer decision variables is described in **"Learning to Solve Parametric Mixed-Integer Optimal Control Problems via Differentiable Predictive Control"** paper, available at (https://arxiv.org/abs/2506.19646)
+
+<div style="text-align:center;">
+  <span style="background:white; padding:8px; display:inline-block;">
+    <img src="MI-NDPC_method.jpg" width="800">
+  </span>
+</div>
 
 ## Repository Structure
 
@@ -72,7 +81,7 @@ The following figures illustrate the main results:
 Closed-loop simulation results of a two-chiller system obtained with MI-DPC for a prediction horizon of N = 15.
 <div style="text-align:center;">
   <span style="background:white; padding:8px; display:inline-block;">
-    <img src="plots/control_plot_N15.svg" width="900">
+    <img src="plots/control_plot_N15.jpg" width="900">
   </span>
 </div>
 
@@ -80,7 +89,7 @@ Closed-loop simulation results of a two-chiller system obtained with MI-DPC for 
 Mean inference time (MIT) and training time (TT) as a function of prediction horizon length ($N$) for different numbers of chillers ($M$) with Mixed-Integer Differentiable Predictive Control. The plot indicates an approximate linear trend of problem size and computational complexity.
 <div style="text-align:center;">
   <span style="background:white; padding:8px; display:inline-block;">
-    <img src="plots/MIT_plot.svg" width="600">
+    <img src="plots/MIT_plot.jpg" width="500">
   </span>
 </div>
 
@@ -90,7 +99,7 @@ Mean inference time (MIT) and training time (TT) as a function of prediction hor
 This plot shows how scaling up the magnitude of binary-variance regularization ($\Lambda$) affects the relaxed integer variable ($\tilde\delta$). With higher magnitudes the regularization penalizes low confidence of the binary value, i.e., values near rounding threshold $0.5$; $\tilde\delta = 0.5$.
 <div style="text-align:center;">
   <span style="background:white; padding:8px; display:inline-block;">
-    <img src="plots/experiment_plot.svg" width="500">
+    <img src="plots/experiment_plot.jpg" width="500">
   </span>
 </div>
 
@@ -140,11 +149,17 @@ Parameters:
 - NumPy, Matplotlib
 - Pandas, Tabulate (for analysis)
 
-## Citation
+## Citations
 
 If you use this code in your research, please cite:
 
 ```
 [Paper citation will be added upon publication]
 SSRN: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5764791
+```
+
+If you use Mixed-Integer Differentiable Predictive Control methodology, please cite:
+```
+[Paper citation will be added upon publication]
+https://arxiv.org/abs/2506.19646
 ```

@@ -202,7 +202,6 @@ if __name__=='__main__':
     ax[1].set_ylabel('$T_\mathrm{r}$ [°C]')
     ax[2].set_ylabel('$s$ [-]')
     ax[-1].set_xlabel('Time [h]')
-    # ax[1].set_yticks([init.T_return_min, (init.T_return_max+init.T_return_min)/2, init.T_return_max])
     ax[0].grid()
     ax[1].grid()
     ax[2].grid()

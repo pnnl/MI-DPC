@@ -525,14 +525,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             )
 
      
-        # 6) P_pump
-        # for i in range(data["P_pump"].size(-1)):
-        #     axes[7].plot(
-        #         time, data["P_pump"][0, :, i].cpu(),
-        #         linestyle=style, color=color,
-        #         label=fr"$\mathrm{{Chiller}}\; {i+1}\ \mathrm{{{label_tag}}}$"
-        #     )
-
+   
         # 7) mass_flow
         for i in range(data["mass_flow"].size(-1)):
             axes[4].plot(
@@ -561,7 +554,6 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
 
 
         # 10) COP
-        # COP = init.a + init.b * PLR + init.c * PLR ** 2
         COP = data["Q_delivered"].sum(dim=-1, keepdim=True)/data["P_chiller"].sum(dim=-1, keepdim=True)
         axes[5].plot(
             time, 

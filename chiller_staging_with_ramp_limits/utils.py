@@ -450,13 +450,3 @@ if __name__ == '__main__':
     plt.xlabel("Time [hours]"); plt.ylabel("Load [kW]")
     plt.grid(True, alpha=0.3); plt.show()
 
-
-
-# def generate_simple_load(T, base=50, peak=1000, noise_std=0.0): # Deprecated
-#     # t = torch.arange(T, dtype=torch.get_default_dtype(), requires_grad=True)
-#     t = torch.arange(T)
-#     hours = t / 12  # 5-min steps → 12 per hour
-#     daily = 0.2 * (1 + torch.sin(2 * torch.pi * (hours - 15) / 24))
-#     weekend = 1 - ((hours // 24) % 7 >= 5).float() * 0.4
-#     load = base + (peak - base) * daily * weekend
-#     return torch.clamp(load + torch.randn(T) * noise_std * load, base, peak)

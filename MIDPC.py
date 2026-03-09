@@ -235,8 +235,6 @@ if __name__=='__main__':
                 T_supply_lb, T_supply_ub,
                 flow_lb, flow_ub,
                 T_evap_lb, T_evap_ub,
-                # relaxed_integer_variable_lb, relaxed_integer_variable_ub,
-                # cooling_bound,
                 ]
         
         # PROBLEM DEFINITION
@@ -284,7 +282,6 @@ if __name__=='__main__':
                 epochs=120,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
-                # eval_metric='dev_loss',
                 warmup=20,
                 patience=100,
                 clip=100., 

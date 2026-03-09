@@ -327,11 +327,7 @@ def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_uni
                 linestyle=style, color=color, alpha=0.8,
                 label=fr"${{\mathrm{{Chiller\;{i+1}}}}}\ \mathrm{{{label_tag}}}$"
             )
-            # axes[0].plot(
-            #     time, data["T_evap"][0, :, i],
-            #     linestyle=style, color=color, alpha=0.5,
-            #     label=fr"$T_{{\mathrm{{evap,{i+1}}}}}\ \mathrm{{{label_tag}}}$"
-            # )
+ 
         axes[0].plot(time, torch.ones(s_length)*init.T_min, 'k--')
         axes[0].plot(time, torch.ones(s_length)*init.T_max, 'k--')
         # 2) Load vs Q_delivered

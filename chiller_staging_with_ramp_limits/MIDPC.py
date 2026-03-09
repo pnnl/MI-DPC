@@ -75,8 +75,6 @@ def round_fn(x):
 system_filter = ChillerSystem(init = init)
 
 def load_filter(x):
-        # print(x)
-        # print(system_filter.apply_load_filter(x[:,[0]]))
         return system_filter.apply_load_filter(x[:,[0]])
 
 if __name__=='__main__':
@@ -103,10 +101,8 @@ if __name__=='__main__':
         integrator = integrators.RK4(system, h=torch.tensor(Ts))
                         # In Size: T_supply + T_return + load + filtered_load+ relaxed_integer
         net_flow = utils.customMPL(
-                                        # insize=1*init.M+1+1*(nsteps)+1+(init.M-1), outsize=init.M, hsizes=[120, 120, 120],
                                         insize=1*init.M+1+1*(nsteps)+0, outsize=init.M, hsizes=[240, 240, 120],
                                         nonlin=torch.nn.ReLU(), layer_norm=layer_norm, affine=affine_norm, dropout_prob=0.0,
-                                        # mins=mins+([0.]*(init.M-1)), maxs=maxs+([1.]*(init.M-1)), u_min=init.flow_min, u_max=init.flow_max, 
                                         mins=mins, maxs=maxs, u_min=init.flow_min, u_max=init.flow_max, 
                                         clipping=False, spectral_norm=spectral_norm)
 
@@ -143,7 +139,6 @@ if __name__=='__main__':
                         name='policy_integer')
         
 
-        # round_fn = lambda x: torch.cat((relaxed_binary(x), torch.ones((x.size(0), 1), requires_grad=False)), dim=-1)# bound integers to avoid training instability
         rounding_node = Node(round_fn, input_keys=['relaxed_integer'], output_keys=['integer'], name='soft_rounding')
 
         policy_flow_node = Node(net_flow,
@@ -182,16 +177,9 @@ if __name__=='__main__':
         T_return_variable = variable('T_supply_and_return')[:,:nsteps,init.M:] # No terminal state
         T_supply_variable = variable('T_supply_and_return')[:,:nsteps,:init.M] # No terminal state
 
-        # T_out_variable = system.get_outlet_temperature(integer_status=integer_variable, 
-        #                                                 mass_flow=flow_variable,
-        #                                                 T_supply=T_supply_variable) # State
 
         cooling_delivered_variable = variable('Q_delivered')
-        # cooling_delivered_variable = system.get_cooling_delivered_per_chiller(integer_status=integer_variable,
-        #                                                                 mass_flow=flow_variable,
-        #                                                                 T_return=T_return_variable,
-        #                                                                 T_supply=T_supply_variable) # Decisions
-        
+
         #%% CONTROL OBJECTIVES
         chiller_loss =  1.*((system.get_chiller_power_PLR_(cooling=cooling_delivered_variable,
                                                         integer_status=integer_variable) == 0.))
@@ -204,9 +192,6 @@ if __name__=='__main__':
         c = 20.
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2.)
         binary_regularization = 400.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2.)
-        # switching_loss = c*((relaxed_integer_variable[:, 1:, :] == relaxed_integer_variable[:, :-1, :])^2)
-        # switching_loss = c*(integer_variable == 0)
-        # polar_loss = c*((relaxed_integer_variable[:,:,[0]] == integer_variable[:,:,[0]])^2)
 
         chiller_loss.name = 'chiller_loss'; pump_loss.name = 'pump_loss'; switching_loss.name = 'switching_loss'
         cooling_loss.name = 'cooling_loss'
@@ -218,7 +203,6 @@ if __name__=='__main__':
                         binary_regularization
                         ]
         #%% CONSTRAINTS
-        # T_out_lb, T_out_ub = 10.*(T_out_variable >= init.T_min), 10.*(T_out_variable <= init.T_max)
         T_return_lb  = 10.*(T_supply_and_return_variable[:,:,init.M:] >= init.T_return_min) # States
         T_return_ub = 10.*(T_supply_and_return_variable[:,:,init.M:] <= init.T_return_max)
         T_supply_lb = 10.*(T_supply_and_return_variable[:,:,:init.M] >= init.T_supply_min) 
@@ -233,7 +217,6 @@ if __name__=='__main__':
         relaxed_integer_variable_lb = 5.*(relaxed_integer_variable >= 0.)
         relaxed_integer_variable_ub = 5.*(relaxed_integer_variable <= 1.)
 
-        # T_out_lb.name, T_out_ub.name = 'T_out_lb','T_out_ub'
         T_return_lb.name, T_return_ub.name = 'T_return_lb','T_return_ub'
         T_supply_lb.name, T_supply_ub.name = 'T_supply_lb','T_supply_ub'
         flow_lb.name, flow_ub.name = 'flow_lb','flow_ub'
@@ -268,8 +251,6 @@ if __name__=='__main__':
                                                         noise_scale=5
                                                         )
         
-        # loads_t = loads_t_1d.unfold(0,nsteps+1,1)
-        # loads_t = loads_t[:num_data,:].unsqueeze(-1)
         loads_t = loads_t_1d[:num_data*(nsteps)].reshape(num_data,nsteps,1)
         
         train_data = DictDataset({'T_supply_and_return':torch.cat((T_supply_t[:num_train_data].to(device),

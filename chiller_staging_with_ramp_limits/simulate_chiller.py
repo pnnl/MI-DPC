@@ -68,19 +68,11 @@ def simulate(
     output['T_evap'] = torch.vstack(T_evap_hist).swapaxes(0,1)
     output['Q_delivered'] = torch.vstack(Q_delivered_hist).swapaxes(0,1)
     output['P_chiller'] = torch.vstack(P_chiller_hist).swapaxes(0,1)
-    
-    # # # Compute scores
-    # output['P_chiller'] = system.get_chiller_power_PLR(
-    #     integer_status=output['chiller_status'], mass_flow=output['mass_flow'],
-    #     T_return=output['T_return'][:,:-1,:], T_supply=output['T_supply'][:,:-1,:],
-    # )
+
     output['P_pump'] = system.get_pump_consumption(
         integer_status=output['chiller_status'], mass_flow=output['mass_flow']
         )
-    # output['Q_delivered'] = system.get_cooling_delivered_per_chiller(
-        # integer_status=output['chiller_status'], mass_flow=output['mass_flow'],
-        # T_return=output['T_return'][:,:-1,:], T_supply=output['T_supply'][:,:-1,:],
-    # )
+
     output['T_out'] = system.get_outlet_temperature(
         integer_status=output['chiller_status'], mass_flow=output['mass_flow'],
         T_supply=output['T_supply'][:,:-1,:]
@@ -97,12 +89,10 @@ if __name__=='__main__':
     parser.add_argument('-M', default=3, type=int, help='Number of chillers')
     parser.add_argument('-n_days', default=7, type=int, help='Number of days of simulation')
     parser.add_argument('-plotting', default=True, type=bool, help='Plot or not')
-    # args = parser.parse_args()
     args, unknown = parser.parse_known_args()
     init = SystemParameters(Ts=args.Ts, M=args.M)
     chiller_system = ChillerSystem(init=init)
-    # chiller_system.ramp_rate_ub = 0.05
-    # chiller_system.ramp_rate_lb = 0.05
+
     # # # Initialize the policy
     if args.policy == 'RBC':
         from RBC import RBC_policy
@@ -142,21 +132,6 @@ if __name__=='__main__':
 
         )
 
-    # # # System init
-    # chiller_system = ChillerSystem(init=init)
-        
-                                    # a=init.a, b=init.b, c=init.c,
-                                    # C_r=init.C_r, C_i=init.C_i, c_p=init.c_p,
-                                    # gamma=init.gamma, exponent=init.exponent, M=init.M, 
-                                    # Ts=args.Ts, Q_rated=init.Q_delivered_max,
-                                    # eta_supply=init.eta_supply,
-                                    # eta_return=init.eta_return,
-                                    # h_filter=init.load_filter,
-                                    # eta_return=1.,
-                                    # h_filter=[0.2,]
-                                    # h_filter=[0.1]*10,
-                                    # h_filter=[1.]
-                                    # )
     
     integrator = integrators.RK4(chiller_system, h=torch.tensor(args.Ts))
     
@@ -199,35 +174,13 @@ if __name__=='__main__':
                         T_return_0=T_return_0, # IC
                         load_signal=load_test, # Disturbance
                         dynamics_forward=integrator, # Dynamics model [integrator or chiller_system.forward]
-                        # dynamics_forward=chiller_system.exact_discretization,
-                        # dynamics_forward=chiller_system.forward_euler,
                         policy=policy, # Control strategy
                         nsteps=args.nsteps, # Prediction horizon for [MIDPC, MIMPC]
                         verbose=False, # Print current timestep
                         system=chiller_system, # For computing score variables
-                        # n_days=args.n_days
                        ) # Returns dictionary
     # # # Save outputs for analysis
     torch.save(outputs, f'results/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pt')
     
     if args.plotting:
         plot_chiller_data(outputs, Ts=args.Ts, time_unit='h',save_path=f'plots/{args.policy}/data_N{args.nsteps}_Ts_{args.Ts}_M_{init.M}.pdf')
-# if __name__ == '__main__':
-#     import matplotlib.pyplot as plt
-#     plt.show()
-#     PLR = outputs['Q_delivered'][0,:,:].sum(-1,keepdim=True)/ \
-#              (init.Q_delivered_max*outputs['chiller_status'][0,:,:].sum(-1,keepdim=True))
-#     plt.plot(outputs['Q_delivered'][0,:,:].sum(-1,keepdim=True)/
-#              (init.Q_delivered_max*outputs['chiller_status'][0,:,:].sum(-1,keepdim=True)))
-#     plt.plot(outputs['chiller_status'][0,:,:])
-#     print(PLR[1400:1600])
-#%%
-    # import matplotlib.pyplot as plt
-    # plt.plot(load_test[0,:50])
-    # # plt.plot(chiller_system.apply_load_filter(load_test[0]).view(1,-1,1)[0])
-    # filtered = []
-    # for k in range(load_test.size(1)):
-    #     filtered.append(chiller_system.apply_load_filter(load_test[0,k]))
-    # filtered_tensor = torch.vstack(filtered)
-    # plt.plot(filtered_tensor[:50])
-# %%

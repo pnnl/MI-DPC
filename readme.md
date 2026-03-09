@@ -78,7 +78,7 @@ MI-DPC/
 The following figures illustrate the main results:
 
 ### Control Trajectory 
-Closed-loop simulation results of a two-chiller system obtained with MI-DPC for a prediction horizon of N = 15.
+Closed-loop simulation results of a two-chiller system obtained with MI-DPC for a prediction horizon of $N = 15$.
 <div style="text-align:center;">
   <span style="background:white; padding:8px; display:inline-block;">
     <img src="plots/control_plot_N15.jpg" width="900">

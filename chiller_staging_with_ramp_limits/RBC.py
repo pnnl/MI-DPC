@@ -8,9 +8,6 @@ import matplotlib.pyplot as plt
 init = SystemParameters()
 torch.manual_seed(init.seed)
 system = ChillerSystem( init=init)
-                        # M=init.M, Ts=init.Ts, C_r=init.C_r, C_i=init.C_i, 
-                      #  a=init.a, b=init.b ,c=init.c , c_p=init.c_p, 
-                      #  gamma=init.gamma, Q_rated=init.Q_delivered_max)
 
 class RBC_policy():
   def __init__(self, PLR_on=0.6, PLR_off=0.2, n_active_chillers=2, Q_delivered_max = 500, M=2,
@@ -35,7 +32,6 @@ class RBC_policy():
                                         ramp_bounds=True, update_memory=False
                                         ).sum(-1, keepdim=True) \
             /(self.Q_delivered_max*self.n_active_chillers)
-    # print(PLR)
     if PLR > self.PLR_on:
       self.n_active_chillers += 1
     if PLR < self.PLR_off:

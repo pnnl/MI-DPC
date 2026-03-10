@@ -6,7 +6,7 @@ This repository contains the implementation and experimental results for the pap
 
 This repository implements **Mixed-Integer Differentiable Predictive Control (MIDPC)** for optimal control of multi-chiller plants. MIDPC embeds mixed-integers model predictive control principles within a deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MIMPC)** in terms of computational time and a **Rule-Based Control (RBC)** in terms of control performance.
 
-The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Morever, the optimal control problem at hand also features a bilinear dynamics and nonlinear performance scores; implemented as equality constraints.
+The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Moreover, the optimal control problem at hand also features bilinear dynamics and nonlinear performance scores, implemented as equality constraints.
 
 ## Graphical abstract
 ![Graphical Abstract](graphical_abstract.png)
@@ -44,7 +44,7 @@ MI-DPC/
 └── logs/                             # Training and simulation logs
 ```
 
-**Note:** The `chiller_staging_with_ramp_limits/` directory contains the same experimental setup as the main repository, with the addition of ramp rate constraints on the delivered cooling. This variant explores the impact of rate-of-change limitations on cooling delivery. This part of implementation is still in development.
+**Note:** The `chiller_staging_with_ramp_limits/` directory contains the same experimental setup as the main repository, with the addition of ramp rate constraints on the delivered cooling. This variant explores the impact of rate-of-change limitations on cooling delivery. This part of the implementation is still in development.
 
 ## Major Files
 
@@ -136,7 +136,7 @@ Parameters:
 
 - **Physics-Informed Policy Learning**: Incorporates system dynamics directly into the optimal control problem
 - **Mixed-Integer Control**: Handles discrete (chiller on/off) and continuous (flow rates, temperatures) decisions
-- **Scalability**: Linear scaling of training time and inference time with respect to number of chillers and prediction horizon length
+- **Scalability**: Linear scaling of training time and inference time with respect to the number of chillers and prediction horizon length
 - **Fast Inference**: Sub-millisecond inference times, suitable for real-time control
 - **Energy Efficiency**: Optimizes chiller and pump power consumption while satisfying cooling demand
 

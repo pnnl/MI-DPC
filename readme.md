@@ -143,7 +143,7 @@ Parameters:
 ## Dependencies
 
 - PyTorch
-- NeuroMancer
+- [Neuromancer](https://github.com/pnnl/neuromancer)
 - Pyomo (for MIMPC optimization)
 - Gurobi or SCIP (for MIMPC solver)
 - NumPy, Matplotlib

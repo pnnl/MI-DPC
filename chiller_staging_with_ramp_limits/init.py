@@ -40,11 +40,11 @@ class SystemParameters():
             self.gamma = 1.395*1e-2 # Pump power coefficient [kWs^2/kg^2]
 
         # PROCESS BOUNDS
-        self.T_min, self.T_max = 8., 12. # Outlet temperature bounds [C]
-        self.T_supply_min, self.T_supply_max = 8., 12. # Supply temperature bounds [C]
-        self.T_evap_min, self.T_evap_max = 8., 12. # Evaporation temperature bounds [C]
-        self.T_return_min, self.T_return_max = 8., 40. # Return temperature bounds [C]
-        self.flow_min, self.flow_max = 5., 20. # Mass flow bounds [kg/s]
+        self.T_min, self.T_max = 7., 12. # Outlet temperature bounds [C]
+        self.T_supply_min, self.T_supply_max = 7., 12. # Supply temperature bounds [C]
+        self.T_evap_min, self.T_evap_max = 7., 12. # Evaporation temperature bounds [C]
+        self.T_return_min, self.T_return_max = 7., 26. # Return temperature bounds [C]
+        self.flow_min, self.flow_max = 6., 20. # Mass flow bounds [kg/s]
 
 
 # Q_delivered_max = (T_return_max - T_evap_min) * c_p * flow_max # Rated maximum cooling per chiller

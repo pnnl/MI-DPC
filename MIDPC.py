@@ -89,8 +89,13 @@ if __name__=='__main__':
         args, unknown = parser.parse_known_args()
         nsteps = args.nsteps
         nsteps_list = [[5, 10, 15], [20, 40 ,60]]
-        Ts = args.Ts
         init = SystemParameters(M=args.M)
+        Ts = init.Ts
+        init.T_return_max = 26.
+        init.flow_min = 6.
+        init.T_evap_min = 7
+        init.T_supply_min = 7
+        init.T_return_min = 7
         layer_norm = False; affine_norm = False; spectral_norm = False
         # exponent = 2
         load_min = 0; load_max = (init.Q_delivered_max*init.M)*0.75
@@ -193,9 +198,11 @@ if __name__=='__main__':
         pump_loss =  ((system.get_pump_consumption(mass_flow=flow_variable, 
                                 integer_status=integer_variable) == 0.))
         
-        cooling_loss = 0.001*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
-        # 10 for long horizons!
-        c = 20. if nsteps in nsteps_list[0] else 10.# 10 for long horizons!
+        cooling_constant = 0.001 if init.M == 2 else 0.0005
+        cooling_loss = cooling_constant*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
+        # c = (40./(init.M-1)) if nsteps in nsteps_list[0] else 10.
+        # c = 80. if nsteps in nsteps_list[0] else 10.
+        c = 80.
         switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2)
         binary_regularization = 200.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2)
 
@@ -210,28 +217,30 @@ if __name__=='__main__':
                         binary_regularization
                         ]
         #%% CONSTRAINTS
+        temp_ub_coeff = 100 if init.M == 2 else 150
         T_return_lb  = 10.*(T_supply_and_return_variable[:,:,init.M:] >= init.T_return_min) # States
-        T_return_ub = 10.*(T_supply_and_return_variable[:,:,init.M:] <= init.T_return_max)
+        T_return_ub = temp_ub_coeff*(T_supply_and_return_variable[:,:,init.M:] <= init.T_return_max - 2.) # Constraint tightening
         T_supply_lb = 10.*(T_supply_and_return_variable[:,:,:init.M] >= init.T_supply_min) 
         T_supply_ub = 10.*(T_supply_and_return_variable[:,:,:init.M] <= init.T_supply_max)
         
         cooling_bound = 0.5 * (torch.sum(cooling_delivered_variable[:,:nsteps,:],dim=-1,keepdim=True) + init.tolerance >= load_variable[:,:nsteps,:]) # Cooling constr
         cooling_bound.name='cooling_bound'
 
-        flow_lb = 10.*(flow_variable >= init.flow_min); flow_ub = 10.* (flow_variable <= init.flow_max) # Decisions
-        T_evap_lb = 10.*(T_evap_variable >= init.T_evap_min); T_evap_ub = 10.* (T_evap_variable <= init.T_evap_max)
+        input_constraints_const = 100. if init.M == 2 else 20.
+        flow_lb = input_constraints_const*(flow_variable >= init.flow_min); flow_ub = input_constraints_const* (flow_variable <= init.flow_max) # Decisions
+        T_evap_lb = input_constraints_const*(T_evap_variable >= init.T_evap_min); T_evap_ub = input_constraints_const* (T_evap_variable <= init.T_evap_max)
         
         relaxed_integer_variable_lb = 5.*(relaxed_integer_variable >= 0.)
         relaxed_integer_variable_ub = 5.*(relaxed_integer_variable <= 1.)
 
-        # T_out_lb.name, T_out_ub.name = 'T_out_lb','T_out_ub'
         T_return_lb.name, T_return_ub.name = 'T_return_lb','T_return_ub'
         T_supply_lb.name, T_supply_ub.name = 'T_supply_lb','T_supply_ub'
         flow_lb.name, flow_ub.name = 'flow_lb','flow_ub'
         T_evap_lb.name, T_evap_ub.name = 'T_evap_lb', 'T_evap_ub`'
 
         constraints = [
-                T_return_lb, T_return_ub,
+                T_return_lb,
+                T_return_ub,
                 T_supply_lb, T_supply_ub,
                 flow_lb, flow_ub,
                 T_evap_lb, T_evap_ub,
@@ -243,7 +252,9 @@ if __name__=='__main__':
         #%% Dataloaders
         num_data = 40000; num_train_data = 30000; batch_size = 10000
         T_supply_t = torch.rand(num_data, 1, init.M).uniform_(init.T_supply_min, init.T_supply_max)
-        T_return_t = T_supply_t.mean(-1, keepdim=True).uniform_(init.T_supply_max, init.T_return_max)
+        # T_return_t = T_supply_t.mean(-1, keepdim=True).uniform_(init.T_supply_max, init.T_return_max)
+        # T_return_t = torch.rand(num_data, 1, 1).uniform_(init.T_return_min, init.T_return_max)
+        T_return_t = torch.amax(T_supply_t, dim=-1, keepdim=True)
 
         _, loads_t_1d = utils.generate_datacenter_load(
                                                         number_of_days=14000, 
@@ -272,14 +283,14 @@ if __name__=='__main__':
         logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=10)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps}, M={init.M} at Ts={Ts}') 
-        learning_rate = 0.006 if nsteps in nsteps_list[0] else 0.004 #0.004 for long horizons!
+        learning_rate = 0.006
         optimizer = torch.optim.Adam(cl_system.parameters(), lr=learning_rate, 
-        weight_decay=0.00)
+        weight_decay=0.006)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,
                 optimizer=optimizer,
-                epochs=120,
+                epochs=100 if nsteps is not 5 else 120,
                 train_metric='train_loss',
                 dev_metric='dev_loss',
                 warmup=20,

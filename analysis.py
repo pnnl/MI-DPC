@@ -48,6 +48,8 @@ def get_median_RCE(load, cooling): # Mean Relative Control Error
 
 if __name__=='__main__':
     Ts = 180
+    DPC_RESULTS_DIR = "results/MIDPC"
+    MIMPC_RESULTS_DIR = "results/MIMPC"
     M_list = [2, 3]
     N_list = [5, 10, 15]
     N_list_tab = [5, 10, 15]
@@ -81,11 +83,11 @@ if __name__=='__main__':
 
     print('='*80)
     print('='*80)
-    DPC_data = {}; training_data = {}
+    DPC_data = {}; training_data = {}   
     for M in M_list:
         for nsteps in N_list:
-            DPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIDPC/data_N{nsteps}_Ts_180_M_{M}.pt')
-            training_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIDPC/policies/training_data_N_{nsteps}_Ts_{Ts}_M_{M}.pt')
+            DPC_data[f'M={M}, N={nsteps}'] = torch.load(f'{DPC_RESULTS_DIR}/data_N{nsteps}_Ts_180_M_{M}.pt')
+            training_data[f'M={M}, N={nsteps}'] = torch.load(f'{DPC_RESULTS_DIR}/policies/training_data_N_{nsteps}_Ts_{Ts}_M_{M}.pt')
             mean_cop = get_mean_COP(
                                     cooling=DPC_data[f'M={M}, N={nsteps}']['Q_delivered'], 
                                     chiller_power=DPC_data[f'M={M}, N={nsteps}']['P_chiller']
@@ -120,7 +122,7 @@ if __name__=='__main__':
     MIMPC_data = {}
     for M in M_list:
         for nsteps in N_list_tab:
-            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'results/MIMPC/data_N{nsteps}_Ts_180_M_{M}.pt')
+            MIMPC_data[f'M={M}, N={nsteps}'] = torch.load(f'{MIMPC_RESULTS_DIR}/data_N{nsteps}_Ts_180_M_{M}.pt')
             MIMPC_data[f'M={M}, N={nsteps}']['Inference_Time'] = MIMPC_data[f'M={M}, N={nsteps}']['inference_time'].mean()
    
     import pandas as pd

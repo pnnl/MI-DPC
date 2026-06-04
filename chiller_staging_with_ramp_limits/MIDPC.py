@@ -189,22 +189,24 @@ if __name__=='__main__':
         
         cooling_loss = 0.001*((torch.sum(cooling_delivered_variable,dim=-1,keepdim=True) == load_variable)^2.)
         # c = init.delta_penalty # Switching cost coefficient
-        c = 20.
-        switching_loss = c*((integer_variable[:, 1:, :] == integer_variable[:, :-1, :])^2.)
+        c = 10.
+        switching_loss_1 = c*((integer_variable[:, 1:, [0]] == integer_variable[:, :-1, [0]])^2.)
+        switching_loss_2 = c*((integer_variable[:, 1:, [1]] == integer_variable[:, :-1, [1]])^2.)
         binary_regularization = 400.*((relaxed_integer_variable * (1-relaxed_integer_variable) == 0.)^2.)
 
-        chiller_loss.name = 'chiller_loss'; pump_loss.name = 'pump_loss'; switching_loss.name = 'switching_loss'
+        chiller_loss.name = 'chiller_loss'; pump_loss.name = 'pump_loss'; switching_loss_1.name = 'switching_loss_1'; switching_loss_2.name = 'switching_loss_2'
         cooling_loss.name = 'cooling_loss'
         loss_list = [
                         chiller_loss,
                         pump_loss,
                         cooling_loss,
-                        switching_loss,
+                        switching_loss_1,
+                        switching_loss_2,
                         binary_regularization
                         ]
         #%% CONSTRAINTS
         T_return_lb  = 10.*(T_supply_and_return_variable[:,:,init.M:] >= init.T_return_min) # States
-        T_return_ub = 10.*(T_supply_and_return_variable[:,:,init.M:] <= init.T_return_max)
+        T_return_ub = 1000.*(T_supply_and_return_variable[:,:,init.M:] <= init.T_return_max - 1.1)
         T_supply_lb = 10.*(T_supply_and_return_variable[:,:,:init.M] >= init.T_supply_min) 
         T_supply_ub = 10.*(T_supply_and_return_variable[:,:,:init.M] <= init.T_supply_max)
         
@@ -266,7 +268,7 @@ if __name__=='__main__':
         # logger = BasicLogger(stdout=['train_loss','dev_loss'],verbosity=1)
         #%% Optimizer
         print(f'Training MIDPC policy for N={nsteps} at Ts={Ts}')
-        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.001, weight_decay=0.00)
+        optimizer = torch.optim.AdamW(cl_system.parameters(), lr=0.006, weight_decay=0.002)
         trainer = Trainer(
                 problem.to(device),
                 train_loader, dev_loader,

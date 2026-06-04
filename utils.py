@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 init = SystemParameters()
-# Custom MLP
+# Custom MLP Class
 class customMPL(nn.Module):
     def __init__(
         self,
@@ -90,7 +90,7 @@ class customMPL(nn.Module):
             out = torch.clip(out, self.u_min, self.u_max)
         return out
 
-# LOAD SIGNAL FN
+# GENERATE LOAD SIGNAL FUNCTION
 def generate_datacenter_load(
 sampling_time=300,   # seconds
 number_of_days=1,   #  Number of days 
@@ -437,6 +437,7 @@ def plot_chiller_data_nice(*datas, labels=None, save_path=None, Ts=300, time_uni
 
     plt.show()
 
+# GENERATE CONTROL PLOT FEATURED IN THE PAPER
 def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_unit=None, plot_w = 7.16, plot_h=3.5):
     """
     Plot chiller data for one or more datasets on shared axes.
@@ -504,6 +505,7 @@ def plot_chiller_data_paper(*datas, labels=None, save_path=None, Ts=180, time_un
             )
 
         axes[2].plot(time, torch.ones(s_length)*init.T_min, 'k:')
+        # axes[2].set_yticks([init.T_min, 20, init.T_return_max,])
         # 2) Load vs Q_delivered
         axes[0].plot(
             time, data["load"][0, :, :].cpu(),

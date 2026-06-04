@@ -17,6 +17,9 @@ cl_systems = {}
 if __name__=='__main__':
         for LAMBDA in LAMBDAS:
             init = SystemParameters()
+            init.T_supply_min, init.T_evap_min, init.T_return_min = 8.,8.,8.    # This experiment was conducted with old process bounds
+            init.T_supply_max, init.T_evap_max, init.T_return_max = 12., 12., 40.
+            init.flow_min, init.flow_max = 5.,20.
             def relaxed_binary(x, slope=1.0, threshold=0.5):
                     logits = slope * (x - threshold)
                     sig = torch.sigmoid(logits)
@@ -30,7 +33,7 @@ if __name__=='__main__':
             torch.manual_seed(202)
             nsteps = 20
             Ts = 180
-            init = SystemParameters(M=2)
+        #     init = SystemParameters(M=2)
             layer_norm = False; affine_norm = False; spectral_norm = False
             # exponent = 2
             load_min = 0; load_max = (init.Q_delivered_max*init.M)*0.75

@@ -154,8 +154,16 @@ Parameters:
 If you use this code in your research, please cite:
 
 ```
-[Paper citation will be added upon publication]
-SSRN: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5764791
+@article{boldocky2026data,
+  title={Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control},
+  author={Boldock{\'y}, J{\'a}n and Faulkner, Cary and Michael, Elad and Gulan, Martin and Tuor, Aaron and Drgo{\v{n}}a, J{\'a}n},
+  journal={Control Engineering Practice},
+  volume={174},
+  pages={107063},
+  year={2026},
+  publisher={Elsevier},
+ doi = {https://doi.org/10.1016/j.conengprac.2026.107063},
+}
 ```
 
 If you use Mixed-Integer Differentiable Predictive Control methodology, please cite:

@@ -1,6 +1,6 @@
 # Mixed-Integer Differentiable Predictive Control for Chiller Plant Optimization
 
-This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (SSRN: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5764791).
+This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (https://www.sciencedirect.com/science/article/pii/S0967066126003072?dgcid=SSRN_redirect_SD&ssrnid=5764791).
 
 ## Overview
 

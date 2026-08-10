@@ -1,7 +1,7 @@
 # Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control
 
 This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (https://www.sciencedirect.com/science/article/pii/S0967066126003072?dgcid=SSRN_redirect_SD&ssrnid=5764791).
-
+> A condensed version of the paper is available here: https://xboldocky.github.io/chiller-plant-MIDPC/
 ## Overview
 
 This repository implements **Mixed-Integer Differentiable Predictive Control (MI-DPC)** for optimal control of multi-chiller plants used for data center cooling. MI-DPC embeds mixed-integer model predictive control principles within a self-supervised deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand and process constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MI-MPC)** in terms of computational time and a **Rule-Based Control (RBC)** in terms of control performance.

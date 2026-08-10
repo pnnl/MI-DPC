@@ -11,14 +11,14 @@ The code models a chiller plant with multiple chillers ($M$) that must meet time
 > **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC/blob/master/interactive_example.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
 
 ## Graphical abstract
-![Graphical Abstract](graphical_abstract.png)
+![Graphical Abstract](aux/images/graphical_abstract.png)
 
 ## Mixed-Integer Differentiable Predictive Control
 The methodology that enables the DPC to handle mixed-integer decision variables is described in **"Learning to Solve Parametric Mixed-Integer Optimal Control Problems via Differentiable Predictive Control"** paper, available at (https://arxiv.org/abs/2506.19646)
 
 <div style="text-align:center;">
   <span style="background:white; padding:8px; display:inline-block;">
-    <img src="MI-NDPC_method.jpg" width="800">
+    <img src="aux/images/MI-NDPC_method.jpg" width="800">
   </span>
 </div>
 

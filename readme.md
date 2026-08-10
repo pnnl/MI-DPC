@@ -1,10 +1,6 @@
 # Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control
 
-<<<<<<< HEAD
-This repository contains the implementation and experimental results for the paper: **"Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control"** (DOI: https://doi.org/10.1016/j.conengprac.2026.107063).
-=======
 This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (https://www.sciencedirect.com/science/article/pii/S0967066126003072?dgcid=SSRN_redirect_SD&ssrnid=5764791).
->>>>>>> refs/remotes/origin/master
 
 ## Overview
 
@@ -12,7 +8,7 @@ This repository implements **Mixed-Integer Differentiable Predictive Control (MI
 
 The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Moreover, the optimal control problem at hand also features bilinear dynamics and nonlinear performance curves, making it formally a *mixed-integer nonlinear optimal control problem*, which is notoriously expensive to solve in real time.
 
-> **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
+> **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC/blob/master/interactive_example.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
 
 ## Graphical abstract
 ![Graphical Abstract](graphical_abstract.png)
@@ -93,8 +89,8 @@ Closed-loop simulation results of a two-chiller system obtained with MI-DPC for 
 
 ### Inference Time Analysis of MIDPC
 Mean inference time (MIT) and training time (TT) as a function of prediction horizon length ($N$) for different numbers of chillers ($M$) with Mixed-Integer Differentiable Predictive Control. The plot indicates an approximate linear trend of problem size and computational complexity.
-<div style="text-align:center;">
-  <span style="background:white; padding:8px; display:inline-block;">
+<div style="align:center;">
+  <span style="background:white; padding:8px; display:inline-block; align:center;">
     <img src="plots/MIT_plot.jpg" width="500">
   </span>
 </div>

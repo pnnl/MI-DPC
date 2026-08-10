@@ -1,6 +1,6 @@
-# Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control
+# Mixed-integer nonlinear differentiable predictive control for chiller plant optimization
 
-This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (https://www.sciencedirect.com/science/article/pii/S0967066126003072?dgcid=SSRN_redirect_SD&ssrnid=5764791).
+This repository contains the implementation and experimental results for the paper: **"Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control"** (https://www.sciencedirect.com/science/article/pii/S0967066126003072?dgcid=SSRN_redirect_SD&ssrnid=5764791).
 > A condensed version of the paper is available here: https://xboldocky.github.io/chiller-plant-MIDPC/
 ## Overview
 

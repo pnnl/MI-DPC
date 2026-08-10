@@ -8,7 +8,7 @@ This repository implements **Mixed-Integer Differentiable Predictive Control (MI
 
 The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Moreover, the optimal control problem at hand also features bilinear dynamics and nonlinear performance curves, making it formally a *mixed-integer nonlinear optimal control problem*, which is notoriously expensive to solve in real time.
 
-> **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC/blob/master/interactive_example.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
+> **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC/blob/master/chiller_plant_midpc_example.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
 
 ## Graphical abstract
 ![Graphical Abstract](aux/images/graphical_abstract.png)

@@ -1,12 +1,14 @@
-# Mixed-Integer Differentiable Predictive Control for Chiller Plant Optimization
+# Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control
 
-This repository contains the implementation and experimental results for the paper: **"Mixed-Integer Differentiable Predictive Control for Chiller Systems"** (SSRN: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5764791).
+This repository contains the implementation and experimental results for the paper: **"Data center chiller plant optimization via mixed-integer nonlinear differentiable predictive control"** (DOI: https://doi.org/10.1016/j.conengprac.2026.107063).
 
 ## Overview
 
-This repository implements **Mixed-Integer Differentiable Predictive Control (MIDPC)** for optimal control of multi-chiller plants. MIDPC embeds mixed-integers model predictive control principles within a deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MIMPC)** in terms of computational time and a **Rule-Based Control (RBC)** in terms of control performance.
+This repository implements **Mixed-Integer Differentiable Predictive Control (MI-DPC)** for optimal control of multi-chiller plants used for data center cooling. MI-DPC embeds mixed-integer model predictive control principles within a self-supervised deep learning framework. Thus, we are able to achieve energy-efficient chiller operation, satisfy cooling demand and process constraints, while perserving computational scalability. The approach is compared against the nominal **Mixed-Integer Model Predictive Control (MI-MPC)** in terms of computational time and a **Rule-Based Control (RBC)** in terms of control performance.
 
-The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Moreover, the optimal control problem at hand also features bilinear dynamics and nonlinear performance scores, implemented as equality constraints.
+The code models a chiller plant with multiple chillers ($M$) that must meet time-varying cooling loads while minimizing energy consumption. The control problem involves discrete decisions (chiller on/off status) ($\delta$) and continuous decisions (mass flow rates $\dot{m}$, evaporation temperatures ($T_\mathrm{e}$), making it a mixed-integer optimization problem. Moreover, the optimal control problem at hand also features bilinear dynamics and nonlinear performance curves, making it formally a *mixed-integer nonlinear optimal control problem*, which is notoriously expensive to solve in real time.
+
+> **Instructive live Colab example**: This repository provides a step-by-step implementation of MI-DPC for a chiller plant, using a parameterization similar to that presented in the paper. <a target="_blank" href="https://colab.research.google.com/github/pnnl/MI-DPC"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>  
 
 ## Graphical abstract
 ![Graphical Abstract](graphical_abstract.png)
@@ -57,7 +59,7 @@ MI-DPC/
 ### System Modeling
 
 - **`chiller_system.py`**: Physics-based chiller dynamics including thermal models, power consumption, and cooling delivery calculations.
-- **`init.py`**: System parameters, physical constants, and operating bounds.
+- **`init.py`**: System parameters and operating bounds.
 
 ### Simulation and Analysis
 
@@ -134,11 +136,12 @@ Parameters:
 
 ## Key Features of MIDPC for chiller plant optimization
 
-- **Physics-Informed Policy Learning**: Incorporates system dynamics directly into the optimal control problem
 - **Mixed-Integer Control**: Handles discrete (chiller on/off) and continuous (flow rates, temperatures) decisions
-- **Scalability**: Linear scaling of training time and inference time with respect to the number of chillers and prediction horizon length
+- **Computational Scalability**: Linear scaling of training time and inference time with respect to the number of chillers and prediction horizon length
 - **Fast Inference**: Sub-millisecond inference times, suitable for real-time control
 - **Energy Efficiency**: Optimizes chiller and pump power consumption while satisfying cooling demand
+- **Physics-Informed Policy Learning**: Incorporates system dynamics directly into the optimal control problem
+- **Constraints Handling**: Enforces input constraints via element-wise clipping, while state constraints are treated as penalties within the control objective loss function.
 
 ## Dependencies
 
@@ -171,3 +174,19 @@ If you use Mixed-Integer Differentiable Predictive Control methodology, please c
 [Paper citation will be added upon publication]
 https://arxiv.org/abs/2506.19646
 ```
+## Acknowledgment
+
+This research was primarily supported by the **U.S. Department of Energy Building Technologies Office (BTO), USA** within the **Office of Energy Efficiency and Renewable Energy (EERE), USA** under Contract No. DE-AC05-76RL01830.
+
+<div style="text-align:center;">
+  <span style="background:white; padding:8px; display:inline-block;">
+    <img src="aux/images/PNNL_logo.jpg" alt="PNNL Logo" style="max-width: 600px; height: auto;"/>
+  </span>
+</div>
+This work was also supported by the Ralph O’Connor Sustainable Energy Institute (ROSEI) at Johns Hopkins University.
+
+<div style="text-align:center;">
+  <span style="background:white; padding:8px; display:inline-block;">
+        <img src="aux/images/JHU_logo.png" alt="JHU Logo" style="max-width: 400px; height: auto;"/>
+  </span>
+</div>

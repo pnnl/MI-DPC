@@ -1,3 +1,5 @@
 __pycache__/
 .DS_Store
 chiller_staging_with_ramp_limits/.DS_Store
+chiller_paper.pdf
+.vscode
